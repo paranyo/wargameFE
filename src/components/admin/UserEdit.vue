@@ -68,7 +68,8 @@ export default {
 			}
 
 			this.UPDATE_USER({ uid: this.user.uid, level, nick })
-			this.FETCH_ONEUSER(this.user.uid)
+				.then(_=> this.FETCH_ONEUSER(this.user.uid))
+
 		}
 	}
 }
