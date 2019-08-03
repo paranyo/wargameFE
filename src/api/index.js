@@ -62,18 +62,15 @@ export const auth = {
 	}
 }
 
-
 export const tag = {
 	fetch() {
 		return request.get('/tags').then(({ data }) => data)
-	}
-}
-export const challenge = {
-	create (title) {
-		return request.post('/manage/chall', { title }).then(({ data }) => data)
 	},
-	update(cid, data) {
-		return request.put(`/manage/chall/${cid}`, data).then(({ data }) => data)
+	create (title) {
+		return request.post('/manage/tag/create', { title }).then(({ data }) => data)
+	},
+	update(title, data) {
+		return request.put(`/manage/tag/update/${title}`, data).then(({ data }) => data)
 	}
 }
 

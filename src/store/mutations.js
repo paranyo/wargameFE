@@ -27,8 +27,8 @@ const mutations = {
 	SET_TAGS(state, { list }) {
 		state.tags = list.map(l => l)
 	},
-	SET_IS_ADD_CATEGORY(state, toggle) {
-		state.isAddCategory = toggle 
+	SET_IS_ADD_TAG(state, toggle) {
+		state.isAddTag = toggle
 	},
 	SET_IS_ADD_PROB(state, toggle) {
 		state.isAddProb = toggle

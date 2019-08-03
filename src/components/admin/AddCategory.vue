@@ -2,17 +2,17 @@
 	<modal class="modal-card">
 		<div slot="header" class="modal-card-header">
 			<div class="modal-card-header-title">
-				<h2>Create new Category
-					<a class="modal-close-btn" href="" @click.prevent="SET_IS_ADD_CATEGORY(false)">&times;</a>
+				<h2>Create new Tag
+					<a class="modal-close-btn" href="" @click.prevent="SET_IS_ADD_TAG(false)">&times;</a>
 				</h2>
 			</div>
 		</div>
 		<div slot="body">
-			<input class="form-control" type="text" v-model="inputCategoryTitle" ref="inputCategoryTitle">
+			<input class="form-control" type="text" v-model="title" ref="title">
 		</div>
 		<div slot="footer">
-			<button class="btn" :class="{'btn-success': isValidInput}" type="button" form="add-category-form"
-				:disabled="!isValidInput" @click="onSubmitCreateCategory"> Create Category </button>
+			<button class="btn" :class="{'btn-success': isValidInput}" type="button" form="add-tag-form"
+				:disabled="!isValidInput" @click="onSubmit"> Create tag </button>
 		</div>
 	</modal>
 </template>
@@ -23,29 +23,29 @@ export default {
 	components: {	Modal	},
 	data() {
 		return {
-			inputCategoryTitle: '',
+			title: '',
 			isValidInput: false,
 		}
 	},
 	watch: {
-		inputCategoryTitle(val) {
+		title(val) {
 			this.isValidInput = !!val.trim().length
 		}
 	},
 	mounted () {
-		this.$refs.inputCategoryTitle.focus()
+		this.$refs.title.focus()
 	},
 	methods: {
 		...mapActions([
-			'ADD_CATEGORY',
+			'ADD_TAG',
 		]),
 		...mapMutations([
-			'SET_IS_ADD_CATEGORY'
+			'SET_IS_ADD_TAG'
 		]),
-		onSubmitCreateCategory() {
-			if(!this.inputCategoryTitle.trim()) return
-			this.ADD_CATEGORY(this.inputCategoryTitle)
-			this.SET_IS_ADD_CATEGORY(false)
+		onSubmit() {
+			if(!this.title.trim()) return
+			this.ADD_TAG(this.title)
+			this.SET_IS_ADD_TAG(false)
 		}
 	}
 }

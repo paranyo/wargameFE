@@ -24,23 +24,20 @@ const actions = {
 
 /* TAG 관련 */
 
-// TAG 추가
-	ADD_CATEGORY({ state, dispatch }, title) {
-		return challenge.create(title)
-		.then(_ => dispatch('FETCH_CATEGORY_LIST', state.categoryList))
+	ADD_TAG({ state, dispatch }, title) {
+		return tag.create(title)
+			.then(_=> dispatch('FETCH_TAGS', state.tags))
 	},
-
-// TAG 수정
-	UPDATE_CATEGORY({ state, dispatch }, { id, isOpen }) {
-		return challenge.update(id, { isOpen  })
-		.then(_ => dispatch('FETCH_CATEGORY_LIST', state.categoryList))
+	UPDATE_TAG({ state, dispatch }, { title, isOpen }) {
+		return tag.update(title, { isOpen })
+			.then(_=> dispatch('FETCH_TAGS', state.tags))
 	},
-
-	// TAG 가져오기
 	FETCH_TAGS({ commit }) {
 		return tag.fetch().then(data => commit('SET_TAGS', data))
 	},
 
+
+/* PROB */
 	FETCH_PROBS({ commit }) {
 		return prob.fetch().then(data => commit('SET_PROBS', data))
 	},

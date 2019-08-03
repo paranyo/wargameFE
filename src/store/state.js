@@ -7,7 +7,7 @@ const state = {
 	category: {},
 	probs: [],
 	prob: {},
-	isAddCategory: false,
+	isAddTag: false,
 	isAddProb: false,
 }
 

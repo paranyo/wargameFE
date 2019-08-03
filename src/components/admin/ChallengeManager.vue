@@ -1,50 +1,48 @@
 <template>
 	<div class="container-fluid">
     <div class="container-align">
-			<div class="btn-group btn-group-lg btn-group-toggle" data-toggle="buttons"role="group" 
-				aria-label="Basic example">
-				<label class="btn btn-secondary" v-for="cate in categoryList" :key="cate.title" :id="cate.title">
-					<input type="radio" name="options" :id="cate.title" autocomplete>
-						<router-link class="btn-sizing" :to="`/manage/challenge/${cate.title}`">{{ cate.title }}</router-link>
-					</input>
+			<div class="btn-group btn-group-lg btn-group-toggle" data-toggle="buttons" role="group">
+				<label class="btn btn-secondary" v-for="tag in tags" :key="tag.title" :title="tag.title">
+					<input type="radio" name="options" :title="tag.title" autocomplete>
+					<router-link class="btn-sizing" :to="`/manage/challenge/${tag.title}`">{{ tag.title }}</router-link>
 				</label>
-				<button type="button" class="btn btn-secondary" @click="createCategory">&plus;</button>
-			</div>
-    </div>
-		<AddCategory v-if="isAddCategory" />
+					<button type="button" class="btn btn-secondary" @click="createTag">&plus;</button>
+    	</div>
+		</div>
+		<AddCategory v-if="isAddTag" />
 		<router-view />
 	</div>
 </template>
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
-import { challenge } from '../../api'
 import AddCategory from './AddCategory.vue'
 import ProbField	 from './ProbField.vue'
 export default {
 	components: { AddCategory, ProbField },
 	computed: {
 		...mapState({
-			isAddCategory: 'isAddCategory',
-			categoryList: 'categoryList',
+			isAddTag: 'isAddTag',
+			tags: 'tags'
 		}),
 	},
 	created() {
-		this.FETCH_CATEGORY_LIST()
+		this.FETCH_TAGS()
 	},
 	methods: {
 		...mapActions([
-			'FETCH_CATEGORY_LIST',
+			'FETCH_TAGS',
 		]),
 		...mapMutations([
-			'SET_IS_ADD_CATEGORY'
+			'SET_IS_ADD_TAG'
 		]),
-		createCategory() {
-			this.SET_IS_ADD_CATEGORY(true)
+		createTag() {
+			this.SET_IS_ADD_TAG(true)
 		},
 	}
 }
 </script>
 <style scope>
+
 .container-align {
 	width: 100%;
 	text-align: center;
