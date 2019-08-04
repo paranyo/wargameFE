@@ -75,13 +75,12 @@ export const tag = {
 }
 
 export const prob = {
-	fetch(id) {
-		if(id) 
-			return request.get(`/probs/${id}`).then(({ data }) => data)
-		else 
-			return request.get('/probs').then(({ data }) => data)
+	fetch(tags) {
+		if(tags)
+			return request.post('/probs', { tags }).then(({ data }) => data)
+//	else
+	//		return request.get('/probs', { tags }).then(({ data }) => data)*/
 	},
-
 
 	create (cid, data) {
 		return request.post(`/manage/prob/${cid}`, data).then(({ data }) => data)

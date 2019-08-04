@@ -8,7 +8,9 @@
 				</label>
 				-->
 			<b-form-group>
-				<b-form-checkbox-group :options="options" class="btn-group-lg" buttons @click="show"></b-form-checkbox-group>
+				<b-form-checkbox-group 
+					v-model="selected" :options="options" class="btn-group-lg" buttons @input="show">
+				</b-form-checkbox-group>
 				<button type="button" class="btn btn-danger btn-lg" @click="createTag">&plus;</button>
 			</b-form-group>
 		</div>
@@ -23,7 +25,8 @@ import ProbField	 from './ProbField.vue'
 export default {
 	data() {
 		return {
-			options: []
+			options: [],
+			selected: [],
 		}
 	},
 	components: { AddCategory, ProbField },
@@ -40,6 +43,7 @@ export default {
 	methods: {
 		...mapActions([
 			'FETCH_TAGS',
+			'FETCH_PROBS',
 		]),
 		...mapMutations([
 			'SET_IS_ADD_TAG'
@@ -48,10 +52,10 @@ export default {
 			this.SET_IS_ADD_TAG(true)
 		},
 		fetchOptions() {
-			this.tags.map(t => this.options.push({ text: t.title }))
+			this.tags.map(t => this.options.push({ text: t.title, value: t.id }))
 		},
 		show() {
-	
+			this.FETCH_PROBS({ tags: this.selected })
 		}
 	}
 }

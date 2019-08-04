@@ -38,8 +38,8 @@ const actions = {
 
 
 /* PROB */
-	FETCH_PROBS({ commit }) {
-		return prob.fetch().then(data => commit('SET_PROBS', data))
+	FETCH_PROBS({ commit }, { tags }) {
+		return prob.fetch({ tags }).then(data => commit('SET_PROBS', data))
 	},
 	FETCH_ONEPROB({ commit }, { id }) {
 		return prob.fetch(id)
