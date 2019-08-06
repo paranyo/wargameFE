@@ -29,6 +29,13 @@
 						<input class='form-check-input' type="radio" v-model="pIsOpen" value="0">Close</input>
 					</div>
 				</div>
+				<div class="col">
+				<b-form-group>
+					<b-form-checkbox-group
+						v-model="selected" :options="options">
+					</b-form-checkbox-group>
+				</b-form-group>
+				</div>
 			</div>
 		</div>
 		<div slot="footer">
@@ -41,6 +48,7 @@
 import Modal from '../Modal.vue'
 import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
+	props: ['options'],
 	components: {	Modal	},
 	comupted: {
 		...mapState({
@@ -49,6 +57,7 @@ export default {
 	},
 	data() {
 		return {
+			selected: [],
 			pTitle: '',
 			pFlag: '',
 			pScore: '',
@@ -68,7 +77,7 @@ export default {
 	methods: {
 		...mapActions([
 			'ADD_PROB',
-			'FETCH_PROB_LIST'
+			'FETCH_PROBS'
 		]),
 		...mapMutations([
 			'SET_IS_ADD_PROB'
@@ -79,10 +88,10 @@ export default {
 			const score  = this.pScore
 			const isOpen = this.pisOpen
 			const author = this.pAuthor
-			const id		 = this.$route.params.cid
 			if(!this.pTitle.trim()) return
-			this.ADD_PROB({ id, title, flag, score, isOpen, author })
-				.then(_ => this.FETCH_PROB_LIST(this.$route.params.cid))
+
+			this.ADD_PROB({ title, flag, score, isOpen, author, tags: this.selected })
+				.then(_ => this.FETCH_PROBS())
 			this.SET_IS_ADD_PROB(false)
 		}
 	}

@@ -77,13 +77,13 @@ export const tag = {
 export const prob = {
 	fetch(tags) {
 		if(tags)
-			return request.post('/probs', { tags }).then(({ data }) => data)
+			return request.post('/probs', tags).then(({ data }) => data)
 //	else
 	//		return request.get('/probs', { tags }).then(({ data }) => data)*/
 	},
 
-	create (cid, data) {
-		return request.post(`/manage/prob/${cid}`, data).then(({ data }) => data)
+	create (data) {
+		return request.post(`/manage/prob/create`, data).then(({ data }) => data)
 	},
 	update(pid, data) {
 		return request.put(`/manage/prob/${pid}`, data).then(({ data }) => data)

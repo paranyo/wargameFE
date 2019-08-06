@@ -7,14 +7,14 @@
 			<span class="badge badge-pill badge-warning">{{ prob.score }}pt</span>
 		</div>
 		<div class="card-body">
-      <p><small><code class="card-text">added: {{ prob.created }}</code></small></p>
+      <p><small><code class="card-text">added: {{ prob.createdAt }}</code></small></p>
 	    <p class="card-title"><code>{{ prob.title }}</code></p>
 		</div>
 			<div class="card-footer">
-			<router-link :to="`/manage/challenge/${prob.category}/${prob._id}`" class="btn btn-primary">
+			<router-link :to="`/manage/challenge/${prob.id}`" class="btn btn-primary">
 				Modify</router-link>
-	    <button v-if="!prob.isOpen" href="#" class="btn btn-danger" @click="probOpen">Open</button>
-      <button v-else href="#" class="btn btn-primary" @click="probOpen">Close</button>
+	    <button v-if="!!prob.deletedAt" href="#" class="btn btn-danger" @click="Open">Open</button>
+      <button v-else href="#" class="btn btn-primary" @click="Open">Close</button>
     </div>
   </div>
 </template>
@@ -24,14 +24,13 @@ export default {
 	props: ['prob'],
 	methods: {
 		...mapActions([
-			'FETCH_PROB_LIST',
+			'FETCH_PROBS',
 			'UPDATE_PROB',
 		]),
-		probOpen() {
-			const _id		 = this.prob._id
-			const isOpen = !this.prob.isOpen ? '1' : '0'
-			this.UPDATE_PROB({ _id, isOpen })
-				.then(_=> this.FETCH_PROB_LIST(this.$route.params.cid))
+		Open() {
+			const id		 = this.prob.id
+			const isOpen = !this.prob.deletedAt
+			this.UPDATE_PROB({ id, isOpen })
 		}
 	}
 }

@@ -9,7 +9,7 @@ import Challenge	from '@/components/user/Challenge'
 import Probs			from '@/components/user/Probs'
 import ViewProb		from '@/components/user/ViewProb'
 import Management from '@/components/admin/Management'
-import ChManager  from '@/components/admin/ChallengeManager'
+import Prob			  from '@/components/admin/Prob'
 import ProbField	from '@/components/admin/ProbField'
 import EditProb		from '@/components/admin/EditProb'
 import User				from '@/components/admin/User'
@@ -69,18 +69,12 @@ export default new Router({
 		},
 		{
 			path: '/manage/challenge',
-			component: ChManager,
+			component: Prob,
 			beforeEnter: AdvancedAuth(),
 			children: [
 				{
-					path: ':cid',
-					component: ProbField,
-					children: [
-						{
-							path: ':pid',
-							component: EditProb
-						}
-					]
+					path: ':pid',
+					component: EditProb
 				}
 			]
 		},
