@@ -33,26 +33,7 @@ export const setAuthInHeader = token => {
 }
 
 export const auth = {
-	login(id, pw) { /*
-		const title = "세번째 문제띠"
-		const description = "엌이게본문"
-		const score = "200"
-		const author = "paranyo"
-		const flag = "SF{QWE}"
-		const tags = ['REV', 'MISC', 'PWN']
-
-		const a = request.post('/manage/prob/create', { title, description, score, author, flag, tags }).then(({ data }) => data)
-		const ids					= 11
-		const title				= "세번째 문제띠"
-		const description = "엌이게본문"
-		const score				= "220"
-		const author			= "paranyo"
-		const flag				= "SF{QWE}"
-		const tags				= ['REV', 'MISC', 'PWN']
-		const isOpen			= "false"
-
-		const a = request.put('/manage/prob/update', { id: ids, title, description, score, author, flag, tags, isOpen }).then(({ data }) => data)
-		*/
+	login(id, pw) {
 		return request.post('/user/login', { id, pw })
 			.then(({ data }) => data)
 	},
@@ -97,8 +78,9 @@ export const user = {
 	fetch(uid) {
 		if(uid) {
 			return request.get(`/user/${uid}`).then(({ data }) => data)
+		} else {
+			return request.get('/user').then(({ data }) => data)
 		}
-		return request.get('/user').then(({ data }) => data)
 	},
 
 	update(uid, data) {

@@ -1,17 +1,32 @@
 <template>
 	<div class="container-fluid">
 		<div class="row">
-			<nav class="navbar navbar-light bg-light">
- 				<form class="form-inline">
-   				<div class="input-group">
-   		  		<div class="input-group-prepend">
-    		    		<span class="input-group-text" id="basic-addon1">@</span>
-  		   			</div>
- 		    		<input type="text" class="form-control" placeholder="Search Keyword"aria-label="Search Keyword"
-						 	aria-describedby="basic-addon1">
-		    	</div>
-		  	</form>
-			</nav>
+			<div class="top3">
+			  <b-card-group>
+			    <b-card title="Title" img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top>
+			      <b-card-text>
+			        This is a wider card with supporting text below as a natural lead-in to additional content.
+			        This content is a little bit longer.
+			      </b-card-text>
+			      <div slot="footer"><small class="text-muted">Last updated 3 mins ago</small></div>
+			    </b-card>
+			
+			    <b-card title="Title" img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top>
+			      <b-card-text>
+			        This card has supporting text below as a natural lead-in to additional content.
+			      </b-card-text>
+			      <div slot="footer"><small class="text-muted">Last updated 3 mins ago</small></div>
+			    </b-card>
+			
+			    <b-card title="Title" img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top>
+			      <b-card-text>
+			        This is a wider card with supporting text below as a natural lead-in to additional content.
+			        This card has even longer content than the first to show that equal height action.
+			      </b-card-text>
+			      <div slot="footer"><small class="text-muted">Last updated 3 mins ago</small></div>
+			    </b-card>
+			  </b-card-group>
+			</div>
 		</div>
 		<div class="row">
 			<div v-for="user in users">
@@ -40,6 +55,11 @@ export default {
 }
 </script>
 <style scope>
+.top3 {
+	width: 100%;
+	height: 30%;
+}
+
 .col-sm-3 {
 	padding: 0 5px;
 }

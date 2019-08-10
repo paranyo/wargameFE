@@ -14,6 +14,7 @@ const actions = {
 		return user.fetch().then(data => commit('SET_USERS', data))
 	},
 	FETCH_ONEUSER({ commit }, uid) {
+		console.log(uid)
 		return user.fetch(uid)
 			.then(({ user }) => commit('SET_ONEUSER', user))
 	},

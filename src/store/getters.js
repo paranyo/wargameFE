@@ -7,6 +7,9 @@ const getters = {
 		/*if(typeof state.advancedToken !== null)
 			return !!state.advancedToken*/
 	},
+	userId(state) {
+		return state.uid
+	}
 }
 
 export default getters

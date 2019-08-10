@@ -3,10 +3,8 @@ import { setAuthInHeader } from '../api'
 const mutations = {
 	LOGIN (state, { accessToken, advancedToken, user }) {
 		if(!accessToken) return
-			state.myStatus					 = user
 			state.accessToken				 = accessToken
 			localStorage.accessToken = accessToken
-			
 			if(typeof advancedToken !== null)
 				state.advancedToken				 = advancedToken
 				localStorage.advancedToken = advancedToken

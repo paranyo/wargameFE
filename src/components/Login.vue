@@ -22,6 +22,7 @@
 	</div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 export default {
 	data() {
 		return {
@@ -37,13 +38,18 @@ export default {
 		}
 	},
 	created() {
+		this.$store.commit('LOGOUT')
 		this.returnPath = this.$route.query.returnPath || '/'
 	},
 	methods: {
+		...mapActions([
+			'FETCH_ONEUSER'
+		]),
 		onSubmit() {
-			const {id, pw} = this
+			const { id, pw } = this
 			this.$store.dispatch('LOGIN', { id, pw })
 				.then((data) => {
+					this.FETCH_ONEUSER(id)
 					this.$router.push(this.returnPath) 
 				})
 				.catch(err => { this.error = err.response.data.error })

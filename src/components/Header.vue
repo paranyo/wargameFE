@@ -1,21 +1,38 @@
 <template>
 	<div class="container-fluid">
-		<span class="small alert">이거 잠깐 뜨는 메시지!</span>
-		<div class="page-div py-3 text-center">
-			<div class="center-block">
-				<p><h2 @click="home">Soonchunhyang Wargame</h2></p>
+		<div class="row">
+			<div class="col-md-6">
+				<router-link class="headBtn" to="/ranking">Ranking</router-link>
+				<router-link class="headBtn" to="/challenge">Challenge</router-link>
 			</div>
-			<hr class="my-4">
-			<Menu :isAuth="isAuthenticated" :isAdmin="isAdmin"/>
+			<div class="col-md-6 text-right">
+				<div v-if="user" style="display: inline">
+					<a href="#" class="badge badge-primary">{{ user.nick }}</a>
+					<a href="#" class="badge badge-warning">{{ user.money }}pt</a>
+					<a href="#" class="badge badge-info">{{ user.money }}<i class="fab fa-viacoin"></i></a>
+				</div>
+				<router-link class="badge badge-danger" v-if="isAuthenticated" to="/login">Logout</router-link>
+				<a v-if="isAdmin" href="#" class="badge badge-secondary"><i class="fas fa-wrench"></i></a>
+				<div v-else>
+		    	<router-link class="headBtn" to="/login">Sign In</router-link>
+		    	<router-link class="headBtn" to="/Join">Sign Up</router-link>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md">
+				<hr class="my-1" />
+			</div>
 		</div>
 	</div>
 </template>
 <script>
-import { mapState } from 'vuex'
-import Menu from './Menu'
+import { mapActions, mapState } from 'vuex'
 export default {
-	components: { Menu },
 	computed: {
+		...mapState({
+			user: 'user',
+		}),
 		isAuthenticated() {
 			return this.$store.getters.isAuthenticated
 		},
@@ -23,28 +40,21 @@ export default {
 			return this.$store.getters.isAdmin
 		},
 	},
+	created() {
+		this.FETCH_ONEUSER(localStorage.id)
+	},
 	methods: {
-		logout() {
-			this.$store.commit('LOGOUT')
-			this.$router.push('/login')
-		},
-		home() {
-			this.$router.push('/')
-		}
-	}
+		...mapActions(['FETCH_ONEUSER']),
+	},
 }
 </script>
-
 <style scoped>
-.alert {
-	animation: fadeOut 2s;
-	opacity: 0;
+.headBtn {
+	padding: 0px 10px;
+	font-size: 14px;
+	color: #666666;
 }
-
-@keyframes fadeOut {
-	0% { opacity: 1; }
-  99% { opacity: 0.01;width: 100%; height: 100%;}
-  100% { opacity: 0;width: 0; height: 0;}
+.headBtn:hover {
+	text-decoration: underline;
 }
-
 </style>
