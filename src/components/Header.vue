@@ -1,5 +1,5 @@
 <template>
-	<div class="container-fluid">
+	<div class="container-fluid fixed-top">
 		<div class="row">
 			<div class="col-md-6">
 				<router-link class="headBtn" to="/ranking">Ranking</router-link>
