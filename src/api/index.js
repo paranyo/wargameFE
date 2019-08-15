@@ -82,6 +82,9 @@ export const user = {
 			return request.get('/user').then(({ data }) => data)
 		}
 	},
+	fetchInfo() {
+		return request.get('/myinfo').then(({ data }) => data)
+	},
 
 	update(uid, data) {
 		return request.put(`/user/${uid}`, data).then(({ data }) => data)

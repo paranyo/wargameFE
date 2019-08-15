@@ -3,6 +3,7 @@ const state = {
 	advancedToken: null,
 	users: [],
 	user: {},
+	myInfo: {},
 	tags: [],
 	category: {},
 	probs: [],

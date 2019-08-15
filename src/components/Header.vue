@@ -7,7 +7,7 @@
 				<router-link class="headBtn" to="/challenge">Challenge</router-link>
 			</div>
 			<div class="col-md-6 text-right">
-				<div v-if="user.nick" style="display: inline">
+				<div v-if="user && isAuthenticated" style="display: inline">
 					<a href="#" class="badge badge-primary">{{ user.nick }}</a>
 					<a href="#" class="badge badge-warning">{{ user.money }}pt</a>
 					<a href="#" class="badge badge-info">{{ user.money }}<i class="fab fa-viacoin"></i></a>
@@ -42,10 +42,10 @@ export default {
 		},
 	},
 	created() {
-		this.FETCH_ONEUSER(localStorage.id)
+		this.FETCH_MYINFO()
 	},
 	methods: {
-		...mapActions(['FETCH_ONEUSER']),
+		...mapActions(['FETCH_MYINFO']),
 	},
 }
 </script>

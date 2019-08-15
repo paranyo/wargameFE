@@ -1,6 +1,5 @@
 <template>
-	<div class="container">
-		<div class="center-block">
+	<b-container fluid class="pt-5 mx-auto w-50">
 		<form @submit.prevent="onSubmit">
 			<div class="alert alert-light" role="alert">
 				<h4 class="alert-heading">가입</h4>
@@ -24,8 +23,7 @@
 				<router-link to="/Join">계정을 분실하였습니까?</router-link>
 			</div>
 		</form>
-		</div>
-	</div>
+	</b-container>
 </template>
 <script>
 export default {

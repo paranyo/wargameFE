@@ -22,6 +22,9 @@ const mutations = {
 	SET_ONEUSER (state, user) {
 		state.user = user
 	},
+	SET_MYINFO (state, user) {
+		state.myInfo = user
+	},
 	SET_TAGS(state, { list }) {
 		state.tags = list.map(l => l)
 	},

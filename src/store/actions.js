@@ -10,12 +10,19 @@ const actions = {
 	JOIN(_, { id, nick,  pw }) {
 		return auth.join(id, nick, pw)
 	},
+	FETCH_MYINFO({ commit }) {
+		return user.fetchInfo().then(({ user }) => commit("SET_ONEUSER", user))
+	},
 	FETCH_USERS({ commit }) {
 		return user.fetch().then(data => commit('SET_USERS', data))
 	},
 	FETCH_ONEUSER({ commit }, uid) {
-		return user.fetch(uid)
-			.then(({ user }) => commit('SET_ONEUSER', user))
+		if(uid)
+			return user.fetch(uid)
+				.then(({ user }) => commit('SET_ONEUSER', user))
+		else 
+			return user.fetch()
+				.then(({ user }) => commit('SET_ONEUSER', user))
 	},
 	UPDATE_USER({ state, dispatch }, { uid, nick, level, isBan }) {
 		return user.update(uid, { nick, level, isBan })
