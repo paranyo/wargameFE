@@ -1,23 +1,27 @@
 <template>
-	<div class="container-fluid">
-    <div class="container-align">
-			<div class="btn-group btn-group-lg btn-group-toggle" data-toggle="buttons"role="group" 
-				aria-label="Basic example">
-				<nav aria-label="breadcrumb">
-				  <ol class="breadcrumb">
-				    <li class="breadcrumb-item active" v-for="tag in tags">
-							<router-link :to="`/challenge/${tag.title}`">{{ tag.title }}</router-link>
-						</li>
-				  </ol>
-				</nav>
-			</div>
-    </div>
+	<b-container fluid class="pt-5 mx-auto">
+		<b-row align-h="center">
+			<b-col cols="12" md="auto">
+				<b-button-group size="md">
+					<b-button :pressed.sync="options.state"
+						v-for="tag in tags" :key="tag.title" variant="outline-secondary">
+<!--						<router-link :to="`/challenge/${tag.title}`">{{ tag.title }}</router-link>-->
+						{{ tag.title }}
+					</b-button>
+				</b-button-group>	
+			</b-col>
+		</b-row>
 		<router-view />
-	</div>
+	</b-container>
 </template>
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
+	data() {
+		return { 
+			options: [],
+		}
+	},
 	computed: {
 		...mapState({
 			tags: 'tags',
@@ -25,11 +29,19 @@ export default {
 	},
 	created() {
 		this.FETCH_TAGS()
+		this.$nextTick(() => { this.fetchOptions })
 	},
 	methods: {
 		...mapActions([
 			'FETCH_TAGS',
 		]),
+		fetchOptions() {
+			this.tags.map(t => this.options.push({
+				text: t.title, 
+				value: t.title, 
+				state: true 
+			}))
+		},
 	}
 }
 </script>

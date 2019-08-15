@@ -2,11 +2,12 @@
 	<div class="container-fluid fixed-top">
 		<div class="row">
 			<div class="col-md-6">
+				<router-link class="headBtn" to="/">Main</router-link>
 				<router-link class="headBtn" to="/ranking">Ranking</router-link>
 				<router-link class="headBtn" to="/challenge">Challenge</router-link>
 			</div>
 			<div class="col-md-6 text-right">
-				<div v-if="user" style="display: inline">
+				<div v-if="user.nick" style="display: inline">
 					<a href="#" class="badge badge-primary">{{ user.nick }}</a>
 					<a href="#" class="badge badge-warning">{{ user.money }}pt</a>
 					<a href="#" class="badge badge-info">{{ user.money }}<i class="fab fa-viacoin"></i></a>
