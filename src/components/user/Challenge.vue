@@ -3,8 +3,9 @@
 		<b-row align-h="center">
 			<b-col cols="12" md="auto">
 				<b-button-group size="md">
-					<b-button :pressed.sync="options.state"
-						v-for="tag in tags" :key="tag.title" variant="outline-secondary">
+						{{ tags }}
+					<b-button :pressed.sync="options.state" v-for="tag in tags" 
+						:key="tag.title" variant="outline-secondary"
 <!--						<router-link :to="`/challenge/${tag.title}`">{{ tag.title }}</router-link>-->
 						{{ tag.title }}
 					</b-button>
@@ -29,7 +30,7 @@ export default {
 	},
 	created() {
 		this.FETCH_TAGS()
-		this.$nextTick(() => { this.fetchOptions })
+		this.$nextTick(() => { this.fetchOptions() })
 	},
 	methods: {
 		...mapActions([

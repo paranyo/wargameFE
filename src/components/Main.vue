@@ -1,5 +1,6 @@
 <template>
 	<b-container fluid class="pt-5 mx-auto">
+	<transition appear appear-to-class="animated fadeInDownBig">
 		<b-row align-v="center">
 			<b-col cols="12" md="12">
 				<b-jumbotron bg-variant="light">
@@ -14,16 +15,26 @@
 				</b-jumbotron>
 			</b-col>
 		</b-row>
+	</transition>
 	</b-container>
 </div>
 </template>
 <script>
 export default {
-
+	mounted() {
+	}
 }
 </script>
 <style>
-	p {
-		margin: 0;
+	.slide-fade-enter-active {
+		transition: all .3s ease;
+	}
+	.slide-fade-leave-active {
+		transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+	}
+
+	.slide-fade-enter-to, .slide-fade-leave-to {
+	  transform: translateX(10px);
+		opacity: 0;
 	}
 </style>
