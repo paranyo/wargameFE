@@ -48,7 +48,7 @@ export default new Router({
 		{
 			path: '/challenge',
 			component: Challenge,
-			beforeEnter: requireAuth(),
+			beforeEnter: requireAuth(),/*
 			children: [
 				{
 					path: '/',
@@ -60,7 +60,7 @@ export default new Router({
 						}
 					],
 				}
-			],
+			],*/
 		},
 		{
 			path: '/management',

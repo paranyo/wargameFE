@@ -1,7 +1,7 @@
 <template>
 	<b-container fluid class="pt-5 mx-auto">
 		<div class="row w-75 mx-auto">
-			<b-col sm="12" lg="4" v-for="(user, index) in users" :key="user.nick">
+			<b-col sm="4" lg="4" v-for="(user, index) in users" :key="user.nick">
    			<b-card v-if="index<3"
 					:title="user.nick" img-src="https://placekitten.com/500/350" img-alt="Image" img-top>
 		    	<b-card-text>

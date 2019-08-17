@@ -2,14 +2,16 @@
 	<b-container fluid class="pt-5 mx-auto">
 		<b-row align-h="center">
 			<b-col cols="12" md="auto">
-				<b-button-group size="md">
-						{{ tags }}
-					<b-button :pressed.sync="options.state" v-for="tag in tags" 
-						:key="tag.title" variant="outline-secondary"
-<!--						<router-link :to="`/challenge/${tag.title}`">{{ tag.title }}</router-link>-->
-						{{ tag.title }}
-					</b-button>
-				</b-button-group>	
+				<b-form-group size="md">
+					<b-form-checkbox-group button-variant="outline-secondary"
+							v-model="selected" :options="options" class="btn-group" buttons @input="show">
+					</b-form-checkbox-group>
+				</b-form-group>
+			</b-col>
+		</b-row>
+		<b-row class="px-3 mx-auto">
+			<b-col sm="4" lg="2" v-for="prob in probs" :key="`${prob.id}`">
+				<ProbCard :prob="prob" />
 			</b-col>
 		</b-row>
 		<router-view />
@@ -17,31 +19,37 @@
 </template>
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
+import ProbCard from './ProbCard.vue'
 export default {
 	data() {
-		return { 
+		return {
 			options: [],
+			selected: [],
 		}
 	},
+	components: { ProbCard },
 	computed: {
 		...mapState({
 			tags: 'tags',
-		})
+			probs: 'probs',
+		}),
 	},
 	created() {
-		this.FETCH_TAGS()
-		this.$nextTick(() => { this.fetchOptions() })
+		this.FETCH_TAGS().then(() => this.fetchOptions())
 	},
 	methods: {
 		...mapActions([
 			'FETCH_TAGS',
+			'FETCH_PROBS'
 		]),
 		fetchOptions() {
-			this.tags.map(t => this.options.push({
-				text: t.title, 
-				value: t.title, 
-				state: true 
-			}))
+			this.tags.map(t => { 
+				this.options.push({ text: t.title, value: t.title }) 
+				this.selected.push(t.title)
+			})
+		},
+		show() {
+			this.FETCH_PROBS({ tags: this.selected })
 		},
 	}
 }

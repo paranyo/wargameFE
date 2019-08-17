@@ -1,0 +1,88 @@
+[33mcommit 0b5ba20c277cb1fa9f050760960b99790e0ebf37[m
+Author: paranyo <gksrbxo123@gmail.com>
+Date:   Fri Aug 16 22:52:04 2019 +0900
+
+    REPAIR: Main transition animate 추가
+    
+    FadeInUpBig 으로 추가했따 이상하면 뺴야겠따
+
+[1mdiff --git a/index.html b/index.html[m
+[1mindex f718b30..9cfa5bc 100644[m
+[1m--- a/index.html[m
+[1m+++ b/index.html[m
+[36m@@ -4,6 +4,9 @@[m
+     <meta charset="utf-8">[m
+     <meta name="viewport" content="width=device-width,initial-scale=1">[m
+ 		<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>[m
+[32m+[m		[32m<link href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1" rel="stylesheet" type="text/css">[m
+[32m+[m
+[32m+[m
+     <title>규태네</title>[m
+   </head>[m
+   <body>[m
+[1mdiff --git a/src/components/Main.vue b/src/components/Main.vue[m
+[1mindex ee327dd..b735be3 100644[m
+[1m--- a/src/components/Main.vue[m
+[1m+++ b/src/components/Main.vue[m
+[36m@@ -1,5 +1,6 @@[m
+ <template>[m
+ 	<b-container fluid class="pt-5 mx-auto">[m
+[32m+[m	[32m<transition appear appear-to-class="animated fadeInDownBig">[m
+ 		<b-row align-v="center">[m
+ 			<b-col cols="12" md="12">[m
+ 				<b-jumbotron bg-variant="light">[m
+[36m@@ -14,16 +15,26 @@[m
+ 				</b-jumbotron>[m
+ 			</b-col>[m
+ 		</b-row>[m
+[32m+[m	[32m</transition>[m
+ 	</b-container>[m
+ </div>[m
+ </template>[m
+ <script>[m
+ export default {[m
+[31m-[m
+[32m+[m	[32mmounted() {[m
+[32m+[m	[32m}[m
+ }[m
+ </script>[m
+ <style>[m
+[31m-	p {[m
+[31m-		margin: 0;[m
+[32m+[m	[32m.slide-fade-enter-active {[m
+[32m+[m		[32mtransition: all .3s ease;[m
+[32m+[m	[32m}[m
+[32m+[m	[32m.slide-fade-leave-active {[m
+[32m+[m		[32mtransition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);[m
+[32m+[m	[32m}[m
+[32m+[m
+[32m+[m	[32m.slide-fade-enter-to, .slide-fade-leave-to {[m
+[32m+[m	[32m  transform: translateX(10px);[m
+[32m+[m		[32mopacity: 0;[m
+ 	}[m
+ </style>[m
+[1mdiff --git a/src/components/user/Challenge.vue b/src/components/user/Challenge.vue[m
+[1mindex c7166cb..c792260 100644[m
+[1m--- a/src/components/user/Challenge.vue[m
+[1m+++ b/src/components/user/Challenge.vue[m
+[36m@@ -3,8 +3,9 @@[m
+ 		<b-row align-h="center">[m
+ 			<b-col cols="12" md="auto">[m
+ 				<b-button-group size="md">[m
+[31m-					<b-button :pressed.sync="options.state"[m
+[31m-						v-for="tag in tags" :key="tag.title" variant="outline-secondary">[m
+[32m+[m						[32m{{ tags }}[m
+[32m+[m					[32m<b-button :pressed.sync="options.state" v-for="tag in tags"[m[41m [m
+[32m+[m						[32m:key="tag.title" variant="outline-secondary"[m
+ <!--						<router-link :to="`/challenge/${tag.title}`">{{ tag.title }}</router-link>-->[m
+ 						{{ tag.title }}[m
+ 					</b-button>[m
+[36m@@ -29,7 +30,7 @@[m [mexport default {[m
+ 	},[m
+ 	created() {[m
+ 		this.FETCH_TAGS()[m
+[31m-		this.$nextTick(() => { this.fetchOptions })[m
+[32m+[m		[32mthis.$nextTick(() => { this.fetchOptions() })[m
+ 	},[m
+ 	methods: {[m
+ 		...mapActions([[m
