@@ -1,5 +1,5 @@
 <template>
-	<div class="container-fluid">
+	<b-container fluid class="pt-5 mx-auto">
 		<div class="row">
 			<nav class="navbar navbar-light bg-light">
  				<form class="form-inline">
@@ -13,11 +13,13 @@
 		  	</form>
 			</nav>
 		</div>
-		<div class="row">
-		  <user-card class="col-sm-3" v-for="user in users" :key="`${user.uid}`" :user="user" />
-		</div>
+		<b-row class="mx-auto">
+			<b-col sm="4" lg="2" v-for="user in users" :key="`${user.uid}`" class="pt-3">
+				<UserCard :user="user" />
+			</b-col>
+		</b-row>
 		<router-view />
-	</div>
+	</b-container>
 </template>
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
@@ -42,7 +44,4 @@ export default {
 }
 </script>
 <style scope>
-.col-sm-3 {
-	padding: 0 5px;
-}
 </style>

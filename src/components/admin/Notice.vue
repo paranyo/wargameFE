@@ -7,7 +7,7 @@
 					<template slot="header">환영합니다!</template>
 					<hr class="my-4">
 					<p>
-						나는 이 서비스를 제공하기 위해 많은 노력을 기울였습니다. 재밌는 시간 보내세요!
+						공지사항입니다!
 					</p>
 					<p>
 						Written-By  <b-badge variant="primary">gksrbxo123@gmail.com</b-badge>

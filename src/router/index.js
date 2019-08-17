@@ -8,9 +8,10 @@ import Ranking	  from '@/components/Ranking'
 import Challenge	from '@/components/user/Challenge'
 import Probs			from '@/components/user/Probs'
 import ViewProb		from '@/components/user/ViewProb'
-import Management from '@/components/admin/Management'
-import Prob			  from '@/components/admin/Prob'
-import ProbField	from '@/components/admin/ProbField'
+
+import Notice			from '@/components/admin/Notice'
+import aMain			from '@/components/admin/Main'
+import aChallenge from '@/components/admin/Challenge'
 import EditProb		from '@/components/admin/EditProb'
 import User				from '@/components/admin/User'
 import UserEdit		from '@/components/admin/UserEdit'
@@ -63,31 +64,36 @@ export default new Router({
 			],*/
 		},
 		{
-			path: '/management',
-			component: Management,
-			beforeEnter: AdvancedAuth(),
-		},
-		{
-			path: '/manage/challenge',
-			component: Prob,
+			path: '/settings',
+			component: aMain,
 			beforeEnter: AdvancedAuth(),
 			children: [
 				{
-					path: ':pid',
-					component: EditProb
-				}
-			]
-		},
-		{
-			path: '/user',
-			component: User,
-			beforeEnter: AdvancedAuth(),
-			children: [
+					path: '/settings/notice',
+					component: Notice,
+				},
 				{
-					path: ':uid',
-					component: UserEdit
-				}
-			]
+					path: '/settings/challenge',
+					component: aChallenge,
+					beforeEnter: AdvancedAuth(),
+					children: [
+						{
+							path: ':pid',
+							component: EditProb
+						}
+					]
+				},
+				{
+					path: '/settings/user',
+					component: User,
+					children: [
+						{
+							path: ':uid',
+							component: UserEdit
+						}
+					]
+				},
+			],
 		},
 		{
 			path: '*',

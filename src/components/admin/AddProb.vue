@@ -31,9 +31,9 @@
 				</div>
 				<div class="col">
 				<b-form-group>
-					<b-form-checkbox-group
-						v-model="selected" :options="options">
-					</b-form-checkbox-group>
+					<b-form-checkbox v-for="tag in tags" v-model="selected" :key="tag.title" :value="tag.title">
+						{{ tag.title }}
+					</b-form-checkbox>
 				</b-form-group>
 				</div>
 			</div>
@@ -48,11 +48,15 @@
 import Modal from '../Modal.vue'
 import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
-	props: ['options'],
+	data() {
+		return {
+			selected: [],
+		}
+	},
 	components: {	Modal	},
 	comupted: {
 		...mapState({
-			myStatus: 'myStatus'
+			tags: 'tags',
 		})
 	},
 	data() {
@@ -71,13 +75,17 @@ export default {
 			this.isValidInput = !!val.trim().length
 		}
 	},
+	created() {
+		this.FETCH_TAGS()
+	},
 	mounted () {
 		this.$refs.pTitle.focus()
 	},
 	methods: {
 		...mapActions([
 			'ADD_PROB',
-			'FETCH_PROBS'
+			'FETCH_PROBS',
+			'FETCH_TAGS',
 		]),
 		...mapMutations([
 			'SET_IS_ADD_PROB'

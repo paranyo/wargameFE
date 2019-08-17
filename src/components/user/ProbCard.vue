@@ -1,20 +1,18 @@
 <template>
   <div class="card">
 		<div class="card-header">
-			<span class="badge badge-pill badge-primary">{{ prob.author }}</span>
-			<span v-if="prob.isOpen" class="badge badge-pill badge-info">열림</span>
-			<span v-else class="badge badge-pill badge-dark">닫힘</span>
 			<span class="badge badge-pill badge-warning">{{ prob.score }}pt</span>
+			<span class="badge badge-pill badge-primary">{{ prob.author }}</span>
 		</div>
 		<div class="card-body">
-      <p><small><code class="card-text">added: {{ prob.createdAt }}</code></small></p>
 	    <p class="card-title"><code>{{ prob.title }}</code></p>
+			<p>{{ prob.description }}</p>
+      <p><small><code class="card-text">added: {{ prob.createdAt }}</code></small></p>
+      <p><small><code class="card-text">updated: {{ prob.updatedAt }}</code></small></p>
 		</div>
 			<div class="card-footer">
 			<router-link :to="`/manage/challenge/${prob.id}`" class="btn btn-primary">
-				Modify</router-link>
-	    <button v-if="!!prob.deletedAt" href="#" class="btn btn-danger" @click="Open">Open</button>
-      <button v-else href="#" class="btn btn-primary" @click="Open">Close</button>
+				View</router-link>
     </div>
   </div>
 </template>
@@ -27,10 +25,8 @@ export default {
 			'FETCH_PROBS',
 			'UPDATE_PROB',
 		]),
-		Open() {
-			const id		 = this.prob.id
-			const isOpen = !this.prob.deletedAt
-			this.UPDATE_PROB({ id, isOpen })
+		View() {
+
 		}
 	}
 }
