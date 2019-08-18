@@ -1,25 +1,37 @@
 <template>
 	<b-container fluid class="mx-auto">
 		<b-row align-h="center">
-			<b-col cols="12" md="auto">
+			<b-col cols="1" md="auto">
+				<b-button variant="info" @click="setAddProb">Add Prob</b-button>
+			</b-col>
+			<b-col cols="10" md="auto">
 				<b-form-group size="md">
-					<b-form-checkbox-group button-variant="outline-secondary"
+					<b-form-checkbox-group button-variant="info"
 							v-model="selected" :options="options" class="btn-group" buttons @input="show">
 					</b-form-checkbox-group>
 				</b-form-group>
 			</b-col>
+			<b-col cols="1" md="auto">
+				<b-button variant="info" @click="setAddTag">Add Tag</b-button>
+			</b-col>
 		</b-row>
 		<b-row class="px-3 mx-auto">
 			<b-col sm="4" lg="2" v-for="prob in probs" :key="`${prob.id}`">
-				<ProbCard :prob="prob" />
+				<div class="card-deck">
+					<ProbCard :prob="prob" />
+				</div>
 			</b-col>
 		</b-row>
 		<router-view />
+		<AddTag v-if="isAddTag" />
+		<AddProb v-if="isAddProb" :options="options" />
 	</b-container>
 </template>
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
 import ProbCard from './ProbCard.vue'
+import AddTag		from './AddTag.vue'
+import AddProb	from './AddProb.vue'
 export default {
 	data() {
 		return {
@@ -27,17 +39,25 @@ export default {
 			selected: [],
 		}
 	},
-	components: { ProbCard },
+	components: { ProbCard, AddTag, AddProb },
 	computed: {
 		...mapState({
 			tags: 'tags',
 			probs: 'probs',
+			isAddTag: 'isAddTag',
+			isAddProb: 'isAddProb',
 		}),
 	},
 	created() {
-		this.FETCH_TAGS().then(() => this.fetchOptions())
+		this.FETCH_TAGS()
+		this.$nextTick(() => this.fetchOptions())
+		this.FETCH_PROBS()
 	},
 	methods: {
+		...mapMutations([
+			'SET_IS_ADD_TAG',
+			'SET_IS_ADD_PROB',
+		]),
 		...mapActions([
 			'FETCH_TAGS',
 			'FETCH_PROBS'
@@ -47,6 +67,12 @@ export default {
 				this.options.push({ text: t.title, value: t.title }) 
 				this.selected.push(t.title)
 			})
+		},
+		setAddTag() {
+			this.SET_IS_ADD_TAG(true)
+		},
+		setAddProb() {
+			this.SET_IS_ADD_PROB(true)
 		},
 		show() {
 			this.FETCH_PROBS({ tags: this.selected })

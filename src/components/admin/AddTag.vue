@@ -38,6 +38,7 @@ export default {
 	methods: {
 		...mapActions([
 			'ADD_TAG',
+			'FETCH_TAG',
 		]),
 		...mapMutations([
 			'SET_IS_ADD_TAG'

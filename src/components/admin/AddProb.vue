@@ -1,46 +1,42 @@
 <template>
 	<modal class="modal-card">
-		<div slot="header" class="modal-card-header">
-			<div class="modal-card-header-title">
-				<h5>문제를 만들자!
-					<a class="modal-close-btn" href="" @click.prevent="SET_IS_ADD_PROB(false)">&times;</a>
-				</h5>
-			</div>
-		</div>
+		<div slot="header"></div>
 		<div slot="body">
-			<div class="form-group row">
+			<b-row class="form-group">
 				<input class="form-control" type="text" v-model="pTitle" ref="pTitle"	placeholder='문제 이름'>
-			</div>
-			<div class="form-group row">
+			</b-row>
+			<b-row class="form-group">
+				<b-form-textarea id="textarea" class="form-control" v-model="pDescription" placeholder="본문을 입력하세요"
+					rows="3" max-rows="6"></b-form-textarea>
+			</b-row>
+			<b-row class="form-group">
 				<input class="form-control" type="text" v-model="pFlag"	placeholder='플래그'>
-			</div>
-			<div class="form-group row">
-				<div class="col-4">
+			</b-row>
+			<b-row class="form-group" align-h="start">
+				<b-col cols="4" md="5">
 					<input class="form-control" type="text" v-model='pAuthor' placeholder='출제자'>
-				</div>
-				<div class="col">
+				</b-col>
+				<b-col cols="4" md="3">
 					<input class="form-control" type="text" v-model='pScore' placeholder='스코어'>
-				</div>
-				<div class="col">
-					<div class="form-check">
-						<input class='form-check-input' type="radio" v-model="pIsOpen" value="1">Open</input>
-					</div>
-					<div class="form-check">
-						<input class='form-check-input' type="radio" v-model="pIsOpen" value="0">Close</input>
-					</div>
-				</div>
-				<div class="col">
-				<b-form-group>
-					<b-form-checkbox v-for="tag in tags" v-model="selected" :key="tag.title" :value="tag.title">
-						{{ tag.title }}
-					</b-form-checkbox>
-				</b-form-group>
-				</div>
-			</div>
+				</b-col>
+				<b-col cols="4" md="4">
+					<b-form-radio-group v-model="pIsOpen" :options="radioBtns" buttons button-variant="outline-primary">
+					</b-form-radio-group>
+				</b-col>
+			</b-row>
+			<b-row class="form-group">
+				<b-col>
+					<b-form-group label="문제 분야: ">
+						<b-form-checkbox-group v-model="selected" :options="options">
+						</b-form-checkbox-group>
+					</b-form-group>
+				</b-col>
+			</b-row>
 		</div>
 		<div slot="footer">
 			<button class="btn" :class="{'btn-success': isValidInput}" type="button" form="add-category-form"
 				:disabled="!isValidInput" @click="onSubmitProb">문제 생성</button>
+			<b-button class="modal-close-btn" href="" @click.prevent="SET_IS_ADD_PROB(false)">취소</b-button>
 		</div>
 	</modal>
 </template>
@@ -48,9 +44,21 @@
 import Modal from '../Modal.vue'
 import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
+	props: ['options'],
 	data() {
 		return {
+			radioBtns: [
+	      { text: 'Open', value: '1' },
+        { text: 'Close', value: '0' },
+			],
 			selected: [],
+			pTitle: '',
+			pDescription: '',
+			pFlag: '',
+			pScore: '',
+			pAuthor: '',
+			pIsOpen: 0,
+			isValidInput: false,
 		}
 	},
 	components: {	Modal	},
@@ -59,24 +67,12 @@ export default {
 			tags: 'tags',
 		})
 	},
-	data() {
-		return {
-			selected: [],
-			pTitle: '',
-			pFlag: '',
-			pScore: '',
-			pAuthor: '',
-			pIsOpen: 0,
-			isValidInput: false,
-		}
-	},
 	watch: {
 		pTitle(val) {
 			this.isValidInput = !!val.trim().length
 		}
 	},
 	created() {
-		this.FETCH_TAGS()
 	},
 	mounted () {
 		this.$refs.pTitle.focus()
@@ -85,20 +81,20 @@ export default {
 		...mapActions([
 			'ADD_PROB',
 			'FETCH_PROBS',
-			'FETCH_TAGS',
 		]),
 		...mapMutations([
 			'SET_IS_ADD_PROB'
 		]),
 		onSubmitProb() {
-			const title  = this.pTitle
-			const flag   = this.pFlag
-			const score  = this.pScore
-			const isOpen = this.pisOpen
-			const author = this.pAuthor
+			const title				= this.pTitle
+			const description = this.pDescription
+			const flag				= this.pFlag
+			const score				= this.pScore
+			const isOpen			= this.pisOpen
+			const author			= this.pAuthor
 			if(!this.pTitle.trim()) return
 
-			this.ADD_PROB({ title, flag, score, isOpen, author, tags: this.selected })
+			this.ADD_PROB({ title, description, flag, score, isOpen, author, tags: this.selected })
 				.then(_ => this.FETCH_PROBS())
 			this.SET_IS_ADD_PROB(false)
 		}
@@ -106,24 +102,4 @@ export default {
 }
 </script>
 <style scoped>
-p {
-	margin: 0;
-}
-.modal-card .modal-container {
-  min-width: 300px;
-  max-width: 800px;
-  width: 60%;
-}
-.modal-close-btn {
-  top: 0px;
-  font-size: 24px;
-  text-decoration: none;
-}
-.modal-card-header {
-  position: relative;
-	width: 100%;
-}
-.card-body {
-	padding: 0.8rem;
-}
 </style>
