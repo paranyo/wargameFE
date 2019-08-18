@@ -52,11 +52,11 @@ const actions = {
 		return prob.fetch(id)
 			.then(({ prob }) => commit('SET_PROB', prob))
 	},
-	ADD_PROB({ state, dispatch }, { title, author, score, flag, isOpen, tags }) {
-		return prob.create({ title, author, score, flag, isOpen, tags })
+	ADD_PROB({ state, dispatch }, { title, description, author, score, flag, isOpen, tag }) {
+		return prob.create({ title, description, author, score, flag, isOpen, tag })
 	},
-	UPDATE_PROB({ stae, dispatch }, { id, title, author, score, flag, isOpen }) {
-		return prob.update(id, { title, author, score, flag, isOpen })
+	UPDATE_PROB({ state, dispatch }, { id, title, description, author, score, flag, isOpen }) {
+		return prob.update(id, { id, title, description, author, score, flag, isOpen })
 			.then(_ => dispatch('FETCH_PROBS'))
 	},
 

@@ -34,9 +34,14 @@
   </div>-->
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
 	props: ['prob'],
+	computed: {
+		...mapState({
+			tags: 'tags'
+		}),
+	},
 	methods: {
 		...mapActions([
 			'FETCH_PROBS',

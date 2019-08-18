@@ -53,7 +53,7 @@ export default {
 			'UPDATE_USER'
 		]),
 		onClickClose() {
-			this.$router.push('/user')
+			this.$router.push('/settings/user')
 		},
 		async onSubm() {
 			this.toggleInput = !this.toggleInput

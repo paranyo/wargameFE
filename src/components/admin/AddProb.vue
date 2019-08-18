@@ -26,10 +26,10 @@
 			</b-row>
 			<b-row class="form-group">
 				<b-col>
-					<b-form-group label="문제 분야: ">
-						<b-form-checkbox-group v-model="selected" :options="options">
-						</b-form-checkbox-group>
-					</b-form-group>
+					<b-form-group label="출제 분야: ">
+					  <b-form-radio-group v-model="pTag" :options="options" buttons 
+						button-variant="outline-primary" size="sm"></b-form-radio-group>
+				</b-form-group>
 				</b-col>
 			</b-row>
 		</div>
@@ -51,7 +51,7 @@ export default {
 	      { text: 'Open', value: '1' },
         { text: 'Close', value: '0' },
 			],
-			selected: [],
+			pTag: '',
 			pTitle: '',
 			pDescription: '',
 			pFlag: '',
@@ -65,7 +65,7 @@ export default {
 	comupted: {
 		...mapState({
 			tags: 'tags',
-		})
+		}),
 	},
 	watch: {
 		pTitle(val) {
@@ -92,10 +92,10 @@ export default {
 			const score				= this.pScore
 			const isOpen			= this.pisOpen
 			const author			= this.pAuthor
+			const tag					= this.pTag
 			if(!this.pTitle.trim()) return
-
-			this.ADD_PROB({ title, description, flag, score, isOpen, author, tags: this.selected })
-				.then(_ => this.FETCH_PROBS())
+			this.ADD_PROB({ title, description, flag, score, isOpen, author, tag })
+			.then(_ => this.FETCH_PROBS())
 			this.SET_IS_ADD_PROB(false)
 		}
 	}

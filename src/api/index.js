@@ -67,7 +67,10 @@ export const prob = {
 		return request.post(`/manage/prob/create`, data).then(({ data }) => data)
 	},
 	update(pid, data) {
-		return request.put(`/manage/prob/${pid}`, data).then(({ data }) => data)
+		if(data.title != null)
+			return request.put(`/manage/prob/${pid}`, data).then(({ data }) => data)
+		else
+			return request.put('/manage/prob/visible', data).then(({ data }) => data)
 	},
 	auth(pid, data) {
 		return request.post(`/auth/${ pid }`, data).then(({ data }) => console.log(data))

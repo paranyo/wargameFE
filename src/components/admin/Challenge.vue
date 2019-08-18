@@ -51,7 +51,6 @@ export default {
 	created() {
 		this.FETCH_TAGS()
 		this.$nextTick(() => this.fetchOptions())
-		this.FETCH_PROBS()
 	},
 	methods: {
 		...mapMutations([
@@ -64,8 +63,8 @@ export default {
 		]),
 		fetchOptions() {
 			this.tags.map(t => { 
-				this.options.push({ text: t.title, value: t.title }) 
-				this.selected.push(t.title)
+				this.options.push({ text: t.title, value: t.id }) 
+				this.selected.push(t.id)
 			})
 		},
 		setAddTag() {

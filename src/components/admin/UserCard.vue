@@ -10,7 +10,7 @@
       <p class="card-text">가입: {{ user.createdAt }}</p>
 		</div>
 		<div class="card-footer">
-			<router-link :to="`/user/${user.uid}`" class="btn btn-primary">상세 정보</router-link>
+			<router-link :to="`/settings/user/${user.uid}`" class="btn btn-primary">상세 정보</router-link>
       <button v-if="!user.deletedAt" href="#" class="btn btn-danger" @click="Ban">차단</button>
       <button v-else href="#" class="btn btn-primary" @click="Ban">해제</button>
     </div>
