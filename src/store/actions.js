@@ -57,7 +57,6 @@ const actions = {
 	},
 	UPDATE_PROB({ state, dispatch }, { id, title, description, author, score, flag, isOpen }) {
 		return prob.update(id, { id, title, description, author, score, flag, isOpen })
-			.then(_ => dispatch('FETCH_PROBS'))
 	},
 
 	/* AUTH PROB */

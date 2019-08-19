@@ -59,20 +59,17 @@ export default {
 			pAuthor: '',
 			pIsOpen: 0,
 			isValidInput: false,
+			tags: [],
 		}
 	},
 	components: {	Modal	},
-	comupted: {
-		...mapState({
-			tags: 'tags',
-		}),
-	},
 	watch: {
 		pTitle(val) {
 			this.isValidInput = !!val.trim().length
 		}
 	},
 	created() {
+		this.fetchTags()
 	},
 	mounted () {
 		this.$refs.pTitle.focus()
@@ -85,6 +82,9 @@ export default {
 		...mapMutations([
 			'SET_IS_ADD_PROB'
 		]),
+		fetchTags() {
+			this.options.map(t => this.tags.push(t.value))
+		},
 		onSubmitProb() {
 			const title				= this.pTitle
 			const description = this.pDescription
@@ -95,7 +95,7 @@ export default {
 			const tag					= this.pTag
 			if(!this.pTitle.trim()) return
 			this.ADD_PROB({ title, description, flag, score, isOpen, author, tag })
-			.then(_ => this.FETCH_PROBS())
+			.then(() => this.FETCH_PROBS({ tags: this.tags }))
 			this.SET_IS_ADD_PROB(false)
 		}
 	}

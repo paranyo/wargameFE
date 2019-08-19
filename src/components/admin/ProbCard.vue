@@ -37,21 +37,18 @@
 import { mapState, mapActions } from 'vuex'
 export default {
 	props: ['prob'],
-	computed: {
-		...mapState({
-			tags: 'tags'
-		}),
-	},
 	methods: {
 		...mapActions([
 			'FETCH_PROBS',
 			'UPDATE_PROB',
 		]),
+		
 		setVisible() {
 			const id		 = this.prob.id
 			const isOpen = !!this.prob.deletedAt
 			this.UPDATE_PROB({ id, isOpen })
-		}
+				.then(() => this.$emit('showTags'))
+		},
 	}
 }
 </script>

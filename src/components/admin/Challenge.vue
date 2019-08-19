@@ -18,7 +18,7 @@
 		<b-row class="px-3 mx-auto">
 			<b-col sm="4" lg="2" v-for="prob in probs" :key="`${prob.id}`">
 				<div class="card-deck">
-					<ProbCard :prob="prob" />
+					<ProbCard :prob="prob" v-on:showTags="show" />
 				</div>
 			</b-col>
 		</b-row>
@@ -49,8 +49,7 @@ export default {
 		}),
 	},
 	created() {
-		this.FETCH_TAGS()
-		this.$nextTick(() => this.fetchOptions())
+		this.FETCH_TAGS().then(() => this.fetchOptions())
 	},
 	methods: {
 		...mapMutations([
