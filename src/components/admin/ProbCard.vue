@@ -1,15 +1,19 @@
 <template>
 	<div class="card bg-light mb-3">
 	  <div class="card-header px-2 py-2">
+			<router-link :to="`/settings/challenge/${prob.id}`" class="badge badge-info">
+				수정
+			</router-link>
 			<a href='#' v-if="!prob.deletedAt" class="badge badge-pill badge-info" @click.prevent="setVisible">열림</a>
 			<a href='#' v-else class="badge badge-pill badge-dark" @click.prevent="setVisible">닫힘</a>
 			<span class="badge badge-pill badge-primary">{{ prob.author }}</span>
 			<span class="badge badge-pill badge-warning">{{ prob.score }}pt</span>
+			<span class="badge badge-pill badge-warning">{{ prob.tag }}</span>
 		</div>
 		<div class="card-body">
 			<h5 class="card-title">{{ prob.title }}</h5>
 			<p class="card-text">{{ prob.description }}</p>
-		<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+			<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
 		</div>
   </div>
 <!--
@@ -42,7 +46,6 @@ export default {
 			'FETCH_PROBS',
 			'UPDATE_PROB',
 		]),
-		
 		setVisible() {
 			const id		 = this.prob.id
 			const isOpen = !!this.prob.deletedAt

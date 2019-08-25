@@ -55,7 +55,7 @@ export default {
 			pTitle: '',
 			pDescription: '',
 			pFlag: '',
-			pScore: '',
+			pScore: 0,
 			pAuthor: '',
 			pIsOpen: 0,
 			isValidInput: false,
