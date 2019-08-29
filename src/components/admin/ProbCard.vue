@@ -16,26 +16,6 @@
 			<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
 		</div>
   </div>
-<!--
-  <div class="card">
-		<div class="card-header">
-			<span class="badge badge-pill badge-primary">{{ prob.author }}</span>
-			<span v-if="prob.isOpen" class="badge badge-pill badge-info">열림</span>
-			<span v-else class="badge badge-pill badge-dark">닫힘</span>
-			<span class="badge badge-pill badge-warning">{{ prob.score }}pt</span>
-		</div>
-		<div class="card-body">
-	    <p class="card-title"><code>{{ prob.title }}</code></p>
-			<p>{{ prob.description }}</p>
-      <p><small><code class="card-text">added: {{ prob.createdAt }}</code></small></p>
-		</div>
-			<div class="card-footer">
-			<router-link :to="`/manage/challenge/${prob.id}`" class="btn btn-primary">
-				Modify</router-link>
-	    <button v-if="!!prob.deletedAt" href="#" class="btn btn-danger" @click="Open">Open</button>
-      <button v-else href="#" class="btn btn-primary" @click="Open">Close</button>
-    </div>
-  </div>-->
 </template>
 <script>
 import { mapState, mapActions } from 'vuex'

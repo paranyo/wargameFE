@@ -3,7 +3,7 @@
 		<b-row align-h="center">
 			<b-col cols="12" md="auto">
 				<b-form-group size="md">
-					<b-form-checkbox-group button-variant="outline-secondary"
+					<b-form-checkbox-group button-variant="info"
 							v-model="selected" :options="options" class="btn-group" buttons @input="show">
 					</b-form-checkbox-group>
 				</b-form-group>
@@ -11,14 +11,16 @@
 		</b-row>
 		<b-row class="px-3 mx-auto">
 			<b-col sm="4" lg="2" v-for="prob in probs" :key="`${prob.id}`">
-				<ProbCard :prob="prob" />
+				<div class="card-deck">
+					<ProbCard :prob="prob" v-on:showTags="show" />
+				</div>
 			</b-col>
 		</b-row>
 		<router-view />
 	</b-container>
 </template>
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import ProbCard from './ProbCard.vue'
 export default {
 	data() {
@@ -44,8 +46,8 @@ export default {
 		]),
 		fetchOptions() {
 			this.tags.map(t => { 
-				this.options.push({ text: t.title, value: t.title }) 
-				this.selected.push(t.title)
+				this.options.push({ text: t.title, value: t.id }) 
+				this.selected.push(t.id)
 			})
 		},
 		show() {
@@ -55,21 +57,4 @@ export default {
 }
 </script>
 <style scope>
-.container-align {
-	width: 100%;
-	text-align: center;
-}
-.btn-sizing {
-	display: inline-block;
-}
-.center-menu {
- text-align: center;
-}
-a {
-	color: #afafaf;
-}
-a:hover {
-	color: #0f0f0f;
-	text-decoration: none;
-}
 </style>

@@ -1,4 +1,4 @@
-import { auth, user, tag, challenge, prob, rank } from '../api'
+import { auth, user, tag, challenge, prob, rank, admin } from '../api'
 
 const actions = {
 	LOGIN({ commit }, { id, pw }) {
@@ -48,20 +48,24 @@ const actions = {
 	FETCH_PROBS({ commit }, { tags }) {
 		return prob.fetch({ tags }).then(data => commit('SET_PROBS', data))
 	},
-	FETCH_ONEPROB({ commit }, { id }) {
-		return prob.fetch(id)
-			.then(({ prob }) => commit('SET_PROB', prob))
+	FETCH_ONEPROB({ commit }, id) {
+		return prob.fetchOne(id).then(({ prob }) => commit('SET_PROB', prob))
 	},
 	ADD_PROB({ state, dispatch }, { title, description, author, score, flag, isOpen, tag }) {
 		return prob.create({ title, description, author, score, flag, isOpen, tag })
 	},
-	UPDATE_PROB({ state, dispatch }, { id, title, description, author, score, flag, isOpen }) {
-		return prob.update(id, { id, title, description, author, score, flag, isOpen })
+	UPDATE_PROB({ state, dispatch }, { id, title, description, author, score, flag, isOpen, tag }) {
+		return prob.update(id, { id, title, description, author, score, flag, isOpen, tag })
+			.then(() => dispatch('FETCH_PROBS', ''))
 	},
 
 	/* AUTH PROB */
 	AUTH_PROB({ state, dispatch }, { pid, flag }) {
 		return prob.auth(pid, { flag })
+	},
+
+	FETCH_HASH(_, { flag }) {
+		return admin.getHash({ flag }).then(data => data)
 	}
 }
 

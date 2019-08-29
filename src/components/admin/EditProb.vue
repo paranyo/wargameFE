@@ -10,7 +10,7 @@
 					placeholder="본문을 입력하세요"	rows="3" max-rows="6"></b-form-textarea>
 			</b-row>
 			<b-row class="form-group">
-				<div class="input-group mb-3">
+				<div class="input-group">
 				  <input type="text" class="form-control" placeholder="플래그" v-model="flag">
 				  <div class="input-group-append">
 				    <button class="btn btn-outline-secondary" type="button" @click="getHash">Hash</button>

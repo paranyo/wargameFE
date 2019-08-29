@@ -6,9 +6,7 @@ import Login			from '@/components/Login'
 import Join				from '@/components/Join'
 import Ranking	  from '@/components/Ranking'
 import Challenge	from '@/components/user/Challenge'
-import Probs			from '@/components/user/Probs'
-import ViewProb		from '@/components/user/ViewProb'
-
+import ProbView		from '@/components/user/ProbView'
 import Notice			from '@/components/admin/Notice'
 import aMain			from '@/components/admin/Main'
 import aChallenge from '@/components/admin/Challenge'
@@ -49,19 +47,13 @@ export default new Router({
 		{
 			path: '/challenge',
 			component: Challenge,
-			beforeEnter: requireAuth(),/*
+			beforeEnter: requireAuth(),
 			children: [
 				{
-					path: '/',
-					component: Probs,
-					children: [
-						{
-							path: ':id',
-							component: ViewProb
-						}
-					],
+					path: ':id',
+					component: ProbView,
 				}
-			],*/
+			]
 		},
 		{
 			path: '/settings',
@@ -78,7 +70,7 @@ export default new Router({
 					beforeEnter: AdvancedAuth(),
 					children: [
 						{
-							path: ':pid',
+							path: ':id',
 							component: EditProb
 						}
 					]

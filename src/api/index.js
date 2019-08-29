@@ -59,16 +59,19 @@ export const prob = {
 	fetch(tags) {
 		if(tags)
 			return request.post('/probs', tags).then(({ data }) => data)
-//	else
-	//		return request.get('/probs', { tags }).then(({ data }) => data)*/
+		else
+			return request.post('/probs').then(({ data }) => data)
 	},
-
+	fetchOne(id) {
+		if(id)
+			return request.get(`/probs/${id}`).then(({ data }) => data)
+	},
 	create (data) {
 		return request.post(`/manage/prob/create`, data).then(({ data }) => data)
 	},
-	update(pid, data) {
+	update(id, data) {
 		if(data.title != null)
-			return request.put(`/manage/prob/${pid}`, data).then(({ data }) => data)
+			return request.put(`/manage/prob/${id}`, data).then(({ data }) => data)
 		else
 			return request.put('/manage/prob/visible', data).then(({ data }) => data)
 	},
@@ -92,6 +95,12 @@ export const user = {
 	update(uid, data) {
 		return request.put(`/user/${uid}`, data).then(({ data }) => data)
 	}
+}
+
+export const admin = {
+	getHash(data) {
+			return request.post('/manage/hash', data).then(({ data }) => data)
+	},
 }
 
 export const rank = {
