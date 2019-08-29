@@ -11,7 +11,7 @@
 			<span class="badge badge-pill badge-warning">{{ prob.tag }}</span>
 		</div>
 		<div class="card-body">
-			<h5 class="card-title">{{ prob.title }}</h5>
+			<p class="card-title">{{ prob.title }}</p>
 			<p class="card-text">{{ prob.description }}</p>
 			<p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
 		</div>
