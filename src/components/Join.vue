@@ -26,6 +26,7 @@
 	</b-container>
 </template>
 <script>
+import { sha256 } from 'js-sha256'
 export default {
 	data() {
 		return {
@@ -45,7 +46,7 @@ export default {
 		onSubmit() {
 			const { id, nick, pw, pw2 } = this
 			if(pw != pw2) return alert('비밀번호가 일치하지 않습니다');
-			this.$store.dispatch('JOIN', { id, nick, pw })
+			this.$store.dispatch('JOIN', { id, nick, pw: sha256(pw) })
 				.then(() => {	this.$router.push('/login') })
 				.catch(err => { this.error = err.response.data.error })
 		}

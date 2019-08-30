@@ -32,17 +32,18 @@
 				</b-form-group>
 				</b-col>
 			</b-row>
-		</div>
-		<div slot="footer">
-			<button class="btn" :class="{'btn-success': isValidInput}" type="button" form="add-category-form"
-				:disabled="!isValidInput" @click="onSubmitProb">문제 생성</button>
-			<b-button class="modal-close-btn" href="" @click.prevent="SET_IS_ADD_PROB(false)">취소</b-button>
+			<b-row>
+				<b-button class="btn" :class="{'btn-success': isValidInput}" form="add-category-form" block
+					:disabled="!isValidInput" @click="onSubmitProb">문제 생성</b-button>
+				<b-button block @click.prevent="SET_IS_ADD_PROB(false)">취소</b-button>	
+			</b-row>
 		</div>
 	</modal>
 </template>
 <script>
 import Modal from '../Modal.vue'
 import { mapState, mapMutations, mapActions } from 'vuex'
+import { sha256 } from 'js-sha256'
 export default {
 	props: ['options'],
 	data() {
@@ -94,12 +95,10 @@ export default {
 			const author			= this.pAuthor
 			const tag					= this.pTag
 			if(!this.pTitle.trim()) return
-			this.ADD_PROB({ title, description, flag, score, isOpen, author, tag })
+			this.ADD_PROB({ title, description, flag: sha256(flag), score, isOpen, author, tag })
 			.then(() => this.FETCH_PROBS({ tags: this.tags }))
 			this.SET_IS_ADD_PROB(false)
 		}
 	}
 }
 </script>
-<style scoped>
-</style>

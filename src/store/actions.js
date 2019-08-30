@@ -60,11 +60,11 @@ const actions = {
 	},
 
 	/* AUTH PROB */
-	AUTH_PROB({ state, dispatch }, { pid, flag }) {
-		return prob.auth(pid, { flag })
+	AUTH_PROB({ state, dispatch }, { id, flag }) {
+		return prob.auth(id, { flag }).then(({ result }) => console.log(result))
 	},
 
-	FETCH_HASH(_, { flag }) {
+	FETCH_HASH({ state, dispatch }, { flag }) {
 		return admin.getHash({ flag }).then(data => data)
 	}
 }

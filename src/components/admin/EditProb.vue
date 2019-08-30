@@ -42,23 +42,25 @@
 					</b-form-group>
 				</b-col>
 			</b-row>
-		</div>
-		<div slot="footer">
-			<b-button button-variant="outline-secondary" @click="onSubmitForm" @keyup.enter="onSubmitForm">
-				문제 수정</b-button>
-			<b-button class="modal-close-btn" href="" @click="onClickClose">취소</b-button>
+			<b-row>
+				<b-button block button-variant="outline-secondary" @click="onSubmitForm" @keyup.enter="onSubmitForm">
+					문제 수정</b-button>
+				<b-button block @click="onClickClose">취소</b-button>
+			</b-row>
 		</div>
 	</modal>
 </template>
 <script>
 import Modal from '../Modal.vue'
 import { mapState, mapMutations, mapActions } from 'vuex'
+import { sha256 } from 'js-sha256'
 export default {
 	data() {
 		return {
 			title: '',
 			description: '',
 			flag: '',
+			rflag: '',
 			score: 0,
 			author: '',
 			isOpen: '',
@@ -95,8 +97,9 @@ export default {
 		]),
 		getHash() {
 			const flag = this.flag.trim()
+			this.rflag = sha256(flag)
 			if(flag.length != 64)
-				this.FETCH_HASH({ flag }).then(data => this.flag = data.hash)
+				this.FETCH_HASH({ flag: sha256(flag) }).then(data => this.flag = data.flag)
 			else
 				alert('한 번만 해싱하세요!')
 		},
@@ -109,8 +112,9 @@ export default {
 			const isOpen			= this.isOpen
 			const tag					= this.tagId
 			if(!title || !description || !flag || !author) return
-
-			this.UPDATE_PROB({ id: this.prob.id, title, description, flag, score, author, isOpen, tag })
+			if(flag.length != 64)
+				return alert('플래그 값을 해시해야 합니다')
+			this.UPDATE_PROB({ id: this.prob.id, title, description, flag: this.rflag, score, author, isOpen, tag })
 				.then(() => this.$router.push('/settings/challenge'))
 
 		},

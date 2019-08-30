@@ -75,8 +75,8 @@ export const prob = {
 		else
 			return request.put('/manage/prob/visible', data).then(({ data }) => data)
 	},
-	auth(pid, data) {
-		return request.post(`/auth/${ pid }`, data).then(({ data }) => console.log(data))
+	auth(id, data) {
+		return request.post(`/auth/${id}`, data).then(({ data }) => data)
 	}
 }
 

@@ -17,15 +17,14 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<div slot="footer">
-			<b-button class="modal-close-btn btn-block" href="" @click="onClickClose">취소</b-button>
+			<b-button class="mt-3" block @click="onClickClose">취소</b-button>
 		</div>
 	</modal>
 </template>
 <script>
 import Modal from '../Modal.vue'
 import { mapState, mapMutations, mapActions } from 'vuex'
+import { sha256 } from 'js-sha256'
 export default {
 	data() {
 		return {
@@ -51,9 +50,9 @@ export default {
 			'AUTH_PROB',
 		]),
 		onSubmitForm() {
-			const flag				= this.flag.trim()
+			const flag = this.flag.trim()
 			if(!flag) return
-			this.AUTH_PROB({ id: this.prob.id, flag }).then(() => this.$router.push('/challenge'))
+			this.AUTH_PROB({ id: this.prob.id, flag: sha256(flag) }).then(() => this.$router.push('/challenge'))
 		},
 		onClickClose() {
 			this.$router.push('/challenge')

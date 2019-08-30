@@ -21,6 +21,7 @@
 </template>
 <script>
 import { mapActions } from 'vuex'
+import { sha256 } from 'js-sha256'
 export default {
 	data() {
 		return {
@@ -45,7 +46,7 @@ export default {
 		]),
 		onSubmit() {
 			const { id, pw } = this
-			this.$store.dispatch('LOGIN', { id, pw })
+			this.$store.dispatch('LOGIN', { id, pw: sha256(pw) })
 				.then((data) => {
 					this.FETCH_ONEUSER(id)
 					this.$router.push(this.returnPath) 
