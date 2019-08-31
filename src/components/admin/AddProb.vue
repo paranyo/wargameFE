@@ -93,9 +93,9 @@ export default {
 			const score				= this.pScore
 			const isOpen			= this.pisOpen
 			const author			= this.pAuthor
-			const tag					= this.pTag
+			const tagId				= this.pTag
 			if(!this.pTitle.trim()) return
-			this.ADD_PROB({ title, description, flag: sha256(flag), score, isOpen, author, tag })
+			this.ADD_PROB({ title, description, flag: sha256(flag), score, isOpen, author, tagId })
 			.then(() => this.FETCH_PROBS({ tags: this.tags }))
 			this.SET_IS_ADD_PROB(false)
 		}

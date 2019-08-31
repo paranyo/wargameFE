@@ -1,42 +1,36 @@
 <template>
 	<b-container fluid class="pt-5 mx-auto">
-		<div class="row w-75 mx-auto">
-			<b-col sm="4" lg="4" v-for="(user, index) in users" :key="user.nick">
-   			<b-card v-if="index<3"
-					:title="user.nick" img-src="https://placekitten.com/500/350" img-alt="Image" img-top>
-		    	<b-card-text>
-						{{ user }}
-    		  </b-card-text>
-		    	<b-card-text class="small text-muted">Last updated 3 mins ago</b-card-text>
-				</b-card>
-			</b-col>
-		</div>
-		<div class="row">
+		<b-row class="mx-auto">
+			<div class="card-deck" style="margin: 0 auto">
+				<b-col v-for="(user, index) in users.slice(0, 3)" :key="user.nick" sm=12 lg=4 md=4	
+				style="max-width: 320px">
+					<b-card v-if="index<3" img-src="https://placekitten.com/500/350" img-alt="Image" img-top>
+				  	<b-card-text>
+							<span class="badge badge-pill badge-primary">{{ user.score }}</span> {{ user.nick }}
+						</b-card-text>
+			    	<b-card-text class="small text-muted">{{ lastSolved(user.lastSolved) }}</b-card-text>
+					</b-card>
+				</b-col>
+			</div>
+		</b-row>
+		<b-row class="w-75">
 			<div class="col-md">
 				<hr class="my-4" />
 			</div>
-		</div>
-		<div class="row w-75 mx-auto">
-			<table class="table table-hover">
-				<thead>
-					<tr class="table-dark">
-						<td>POS</td>
-						<td>NICKNAME</td>
-						<td>SCORE</td>
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="(user, index) in users" :key="user.nick" v-if="index > 2">
-						<td>1</td>
-						<td>{{ user.nick }}</td>
-						<td>1230</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="row">
-		</div>
-		<router-view />
+		</b-row>
+		<b-row class="mx-auto">
+			<div class="card-deck" style="margin: 0 auto">
+				<b-col v-for="(user, index) in users.slice(3, users.length)" :key="user.nick" sm=6 lg=3 md=3	
+				style="max-width: 380px">
+					<b-card img-src="https://placekitten.com/500/350" img-alt="Image" img-top>
+				  	<b-card-text>
+							<span class="badge badge-pill badge-primary">{{ user.score }}</span> {{ user.nick }}
+						</b-card-text>
+			    	<b-card-text class="small text-muted">{{ lastSolved(user.lastSolved) }}</b-card-text>
+					</b-card>
+				</b-col>
+			</div>
+		</b-row>
 	</b-container>
 </template>
 <script>
@@ -46,6 +40,9 @@ export default {
 		...mapState({
 			users: 'users'
 		}),
+		time() {
+
+		},
 	},
 	created() {
 		this.FETCH_USERS()
@@ -53,32 +50,21 @@ export default {
 	methods: {
 		...mapActions([
 			'FETCH_USERS'
-		])
+		]),
+		lastSolved(ls) {
+			let t = Math.floor((new Date() - new Date(ls)) / 1000)
+			let c = 0
+			let m = ['s', 'mins', 'hours']
+			while(t > 59) {
+				t = Math.floor(t / 60)
+				c++
+			}
+			if(isNaN(t))
+				return 'last Solved no data'
+			return 'last Solved ' +  t + m[c] + ' ago'
+		}
 	}
 }
 </script>
 <style scope>
-.col-sm-3 {
-	padding: 0 5px;
-}
-.wrapper {
-  position: relative;
-  overflow: hidden;
-}
-
-.wrapper:after {
-  content: '';
-  display: block;
-  padding-top: 100%;
-}
-
-.wrapper img {
-  width: auto;
-  height: 100%;
-  max-width: none;
-  position: absolute;
-  left: 50%;
-  top: 0;
-  transform: translateX(-50%);
-}
 </style>

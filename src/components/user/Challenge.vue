@@ -10,11 +10,9 @@
 			</b-col>
 		</b-row>
 		<b-row class="px-3 mx-auto">
-			<div class="card-deck">
-				<b-col v-for="prob in probs" :key="`${prob.id}`" class="mb-3">
-					<ProbCard :prob="prob" v-on:showTags="show" />
-				</b-col>
-			</div>
+			<b-col v-for="prob in probs" :key="`${prob.id}`" class="mb-3" lg=3 md=4 sm=6>
+				<ProbCard :prob="prob" v-on:showTags="show" />
+			</b-col>
 		</b-row>
 		<router-view />
 	</b-container>

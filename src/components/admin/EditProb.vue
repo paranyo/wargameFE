@@ -110,11 +110,11 @@ export default {
 			const score				= parseInt(this.score)
 			const author			= this.author.trim()
 			const isOpen			= this.isOpen
-			const tag					= this.tagId
+			const tagId				= this.tagId
 			if(!title || !description || !flag || !author) return
 			if(flag.length != 64)
 				return alert('플래그 값을 해시해야 합니다')
-			this.UPDATE_PROB({ id: this.prob.id, title, description, flag: this.rflag, score, author, isOpen, tag })
+			this.UPDATE_PROB({ id: this.prob.id, title, description, flag: this.rflag, score, author, isOpen, tagId })
 				.then(() => this.$router.push('/settings/challenge'))
 
 		},

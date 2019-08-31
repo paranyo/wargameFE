@@ -51,11 +51,11 @@ const actions = {
 	FETCH_ONEPROB({ commit }, id) {
 		return prob.fetchOne(id).then(({ prob }) => commit('SET_PROB', prob))
 	},
-	ADD_PROB({ state, dispatch }, { title, description, author, score, flag, isOpen, tag }) {
-		return prob.create({ title, description, author, score, flag, isOpen, tag })
+	ADD_PROB({ state, dispatch }, { title, description, author, score, flag, isOpen, tagId }) {
+		return prob.create({ title, description, author, score, flag, isOpen, tagId  })
 	},
-	UPDATE_PROB({ state, dispatch }, { id, title, description, author, score, flag, isOpen, tag }) {
-		return prob.update(id, { id, title, description, author, score, flag, isOpen, tag })
+	UPDATE_PROB({ state, dispatch }, { id, title, description, author, score, flag, isOpen, tagId }) {
+		return prob.update(id, { id, title, description, author, score, flag, isOpen, tagId })
 			.then(() => dispatch('FETCH_PROBS', ''))
 	},
 

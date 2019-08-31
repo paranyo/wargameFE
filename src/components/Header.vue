@@ -9,7 +9,7 @@
 			<div class="col-md-6 text-right">
 				<div v-if="user && isAuthenticated" style="display: inline">
 					<a href="#" class="badge badge-primary">{{ user.nick }}</a>
-					<a href="#" class="badge badge-warning">{{ user.money }}pt</a>
+					<a href="#" class="badge badge-warning">{{ user.score }}pt</a>
 					<a href="#" class="badge badge-info">{{ user.money }}<i class="fab fa-viacoin"></i></a>
 				</div>
 				<router-link class="badge badge-danger" v-if="isAuthenticated" to="/login">Logout</router-link>
