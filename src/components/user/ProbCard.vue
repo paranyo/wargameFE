@@ -10,7 +10,7 @@
 			<p class="card-text">{{ substrDesc }}</p>
 		</div>
 	  <div class="card-footer bg-transparent">
-			<p class="card-text"><small class="text-muted">0명이 풀었습니다.</small></p>
+			<p class="card-text"><small class="text-muted">{{ prob.solver }}명이 풀었습니다.</small></p>
 		</div>
   </div>
 </template>

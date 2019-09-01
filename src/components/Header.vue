@@ -7,10 +7,10 @@
 				<router-link class="headBtn" to="/challenge">Challenge</router-link>
 			</div>
 			<div class="col-md-6 text-right">
-				<div v-if="user && isAuthenticated" style="display: inline">
-					<a href="#" class="badge badge-primary">{{ user.nick }}</a>
-					<a href="#" class="badge badge-warning">{{ user.score }}pt</a>
-					<a href="#" class="badge badge-info">{{ user.money }}<i class="fab fa-viacoin"></i></a>
+				<div v-if="myInfo && isAuthenticated" style="display: inline">
+					<a href="#" class="badge badge-primary">{{ myInfo.nick }}</a>
+					<a href="#" class="badge badge-warning">{{ myInfo.score }}pt</a>
+					<a href="#" class="badge badge-info">{{ myInfo.money }}<i class="fab fa-viacoin"></i></a>
 				</div>
 				<router-link class="badge badge-danger" v-if="isAuthenticated" to="/login">Logout</router-link>
 				<router-link to="/settings"
@@ -33,7 +33,7 @@ import { mapActions, mapState } from 'vuex'
 export default {
 	computed: {
 		...mapState({
-			user: 'user',
+			myInfo: 'myInfo',
 		}),
 		isAuthenticated() {
 			return this.$store.getters.isAuthenticated
@@ -42,6 +42,11 @@ export default {
 			return this.$store.getters.isAdmin
 		},
 	},
+/*	watch: {
+		'$route'(to, from) {
+			this.FETCH_MYINFO()
+		}
+	},*/
 	created() {
 		this.FETCH_MYINFO()
 	},

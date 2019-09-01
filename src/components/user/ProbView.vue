@@ -48,11 +48,15 @@ export default {
 		...mapActions([
 			'FETCH_ONEPROB',
 			'AUTH_PROB',
+			'FETCH_MYINFO'
 		]),
 		onSubmitForm() {
 			const flag = this.flag.trim()
 			if(!flag) return
 			this.AUTH_PROB({ id: this.prob.id, flag: sha256(flag) }).then(() => this.$router.push('/challenge'))
+				.then(() => {
+					this.FETCH_MYINFO()
+				})
 		},
 		onClickClose() {
 			this.$router.push('/challenge')

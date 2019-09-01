@@ -8,11 +8,8 @@
 			</div>
 		</div>
 		<div slot="body">
-			<input class="form-control" type="text" v-model="title" ref="title">
-		</div>
-		<div slot="footer">
-			<button class="btn" :class="{'btn-success': isValidInput}" type="button" form="add-tag-form"
-				:disabled="!isValidInput" @click="onSubmit"> Create tag </button>
+			<input class="form-control mb-3" type="text" v-model="title" ref="title">
+			<b-button block form="add-tag-form" :disabled="!isValidInput" @click="onSubmit">Create tag</b-button>
 		</div>
 	</modal>
 </template>
@@ -47,6 +44,7 @@ export default {
 			if(!this.title.trim()) return
 			this.ADD_TAG(this.title)
 			this.SET_IS_ADD_TAG(false)
+			this.$emit('fetchTags')
 		}
 	}
 }

@@ -77,7 +77,7 @@ export const prob = {
 	},
 	auth(id, data) {
 		return request.post(`/auth/${id}`, data).then(({ data }) => data)
-	}
+	},
 }
 
 export const user = {

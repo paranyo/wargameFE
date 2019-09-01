@@ -65,6 +65,7 @@ export default {
 			author: '',
 			isOpen: '',
 			tagId: '',
+			tag: []
 		}
 	},
 	components: {	Modal	},
@@ -86,7 +87,11 @@ export default {
 			this.author			 = this.prob.author
 			this.flag				 = this.prob.flag
 			this.isOpen			 = !this.prob.deletedAt * 1
-			this.tagId			 = this.prob.tag
+			this.tagId			 = this.prob.tagId
+
+			this.tags.map((t) => {
+				this.tag.push(t.id)
+			})
 		})
 	},
 	methods: {
@@ -94,6 +99,7 @@ export default {
 			'FETCH_ONEPROB',
 			'UPDATE_PROB',
 			"FETCH_HASH",
+			'FETCH_PROBS',
 		]),
 		getHash() {
 			const flag = this.flag.trim()
@@ -115,7 +121,10 @@ export default {
 			if(flag.length != 64)
 				return alert('플래그 값을 해시해야 합니다')
 			this.UPDATE_PROB({ id: this.prob.id, title, description, flag: this.rflag, score, author, isOpen, tagId })
-				.then(() => this.$router.push('/settings/challenge'))
+				.then(() => {
+					this.FETCH_PROBS({ tags: this.tag })
+					this.$router.push('/settings/challenge')
+				})
 
 		},
 		onClickClose() {

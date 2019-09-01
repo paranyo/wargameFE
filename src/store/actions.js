@@ -11,7 +11,7 @@ const actions = {
 		return auth.join(id, nick, pw)
 	},
 	FETCH_MYINFO({ commit }) {
-		return user.fetchInfo().then(({ user }) => commit("SET_ONEUSER", user))
+		return user.fetchInfo().then(({ user }) => commit("SET_MYINFO", user))
 	},
 	FETCH_USERS({ commit }) {
 		return user.fetch().then(data => commit('SET_USERS', data))
@@ -24,8 +24,8 @@ const actions = {
 			return user.fetch()
 				.then(({ user }) => commit('SET_ONEUSER', user))
 	},
-	UPDATE_USER({ state, dispatch }, { uid, nick, level, isBan }) {
-		return user.update(uid, { nick, level, isBan })
+	UPDATE_USER({ state, dispatch }, { uid, ip, money, nick, level, isBan, reason }) {
+		return user.update(uid, { uid, ip, money, nick, level, isBan, reason })
 			.then(_ => dispatch('FETCH_USERS'))
 	},
 
@@ -56,7 +56,6 @@ const actions = {
 	},
 	UPDATE_PROB({ state, dispatch }, { id, title, description, author, score, flag, isOpen, tagId }) {
 		return prob.update(id, { id, title, description, author, score, flag, isOpen, tagId })
-			.then(() => dispatch('FETCH_PROBS', ''))
 	},
 
 	/* AUTH PROB */

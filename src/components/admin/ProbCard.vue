@@ -15,7 +15,9 @@
 			<p class="card-text">{{ substrDesc }}</p>
 		</div>
 		<div class="card-footer bg-transparent">
-			<p class="card-text"><small class="text-muted">{{ prob.updatedAt }}</small></p>
+			<p><small class="text-muted">updated {{ getAgo(prob.updatedAt) }}</small></p>
+			<p><small class="text-muted">created {{ getAgo(prob.createdAt) }}</small></p>
+			<p><small class="text-muted" style="float: right">{{ prob.solver }} solvers</small></p>
 		</div>
   </div>
 </template>
@@ -42,6 +44,18 @@ export default {
 			'FETCH_PROBS',
 			'UPDATE_PROB',
 		]),
+		getAgo(ls) {
+			let t = Math.floor((new Date() - new Date(ls)) / 1000)
+		  let c = 0
+			let m = ['s', 'mins', 'hours']
+	    while(t > 59) {
+			  t = Math.floor(t / 60)
+		    c++
+	    }
+	    if(isNaN(t))
+			  return 'no record'
+			return +  t + ' ' + m[c] + ' ago'
+		},
 		setVisible() {
 			const id		 = this.prob.id
 			const isOpen = !!this.prob.deletedAt
@@ -52,4 +66,7 @@ export default {
 }
 </script>
 <style scoped>
+p {
+	margin: 0
+}
 </style>

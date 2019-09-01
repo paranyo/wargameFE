@@ -12,7 +12,7 @@ import aMain			from '@/components/admin/Main'
 import aChallenge from '@/components/admin/Challenge'
 import EditProb		from '@/components/admin/EditProb'
 import User				from '@/components/admin/User'
-import UserEdit		from '@/components/admin/UserEdit'
+import EditUser		from '@/components/admin/EditUser'
 import store			from '../store'
 Vue.use(Router)
 
@@ -81,7 +81,7 @@ export default new Router({
 					children: [
 						{
 							path: ':uid',
-							component: UserEdit
+							component: EditUser
 						}
 					]
 				},

@@ -17,13 +17,13 @@
 		</b-row>
 		<b-row class="px-3 mx-auto">
 			<div class="card-deck">
-				<b-col v-for="prob in probs" :key="`${prob.id}`" class="mb-3">
+				<b-col v-for="prob in probs" :key="`${prob.id}`" class="mb-3" md="4" lg="auto" sm="6">
 					<ProbCard :prob="prob" v-on:showTags="show" />
 				</b-col>
 			</div>
 		</b-row>
 		<router-view />
-		<AddTag v-if="isAddTag" />
+		<AddTag v-if="isAddTag" v-on:fetchTags="fetchTags"/>
 		<AddProb v-if="isAddProb" :options="options" />
 	</b-container>
 </template>
@@ -49,7 +49,7 @@ export default {
 		}),
 	},
 	created() {
-		this.FETCH_TAGS().then(() => this.fetchOptions())
+		this.fetchTags()
 	},
 	methods: {
 		...mapMutations([
@@ -61,6 +61,7 @@ export default {
 			'FETCH_PROBS'
 		]),
 		fetchOptions() {
+			this.options = []
 			this.tags.map(t => { 
 				this.options.push({ text: t.title, value: t.id }) 
 				this.selected.push(t.id)
@@ -75,6 +76,9 @@ export default {
 		show() {
 			this.FETCH_PROBS({ tags: this.selected })
 		},
+		fetchTags() {
+			this.FETCH_TAGS().then(() => this.fetchOptions())
+		}
 	}
 }
 </script>
