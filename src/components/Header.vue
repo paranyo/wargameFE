@@ -8,7 +8,9 @@
 			</div>
 			<div class="col-md-6 text-right">
 				<div v-if="myInfo && isAuthenticated" style="display: inline">
-					<a href="#" class="badge badge-primary">{{ myInfo.nick }}</a>
+					<router-link :to="`/status/${myInfo.uid}`" class="badge badge-primary">
+						{{ myInfo.nick }}
+					</router-link>
 					<a href="#" class="badge badge-warning">{{ myInfo.score }}pt</a>
 					<a href="#" class="badge badge-info">{{ myInfo.money }}<i class="fab fa-viacoin"></i></a>
 				</div>

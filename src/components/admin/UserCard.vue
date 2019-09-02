@@ -14,6 +14,7 @@
 			<router-link :to="`/settings/user/${user.uid}`" class="btn btn-sm btn-primary">상세 정보</router-link>
       <button v-if="!user.deletedAt" class="btn btn-danger btn-sm" @click="Ban">차단</button>
       <button v-else href="#" class="btn btn-primary btn-sm" @click="Ban">해제</button>
+			<router-link :to="`/settings/user/${user.uid}`" class="btn btn-sm btn-info">기록</router-link>
     </div>
   </div>
 </template>

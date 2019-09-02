@@ -9,16 +9,32 @@
 				<input class="form-control" type="text" placeholder='ip' v-model="ip">
 			</b-row>
 			<b-row class="form-group" align-h="start">
-				<b-col cols="4" md="6">
+				<b-col cols="4" md="4">
 					<div class="input-group">
-						<input class="form-control" type="text" placeholder='money' v-model="money">
-					  <div class="input-group-append">
+					  <div class="input-group-prepend">
 			        <div class="input-group-text">$</div>
 					  </div>
+						<input class="form-control" type="text" placeholder='money' v-model="money"
+							style="text-align: right">
 					</div>
 				</b-col>
-				<b-col cols="4" md="6">
-					<input class="form-control" type="text" placeholder='level' v-model="level">
+				<b-col cols="4" md="4">
+		      <div class="input-group mb-2">
+					  <div class="input-group-prepend">
+			        <div class="input-group-text">Lv.</div>
+					  </div>
+						<input class="form-control" type="text" placeholder='level' v-model="level" 
+							style="text-align: right">
+		      </div>
+				</b-col>
+				<b-col>
+		      <div class="input-group mb-2">
+					  <div class="input-group-prepend">
+			        <div class="input-group-text">Score</div>
+					  </div>
+						<input style="text-align: right" class="form-control" type="text" placeholder="Score" 
+							readonly :value="user.score">
+					</div>
 				</b-col>
 			</b-row>
 			<b-row>

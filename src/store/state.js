@@ -10,6 +10,7 @@ const state = {
 	prob: {},
 	isAddTag: false,
 	isAddProb: false,
+	isChangePassword: false,
 }
 
 export default state

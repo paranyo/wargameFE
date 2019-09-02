@@ -5,8 +5,11 @@ import NotFound		from '@/components/NotFound'
 import Login			from '@/components/Login'
 import Join				from '@/components/Join'
 import Ranking	  from '@/components/Ranking'
+
 import Challenge	from '@/components/user/Challenge'
 import ProbView		from '@/components/user/ProbView'
+import MyStatus		from '@/components/user/MyStatus'
+
 import Notice			from '@/components/admin/Notice'
 import aMain			from '@/components/admin/Main'
 import aChallenge from '@/components/admin/Challenge'
@@ -54,6 +57,11 @@ export default new Router({
 					component: ProbView,
 				}
 			]
+		},
+		{
+			path: '/status/:uid',
+			component: MyStatus,
+			beforeEnter: requireAuth(),
 		},
 		{
 			path: '/settings',
