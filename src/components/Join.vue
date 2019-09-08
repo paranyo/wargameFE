@@ -11,6 +11,9 @@
 				<div class="form-group row">
 					<input class="form-control" name="nick" type="text" placeholder="닉네임" v-model="nick">
 				</div>
+				<b-row class="form-group">
+					<input class="form-control" type="email" placeholder="이메일" v-model="email">
+				</b-row>
 				<div class="form-group row">
 					<input class="form-control" name="pw" type="password" placeholder="비밀번호" v-model="pw">
 				</div>
@@ -20,7 +23,7 @@
 				<div class="form-group row">
 					<button type="submit" class="btn btn-primary btn-lg btn-block" :disabled="invalidForm">가입</button>
 				</div>
-				<router-link to="/Join">계정을 분실하였습니까?</router-link>
+				<router-link to="/ForgotPW">비밀번호를 분실하였습니까?</router-link>
 			</div>
 		</form>
 	</b-container>
@@ -34,6 +37,7 @@ export default {
 			nick: '',
 			pw: '',
 			pw2: '',
+			email: '',
 			error: ''
 		}
 	},
@@ -44,9 +48,11 @@ export default {
 	},
 	methods: {
 		onSubmit() {
-			const { id, nick, pw, pw2 } = this
-			if(pw != pw2) return alert('비밀번호가 일치하지 않습니다');
-			this.$store.dispatch('JOIN', { id, nick, pw: sha256(pw) })
+			let { id, nick, email, pw, pw2 } = this
+			if(pw != pw2) return alert('비밀번호가 일치하지 않습니다')
+			if(email == undefined)
+				email = 'No'
+			this.$store.dispatch('JOIN', { id, nick, email, pw: sha256(pw) })
 				.then(() => {	this.$router.push('/login') })
 				.catch(err => { this.error = err.response.data.error })
 		}

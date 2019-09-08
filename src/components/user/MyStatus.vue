@@ -33,7 +33,7 @@
 							<div class="input-group-prepend">
 								<div class="input-group-text">Mail</div>
 							</div>
-							<input class="form-control" type="text" placeholder="test123@test.com" readonly>
+							<input class="form-control" type="text" placeholder="E-MAIL" :value="myInfo.email" readonly>
 						</div>
 					</b-col>
 				</b-row>
@@ -59,7 +59,7 @@
 				Solved probs
 			</b-col>
 		</b-row>
-		<ChangePassword v-if="isChangePassword" />
+		<ChangePassword v-if="!isChangePassword" />
 	</b-container>
 </div>
 </template>
@@ -74,12 +74,22 @@ export default {
 			isChangePassword: 'isChangePassword',
 		}),	
 	},
+	watch: {
+		isChangePassword() {
+			if(this.isChangePassword == 2) {
+				alert('변경 성공')
+				alert('로그인 페이지로 이동합니다')
+				this.$store.commit('LOGOUT')
+				this.$router.push('/login')
+			}
+		}
+	},
 	methods: {
 		...mapMutations([
 			'SET_IS_CHANGE_PASSWORD',
 		]),
 		setChangePassword() {
-			this.SET_IS_CHANGE_PASSWORD(true)
+			this.SET_IS_CHANGE_PASSWORD(false)
 		},
 	},
 	

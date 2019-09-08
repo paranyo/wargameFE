@@ -5,6 +5,7 @@ import NotFound		from '@/components/NotFound'
 import Login			from '@/components/Login'
 import Join				from '@/components/Join'
 import Ranking	  from '@/components/Ranking'
+import FindPW		  from '@/components/FindPW'
 
 import Challenge	from '@/components/user/Challenge'
 import ProbView		from '@/components/user/ProbView'
@@ -42,6 +43,10 @@ export default new Router({
 		{
 			path: '/Join',
 			component: Join
+		},
+		{
+			path: '/ForgotPW',
+			component: FindPW,
 		},
 		{
 			path: '/ranking',

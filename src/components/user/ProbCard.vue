@@ -4,6 +4,7 @@
 			<span class="badge badge-pill badge-secondary">{{ prob.tag }}</span>
 			<span class="badge badge-pill badge-warning">{{ prob.score }}pt</span>
 			<span class="badge badge-pill badge-primary">{{ prob.author }}</span>
+			<span v-if="prob.isCorrect" class="badge badge-pill badge-success">Correct</span>
 		</div>
 		<div class="card-body">
 			<p class="card-title">{{ substrTitle }}</p>

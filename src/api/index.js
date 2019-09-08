@@ -37,10 +37,14 @@ export const auth = {
 		return request.post('/user/login', { id, pw })
 			.then(({ data }) => data)
 	},
-	join(id, nick, pw) {
-		return request.post('/user/join', { id, nick, pw })
+	join(id, nick, email, pw) {
+		return request.post('/user/join', { id, nick, email, pw })
 			.then(({ data }) => data)
-	}
+	},
+	sendMail(uid, email) {
+		return request.post('/user/sendMail', { uid, email})
+			.then(({ data }) => data)
+	},
 }
 
 export const tag = {

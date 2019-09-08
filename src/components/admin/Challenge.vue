@@ -17,7 +17,7 @@
 		</b-row>
 		<b-row class="px-3 mx-auto">
 			<div class="card-deck">
-				<b-col v-for="prob in probs" :key="`${prob.id}`" class="mb-3" md="4" lg="auto" sm="6">
+				<b-col v-for="prob in probs" :key="`${prob.id}`" class="mb-3" md=4 sm=4>
 					<ProbCard :prob="prob" v-on:showTags="show" />
 				</b-col>
 			</div>

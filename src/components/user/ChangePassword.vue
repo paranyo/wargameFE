@@ -9,7 +9,7 @@
 			<input class="form-control mb-3" type="password" placeholder="New Password" v-model="newPW">
 			<input class="form-control mb-3" type="password" placeholder="Confirm Password" v-model="confirmPW">
 			<b-button block form="add-tag-form" :disabled="!state" @click="onSubmit">Change</b-button>
-			<b-button block @click="SET_IS_CHANGE_PASSWORD(false)">Cancel</b-button>
+			<b-button block @click="SET_IS_CHANGE_PASSWORD(true)">Cancel</b-button>
 		</div>
 	</modal>
 </template>
@@ -37,19 +37,19 @@ export default {
 			'UPDATE_USER',
 		]),
 		...mapMutations([
-			'SET_IS_CHANGE_PASSWORD'
+			'SET_IS_CHANGE_PASSWORD',
+			'LOGOUT'
 		]),
-		onSubmit() {/*
-			if(!this.title.trim()) return
-			this.ADD_TAG(this.title)
-			this.SET_IS_ADD_TAG(false)
-			this.$emit('fetchTags')*/
+		onSubmit() {
 			if(this.newPW != this.confirmPW)
 				return alert('변경하려는 비밀번호가 서로 일치하지 않습니다')
 			const uid				= this.$route.params.uid
-			const currentPW = this.currentPW
-			const	newPW			= this.newPW
-			//this.CHANGE_PASSWORD({ uid, currentPW, newPW }) 내일 CHANGE 생성하깅~
+			const currentPW = sha256(this.currentPW)
+			const	newPW			= sha256(this.newPW)
+			this.UPDATE_USER({ uid, pw: currentPW, reason: newPW })
+				.then(() => {
+					this.SET_IS_CHANGE_PASSWORD(2)
+				})
 		}
 	}
 }

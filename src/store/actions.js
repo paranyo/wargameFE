@@ -7,8 +7,11 @@ const actions = {
 				commit('LOGIN', { accessToken, advancedToken, user })
 		})
 	},
-	JOIN(_, { id, nick,  pw }) {
-		return auth.join(id, nick, pw)
+	JOIN(_, { id, nick, email, pw }) {
+		return auth.join(id, nick, email, pw)
+	},
+	FIND_PASSWORD(_, { uid, email }) {
+		return auth.sendMail(uid, email)		
 	},
 	FETCH_MYINFO({ commit }) {
 		return user.fetchInfo().then(({ user }) => commit("SET_MYINFO", user))
@@ -24,8 +27,8 @@ const actions = {
 			return user.fetch()
 				.then(({ user }) => commit('SET_ONEUSER', user))
 	},
-	UPDATE_USER({ state, dispatch }, { uid, ip, money, nick, level, isBan, reason }) {
-		return user.update(uid, { uid, ip, money, nick, level, isBan, reason })
+	UPDATE_USER({ state, dispatch }, { uid, pw, ip, money, nick, level, isBan, reason, email }) {
+		return user.update(uid, { uid, pw, ip, money, nick, level, isBan, reason, email })
 			.then(_ => dispatch('FETCH_USERS'))
 	},
 
@@ -60,7 +63,7 @@ const actions = {
 
 	/* AUTH PROB */
 	AUTH_PROB({ state, dispatch }, { id, flag }) {
-		return prob.auth(id, { flag }).then(({ result }) => console.log(result))
+		return prob.auth(id, { flag }).then(({ result }) => result)
 	},
 
 	FETCH_HASH({ state, dispatch }, { flag }) {

@@ -3,10 +3,41 @@
 		<div slot="header"></div>
 		<div slot="body">
 			<b-row class="form-group">
-				<input class="form-control" type="text" placeholder='Nickname' v-model="nick">
+				<b-col>
+					<div class="input-group">
+					  <div class="input-group-prepend">
+			        <div class="input-group-text">ID</div>
+					  </div>
+						<input class="form-control" type="text" placeholder='UID' v-model="user.uid" readonly>
+					</div>
+				</b-col>
+				<b-col>
+					<div class="input-group">
+					  <div class="input-group-prepend">
+			        <div class="input-group-text">NICK</div>
+					  </div>
+						<input class="form-control" type="text" placeholder='Nickname' v-model="nick">
+					</div>
+				</b-col>
 			</b-row>
 			<b-row class="form-group">
-				<input class="form-control" type="text" placeholder='ip' v-model="ip">
+				<b-col>
+					<div class="input-group">
+					  <div class="input-group-prepend">
+			        <div class="input-group-text">E-MAIL</div>
+					  </div>
+						<input class="form-control" type="text" placeholder='E-MAIL' v-model="email"
+							style="text-align: right">
+					</div>
+				</b-col>
+				<b-col>
+					<div class="input-group">
+					  <div class="input-group-prepend">
+			        <div class="input-group-text">IPv4 Address</div>
+					  </div>
+						<input class="form-control" type="text" placeholder='ip' v-model="ip">
+					</div>
+				</b-col>
 			</b-row>
 			<b-row class="form-group" align-h="start">
 				<b-col cols="4" md="4">
@@ -54,6 +85,7 @@ export default {
 		return {
 			nick: '',
 			ip: '',
+			email: '',
 			money: 0,
 			level: ''
 		}
@@ -63,7 +95,7 @@ export default {
 			user: 'user'
 		}),
 		invalidForm() {
-			return !this.nick || !this.ip || !this.level
+			return !this.nick || !this.ip || !this.level || !this.email
 		}
 	},
 	created() {
@@ -73,6 +105,7 @@ export default {
 			this.nick	 = this.user.nick
 			this.level = this.user.level
 			this.money = this.user.money
+			this.email = this.user.email
 		})
 	},
 	methods: {
@@ -82,12 +115,13 @@ export default {
 			'FETCH_USERS',
 		]),
 		onSubmitForm() {
-			const	ip = this.ip.trim()
-			const nick = this.nick.trim()
+			const	ip		= this.ip.trim()
+			const nick	= this.nick.trim()
 			const level = this.level.trim()
+			const email	= this.email.trim()
 			const money = parseInt(this.money)
 			if(!ip || !nick || !level) return
-			this.UPDATE_USER({ uid: this.$route.params.uid, ip, nick, level, money })
+			this.UPDATE_USER({ uid: this.$route.params.uid, ip, nick, level, money, email })
 				.then(() => { this.$router.push('/settings/user')	})
 
 		},

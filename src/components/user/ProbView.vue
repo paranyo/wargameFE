@@ -28,7 +28,8 @@ import { sha256 } from 'js-sha256'
 export default {
 	data() {
 		return {
-			flag: ''
+			flag: '',
+			tag: [],
 		}
 	},
 	components: {	Modal	},
@@ -43,19 +44,26 @@ export default {
 	},
 	created() {
 		this.FETCH_ONEPROB(this.$route.params.id)
+		this.tags.map((t) => {
+			this.tag.push(t.id)
+		})
 	},
 	methods: {
 		...mapActions([
 			'FETCH_ONEPROB',
 			'AUTH_PROB',
-			'FETCH_MYINFO'
+			'FETCH_MYINFO',
+			'FETCH_PROBS',
 		]),
 		onSubmitForm() {
 			const flag = this.flag.trim()
 			if(!flag) return
-			this.AUTH_PROB({ id: this.prob.id, flag: sha256(flag) }).then(() => this.$router.push('/challenge'))
-				.then(() => {
+			this.AUTH_PROB({ id: this.prob.id, flag: sha256(flag) })
+				.then((result) => {
+					alert(result)
 					this.FETCH_MYINFO()
+					this.FETCH_PROBS({ tags: this.tag })
+					this.$router.push('/challenge')
 				})
 		},
 		onClickClose() {
