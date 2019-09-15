@@ -105,6 +105,9 @@ export const admin = {
 	getHash(data) {
 			return request.post('/manage/hash', data).then(({ data }) => data)
 	},
+	getLog(data) {
+		return request.post('/manage/log', data).then(({ data }) => data)
+	},
 }
 
 export const rank = {

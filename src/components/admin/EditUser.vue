@@ -68,6 +68,17 @@
 					</div>
 				</b-col>
 			</b-row>
+			<b-row class="form-group" align-h="start">
+				<b-col cols="12">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<div class="input-group-text">INTRO</div>
+						</div>
+						<input class="form-control" type="text" placeholder="Introduce" v-model="intro"
+							style="text-align: right;">
+					</div>
+				</b-col>
+			</b-row>
 			<b-row>
 				<b-button block button-variant="outline-secondary" @click="onSubmitForm" @keyup.enter="onSubmitForm">
 					수정</b-button>
@@ -87,7 +98,8 @@ export default {
 			ip: '',
 			email: '',
 			money: 0,
-			level: ''
+			level: '',
+			intro: '',
 		}
 	},
 	computed: {
@@ -106,6 +118,7 @@ export default {
 			this.level = this.user.level
 			this.money = this.user.money
 			this.email = this.user.email
+			this.intro = this.user.intro
 		})
 	},
 	methods: {
@@ -120,8 +133,9 @@ export default {
 			const level = this.level.trim()
 			const email	= this.email.trim()
 			const money = parseInt(this.money)
+			const intro = this.intro.trim()
 			if(!ip || !nick || !level) return
-			this.UPDATE_USER({ uid: this.$route.params.uid, ip, nick, level, money, email })
+			this.UPDATE_USER({ uid: this.$route.params.uid, ip, nick, level, money, email, intro })
 				.then(() => { this.$router.push('/settings/user')	})
 
 		},

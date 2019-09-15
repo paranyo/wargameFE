@@ -1,5 +1,5 @@
 <template>
-	<b-container fluid class="pt-5 mx-auto">
+	<b-container fluid class="mx-auto">
 		<div class="row">
 			<nav class="navbar navbar-light bg-light">
  				<form class="form-inline">

@@ -48,8 +48,20 @@
 					</b-col>
 				</b-row>
 				<b-row>
-					<b-col md=12>	
-						<b-button block button-variant="outline-secondary" @click="setChangePassword">비밀번호 변경</b-button>
+					<b-col md="12">
+						<div class="input-group">
+							<input v-if="isEditIntro" class="form-control" type="text"	placeholder="소개글을 입력하세요" 
+								v-model="inputIntro" ref="inputIntro"	@keyup.enter="onIntroSubmit">
+							<input v-else type="Text" class="form-control" readonly :value="myInfo.intro" 
+								@click="onClickIntro" placeholder="소개글을 입력하세요.">
+						</div>
+					</b-col>
+				</b-row>
+				<b-row>
+					<b-col md=12>
+						<div class="input-group">
+							<b-button block button-variant="outline-secondary" @click="setChangePassword">비밀번호 변경</b-button>
+						</div>
 					</b-col>
 				</b-row>
 			</b-col>
@@ -64,10 +76,19 @@
 </div>
 </template>
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapActions, mapState, mapMutations } from 'vuex'
 import ChangePassword from './ChangePassword.vue'
 export default {
 	components: { ChangePassword },
+	data() {
+		return {
+			isEditIntro: false,
+			inputIntro: '',
+		}
+	},
+	created() {
+		this.$nextTick(() => this.inputIntro = this.myInfo.intro)
+	},
 	computed: {
 		...mapState({
 			myInfo: 'myInfo',
@@ -88,15 +109,32 @@ export default {
 		...mapMutations([
 			'SET_IS_CHANGE_PASSWORD',
 		]),
+		...mapActions([
+			'UPDATE_USER',
+			'FETCH_MYINFO',
+		]),
 		setChangePassword() {
 			this.SET_IS_CHANGE_PASSWORD(false)
+		},
+		onClickIntro() {
+			this.isEditIntro = true
+			this.$nextTick(() => this.$refs.inputIntro.focus())
+		},
+		onIntroSubmit() {
+			if(!this.inputIntro) return
+			if(this.inputIntro.length > 33) return alert('32글자까지 입력 가능합니다')
+			const uid		= this.myInfo.uid
+			const intro = this.inputIntro
+			if(intro === this.myInfo.intro) return this.isEditIntro = false
+
+			this.UPDATE_USER({ uid, intro }).then(() => { 
+				this.FETCH_MYINFO()
+				this.isEditIntro = false
+			})
 		},
 	},
 	
 }
 </script>
 <style scoped>
-.input-group {
-	margin-bottom: 10px;
-}
 </style>

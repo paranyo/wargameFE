@@ -27,8 +27,8 @@ const actions = {
 			return user.fetch()
 				.then(({ user }) => commit('SET_ONEUSER', user))
 	},
-	UPDATE_USER({ state, dispatch }, { uid, pw, ip, money, nick, level, isBan, reason, email }) {
-		return user.update(uid, { uid, pw, ip, money, nick, level, isBan, reason, email })
+	UPDATE_USER({ state, dispatch }, { uid, pw, ip, money, nick, level, isBan, reason, email, intro }) {
+		return user.update(uid, { pw, ip, money, nick, level, isBan, reason, email, intro })
 			.then(_ => dispatch('FETCH_USERS'))
 	},
 
@@ -68,6 +68,9 @@ const actions = {
 
 	FETCH_HASH({ state, dispatch }, { flag }) {
 		return admin.getHash({ flag }).then(data => data)
+	},
+	FETCH_LOG(_, { type }) {
+		return admin.getLog({ type }).then(data => data)
 	}
 }
 

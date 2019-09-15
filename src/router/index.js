@@ -17,6 +17,8 @@ import aChallenge from '@/components/admin/Challenge'
 import EditProb		from '@/components/admin/EditProb'
 import User				from '@/components/admin/User'
 import EditUser		from '@/components/admin/EditUser'
+import AuthLog		from '@/components/admin/AuthLog'
+import AllLog			from '@/components/admin/AllLog'
 import store			from '../store'
 Vue.use(Router)
 
@@ -76,6 +78,14 @@ export default new Router({
 				{
 					path: '/settings/notice',
 					component: Notice,
+				},
+				{
+					path: '/settings/AuthLog',
+					component: AuthLog,
+				},
+				{
+					path: '/settings/AllLog',
+					component: AllLog,
 				},
 				{
 					path: '/settings/challenge',

@@ -23,11 +23,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-md">
-				<hr class="my-1" />
-			</div>
-		</div>
 	</div>
 </template>
 <script>

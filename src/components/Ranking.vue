@@ -8,6 +8,7 @@
 				  	<b-card-text>
 							<span class="badge badge-pill badge-primary">{{ user.score }}</span> {{ user.nick }}
 						</b-card-text>
+			    	<b-card-text class="small text-muted">{{ user.intro ? user.intro : 'No Intro'}}</b-card-text>
 			    	<b-card-text class="small text-muted">{{ lastSolved(user.lastSolved) }}</b-card-text>
 					</b-card>
 				</b-col>

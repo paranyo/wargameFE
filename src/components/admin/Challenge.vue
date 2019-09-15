@@ -1,17 +1,17 @@
 <template>
 	<b-container fluid class="mx-auto">
 		<b-row align-h="center">
-			<b-col cols="1" md="auto">
+			<b-col cols="2" md="auto">
 				<b-button variant="info" @click="setAddProb">Add Prob</b-button>
 			</b-col>
-			<b-col cols="10" md="auto">
-				<b-form-group size="md">
+			<b-col cols="8" md="auto" align="center">
+				<b-form-group size="md" md="auto">
 					<b-form-checkbox-group button-variant="info"
 							v-model="selected" :options="options" class="btn-group" buttons @input="show">
 					</b-form-checkbox-group>
 				</b-form-group>
 			</b-col>
-			<b-col cols="1" md="auto">
+			<b-col cols="2" md="auto">
 				<b-button variant="info" @click="setAddTag">Add Tag</b-button>
 			</b-col>
 		</b-row>

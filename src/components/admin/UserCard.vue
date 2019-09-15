@@ -8,6 +8,7 @@
 		</div>
 		<div class="card-body">
       <h5 class="card-title"><span class="small">Lv. {{ user.level }}</span>&nbsp; {{ user.uid }}</h5>
+      <p class="card-text small text-muted">{{ user.intro ? user.intro : 'No Intro' }}</p>
       <p class="card-text"><code>Join => {{ getAgo(user.createdAt) }}</code></p>
 		</div>
 		<div class="card-footer">

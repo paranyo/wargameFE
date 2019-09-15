@@ -1,7 +1,7 @@
 <template>
 	<b-container fluid class="pt-5 mx-auto">
-		<b-row align-h="center">
-			<b-col cols="12" md="auto">
+		<b-row class="mx-auto" align="center">
+			<b-col cols="12" md="12">
 				<b-form-group size="md">
 					<b-form-checkbox-group button-variant="info"
 							v-model="selected" :options="options" class="btn-group" buttons @input="show">

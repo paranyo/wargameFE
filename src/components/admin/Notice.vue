@@ -1,5 +1,5 @@
 <template>
-	<b-container fluid class="pt-5 mx-auto">
+	<b-container fluid class="mx-auto">
 	<transition appear appear-to-class="animated fadeInDownBig">
 		<b-row align-v="center">
 			<b-col cols="12" md="12">
