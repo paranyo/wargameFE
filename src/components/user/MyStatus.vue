@@ -2,7 +2,8 @@
 	<b-container fluid class="pt-5 mx-auto w-75">
 		<b-row>
 			<b-col md=4>
-		    <b-card img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top class="h-100">
+		    <b-card :img-src='`https://maplestory.io/api/character/{"itemId":${hair},"region":"KMS"},{"itemId":2000,"region":"KMS","version":"latest"},{"itemId":12000,"region":"KMS","version":"latest"}/stand1/0?showears=false&showLefEars=false&showHighLefEars=undefined&resize=1&name=&flipX=undefined`' img-alt="Image" img-top class="h-100"
+					style="margin: 0 auto; width: 150px;">
 	  	    <div slot="footer" style="text-align: center;">
 						Lv. <small class="text-muted">{{ myInfo.level }}</small>
 					</div>
@@ -68,7 +69,12 @@
 		</b-row>
 		<b-row>
 			<b-col md=12>
-				Solved probs
+				<b-jumbotron>
+					<div class="items" v-for="item in items" :key="`${item.id}`"
+						v-b-popover.hover.top="`${item.name}`" @click="changeItem(item.id)">
+						<img :src="`https://icons.maplestory.io/api/KMS/323/item/${item.id}/icon`" />
+					</div>
+			  </b-jumbotron>
 			</b-col>
 		</b-row>
 		<ChangePassword v-if="!isChangePassword" />
@@ -84,15 +90,18 @@ export default {
 		return {
 			isEditIntro: false,
 			inputIntro: '',
+			hair: '',
 		}
 	},
 	created() {
 		this.$nextTick(() => this.inputIntro = this.myInfo.intro)
+		this.FETCH_ITEMS()
 	},
 	computed: {
 		...mapState({
 			myInfo: 'myInfo',
 			isChangePassword: 'isChangePassword',
+			items: 'items'
 		}),	
 	},
 	watch: {
@@ -112,7 +121,11 @@ export default {
 		...mapActions([
 			'UPDATE_USER',
 			'FETCH_MYINFO',
+			'FETCH_ITEMS',
 		]),
+		changeItem(id) {
+			this.hair = id
+		},
 		setChangePassword() {
 			this.SET_IS_CHANGE_PASSWORD(false)
 		},
@@ -137,4 +150,25 @@ export default {
 }
 </script>
 <style scoped>
+.row {
+	margin-bottom: 10px;
+}
+.items {
+	border: 2px solid #d4d4d4;
+	border-radius: 6px;
+	padding: 16px 10px;
+  display: inline-block;
+  background: linear-gradient(#868686, #ffffff);
+}
+.jumbotron {
+	max-height: 300px;
+	text-align: center;
+  margin: 0 auto;
+	padding: 15px 10px;
+	overflow-y: scroll;
+}
+.items > img {
+	width: 40px;
+	height: 30px;
+}
 </style>

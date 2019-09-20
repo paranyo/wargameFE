@@ -11,6 +11,7 @@ const state = {
 	isAddTag: false,
 	isAddProb: false,
 	isChangePassword: true,
+	items: [],
 }
 
 export default state

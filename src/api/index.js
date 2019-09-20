@@ -115,3 +115,9 @@ export const rank = {
 		return request.get('/ranking').then(({ data }) => data)
 	}
 }
+
+export const item = {
+	fetch() {
+		return request.get('/item/hair').then(({ data }) => data)
+	}
+}

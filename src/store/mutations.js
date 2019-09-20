@@ -47,6 +47,11 @@ const mutations = {
 	/* RANK */
 	SET_RANKING(state, { user }) {
 		state.rank = user.map(user => user)
+	},
+
+	/* ITEM */
+	SET_ITEMS(state, { items }) {
+		state.items = items.map(i => i)
 	}
 }
 

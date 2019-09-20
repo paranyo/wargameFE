@@ -1,4 +1,4 @@
-import { auth, user, tag, challenge, prob, rank, admin } from '../api'
+import { auth, user, tag, challenge, prob, rank, admin, item } from '../api'
 
 const actions = {
 	LOGIN({ commit }, { id, pw }) {
@@ -71,7 +71,14 @@ const actions = {
 	},
 	FETCH_LOG(_, { type }) {
 		return admin.getLog({ type }).then(data => data)
+	},
+
+/* ITEM */
+	
+	FETCH_ITEMS({ commit }) {
+		return item.fetch().then(data => commit('SET_ITEMS', data))
 	}
+
 }
 
 export default actions
