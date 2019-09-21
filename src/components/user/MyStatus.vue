@@ -2,7 +2,8 @@
 	<b-container fluid class="pt-5 mx-auto w-75">
 		<b-row>
 			<b-col md=4>
-		    <b-card :img-src='`https://maplestory.io/api/character/{"itemId":${hair},"region":"KMS"},{"itemId":2000,"region":"KMS","version":"latest"},{"itemId":12000,"region":"KMS","version":"latest"}/stand1/0?showears=false&showLefEars=false&showHighLefEars=undefined&resize=1&name=&flipX=undefined`' img-alt="Image" img-top class="h-100"
+				{{ myCharacter }}
+		    <b-card :img-src='`https://maplestory.io/api/character/${this.myCharacter},{"itemId":2000,"region":"KMS","version":"latest"},{"itemId":12000,"region":"KMS","version":"latest"}/stand1/0?showears=false&showLefEars=false&showHighLefEars=undefined&resize=1&name=&flipX=undefined`' img-alt="Image" img-top class="h-100"
 					style="margin: 0 auto; width: 150px;">
 	  	    <div slot="footer" style="text-align: center;">
 						Lv. <small class="text-muted">{{ myInfo.level }}</small>
@@ -70,10 +71,21 @@
 		<b-row>
 			<b-col md=12>
 				<b-jumbotron>
-					<div class="items" v-for="item in items" :key="`${item.id}`"
-						v-b-popover.hover.top="`${item.name}`" @click="changeItem(item.id)">
-						<img :src="`https://icons.maplestory.io/api/KMS/323/item/${item.id}/icon`" />
+					<p class='items-nav'>Hair</p>
+					<hr class="my-1">
+					<div class="items" v-if="item.cCode==1" v-for="item in items" :key="`${item.itemCode}`"
+						v-b-popover.hover.top="`${item.item.name}`" @click="changeItem(item.itemCode)">
+						<img :src="`https://icons.maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
+					<p class='items-nav'>Eye</p>
+					<hr class="my-1">
+					<div class="items" v-if="item.cCode==2" v-for="item in items" :key="`${item.itemCode}`"
+						v-b-popover.hover.top="`${item.item.name}`" @click="changeItem(item.itemCode)">
+						<img :src="`https://icons.maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
+					</div>
+			  </b-jumbotron>
+			</b-col>
+		</b-row>
 			  </b-jumbotron>
 			</b-col>
 		</b-row>
@@ -91,10 +103,16 @@ export default {
 			isEditIntro: false,
 			inputIntro: '',
 			hair: '',
+			myCharacter: '',
 		}
 	},
 	created() {
-		this.$nextTick(() => this.inputIntro = this.myInfo.intro)
+		this.$nextTick(() => { 
+			this.inputIntro = this.myInfo.intro
+			this.myCharacter += this.myInfo.items.map((i) => {
+				return JSON.stringify({ itemId: i.itemCode, region: "KMS" })
+			})
+		})
 		this.FETCH_ITEMS()
 	},
 	computed: {
@@ -122,9 +140,17 @@ export default {
 			'UPDATE_USER',
 			'FETCH_MYINFO',
 			'FETCH_ITEMS',
+			'UPDATE_EQUIP',
 		]),
 		changeItem(id) {
-			this.hair = id
+			this.UPDATE_EQUIP({ itemCode: id }).then((data) => {
+				this.myCharacter = ''
+				this.FETCH_MYINFO().then(() => {
+					this.myCharacter += this.myInfo.items.map((i) => {
+						return JSON.stringify({ itemId: i.itemCode, region: "KMS" })
+					})
+				})
+			})
 		},
 		setChangePassword() {
 			this.SET_IS_CHANGE_PASSWORD(false)
@@ -170,5 +196,12 @@ export default {
 .items > img {
 	width: 40px;
 	height: 30px;
+}
+.items-nav {
+	text-align: left;
+	font-size: 16pt;
+	font-weight: bolder;
+	margin-left: 10px;
+	margin-bottom: 0;
 }
 </style>

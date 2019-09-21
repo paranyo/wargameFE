@@ -77,8 +77,10 @@ const actions = {
 	
 	FETCH_ITEMS({ commit }) {
 		return item.fetch().then(data => commit('SET_ITEMS', data))
+	},
+	UPDATE_EQUIP({ commit }, { itemCode }) {
+		return item.update({ itemCode }).then(data => data)
 	}
-
 }
 
 export default actions
