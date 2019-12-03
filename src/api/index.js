@@ -117,10 +117,13 @@ export const rank = {
 }
 
 export const item = {
-	fetch() {
-		return request.get('/item/hair').then(({ data }) => data)
+	fetch(uid) {
+		return request.get(`/item/${uid}`).then(({ data }) => data)
 	},
-	update(data) {
-		return request.post('/item/equip', data).then(({ data }) => data)
+	update(uid, data) {
+		return request.post(`/item/equip/${uid}`, data).then(({ data }) => data)
+	},
+	useBox(data) {
+		return request.post('/item/box', data).then(({ data }) => data)
 	},
 }

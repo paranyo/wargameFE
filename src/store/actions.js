@@ -75,12 +75,15 @@ const actions = {
 
 /* ITEM */
 	
-	FETCH_ITEMS({ commit }) {
-		return item.fetch().then(data => commit('SET_ITEMS', data))
+	FETCH_ITEMS({ commit }, uid) {
+		return item.fetch(uid).then(data => commit('SET_ITEMS', data))
 	},
-	UPDATE_EQUIP({ commit }, { itemCode }) {
-		return item.update({ itemCode }).then(data => data)
-	}
+	UPDATE_EQUIP({ commit }, { itemCode, uid}) {
+		return item.update(uid, { itemCode }).then(data => data)
+	},
+	USE_BOX({ commit }, { uid, id, idx}) {
+		return item.useBox({ uid, id, idx }).then(data => data)
+	},
 }
 
 export default actions

@@ -3,7 +3,7 @@
 		<b-row>
 			<b-col md=4>
 				{{ myCharacter }}
-		    <b-card :img-src='`https://maplestory.io/api/character/${this.myCharacter},{"itemId":2000,"region":"KMS","version":"latest"},{"itemId":12000,"region":"KMS","version":"latest"}/stand1/0?showears=false&showLefEars=false&showHighLefEars=undefined&resize=1&name=&flipX=undefined`' img-alt="Image" img-top class="h-100"
+		    <b-card :img-src='`https://maplestory.io/api/character/${this.myCharacter},{"itemId":2000,"region":"KMS","version":"323"},{"itemId":12000,"region":"KMS","version":"323"}/stand1/0?showears=false&showLefEars=false&showHighLefEars=undefined&resize=1&name=&flipX=undefined`' img-alt="Image" img-top class="h-100"
 					style="margin: 0 auto; width: 150px;">
 	  	    <div slot="footer" style="text-align: center;">
 						Lv. <small class="text-muted">{{ myInfo.level }}</small>
@@ -73,15 +73,21 @@
 				<b-jumbotron>
 					<p class='items-nav'>Hair</p>
 					<hr class="my-1">
-					<div class="items" v-if="item.cCode==1" v-for="item in items" :key="`${item.itemCode}`"
+					<div class="items" v-if="item.cCode==1" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
 						v-b-popover.hover.top="`${item.item.name}`" @click="changeItem(item.itemCode)">
-						<img :src="`https://icons.maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
+						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
 					<p class='items-nav'>Eye</p>
 					<hr class="my-1">
-					<div class="items" v-if="item.cCode==2" v-for="item in items" :key="`${item.itemCode}`"
+					<div class="items" v-if="item.cCode==2" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
 						v-b-popover.hover.top="`${item.item.name}`" @click="changeItem(item.itemCode)">
-						<img :src="`https://icons.maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
+						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
+					</div>
+					<p class='items-nav'>BOX</p>
+					<hr class="my-1">
+					<div class="items" v-if="item.cCode==99" v-for="item in items" :key="`${item.id}`" :value="`${item.itemCode}`"
+						v-b-popover.hover.top="`${item.item.name}`" @click="useItem(item.id, item.item.name, item.itemCode)">
+						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
 			  </b-jumbotron>
 			</b-col>
@@ -110,10 +116,12 @@ export default {
 		this.$nextTick(() => { 
 			this.inputIntro = this.myInfo.intro
 			this.myCharacter += this.myInfo.items.map((i) => {
-				return JSON.stringify({ itemId: i.itemCode, region: "KMS" })
+				return JSON.stringify({ itemId: i.itemCode, region: "KMS", version: "323" })
 			})
 		})
-		this.FETCH_ITEMS()
+		this.$nextTick(() => {
+			this.FETCH_ITEMS(this.$route.params.uid)
+		})
 	},
 	computed: {
 		...mapState({
@@ -141,16 +149,27 @@ export default {
 			'FETCH_MYINFO',
 			'FETCH_ITEMS',
 			'UPDATE_EQUIP',
+			'USE_BOX',
 		]),
 		changeItem(id) {
-			this.UPDATE_EQUIP({ itemCode: id }).then((data) => {
+			this.UPDATE_EQUIP({ itemCode: id, uid: this.$route.params.uid }).then((data) => {
 				this.myCharacter = ''
 				this.FETCH_MYINFO().then(() => {
+					this.FETCH_ITEMS(this.$route.params.uid)
 					this.myCharacter += this.myInfo.items.map((i) => {
 						return JSON.stringify({ itemId: i.itemCode, region: "KMS" })
 					})
 				})
 			})
+		},
+		useItem(idx, name, id) {
+			if(confirm(name + "을 사용하시겠습니까?")) {
+				this.USE_BOX({ uid: this.$route.params.uid, id, idx }).then((data) => {
+					this.FETCH_ITEMS(this.$route.params.uid)
+				})	
+			} else {
+				alert('취소되었습니다.')
+			}
 		},
 		setChangePassword() {
 			this.SET_IS_CHANGE_PASSWORD(false)
@@ -203,5 +222,9 @@ export default {
 	font-weight: bolder;
 	margin-left: 10px;
 	margin-bottom: 0;
+}
+
+.isEquip {
+	box-shadow: 0 0 0 2px green inset;
 }
 </style>
