@@ -166,6 +166,8 @@ export default {
 			if(confirm(name + "을 사용하시겠습니까?")) {
 				this.USE_BOX({ uid: this.$route.params.uid, id, idx }).then((data) => {
 					this.FETCH_ITEMS(this.$route.params.uid)
+					this.FETCH_MYINFO()
+
 				})	
 			} else {
 				alert('취소되었습니다.')
