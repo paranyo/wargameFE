@@ -84,6 +84,15 @@ export const prob = {
 	},
 }
 
+export const notice = {
+	fetch() {
+		return request.get('/notice').then(({ data }) => data)
+	},
+	create (data) {
+		return request.post('/notice/create', data).then(({ data }) => data)
+	},
+}
+
 export const user = {
 	fetch(uid) {
 		if(uid) {

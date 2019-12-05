@@ -25,6 +25,9 @@ const mutations = {
 	SET_MYINFO (state, user) {
 		state.myInfo = user
 	},
+	SET_NOTICE (state, notice) {
+		state.notice = notice.map(post => post)
+	},
 	SET_TAGS(state, { list }) {
 		state.tags = list.map(l => l)
 	},
@@ -33,6 +36,9 @@ const mutations = {
 	},
 	SET_IS_ADD_PROB(state, toggle) {
 		state.isAddProb = toggle
+	},
+	SET_IS_ADD_NOTICE(state, toggle) {
+		state.isAddNotice = toggle
 	},
 	SET_IS_CHANGE_PASSWORD(state, toggle) {
 		state.isChangePassword = toggle

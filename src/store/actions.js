@@ -1,4 +1,4 @@
-import { auth, user, tag, challenge, prob, rank, admin, item } from '../api'
+import { auth, notice, user, tag, challenge, prob, rank, admin, item } from '../api'
 
 const actions = {
 	LOGIN({ commit }, { id, pw }) {
@@ -30,6 +30,14 @@ const actions = {
 	UPDATE_USER({ state, dispatch }, { uid, pw, ip, money, nick, level, isBan, reason, email, intro }) {
 		return user.update(uid, { pw, ip, money, nick, level, isBan, reason, email, intro })
 			.then(_ => dispatch('FETCH_USERS'))
+	},
+
+	// User Main
+	FETCH_NOTICE({ commit }) {
+		return notice.fetch().then(data => commit('SET_NOTICE', data))
+	},
+	ADD_NOTICE({ state, dispatch }, { title, description, isOpen }) {
+		return notice.create({ title, description, isOpen })
 	},
 
 /* TAG 관련 */

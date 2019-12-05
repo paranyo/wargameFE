@@ -10,8 +10,8 @@
 						<b-dropdown-item to="/settings/AuthLog">Auth Log</b-dropdown-item>
 						<b-dropdown-item to="/settings/AllLog">All Log</b-dropdown-item>
 					</b-dropdown>
-			    <b-dropdown right text="Challenge" to="/settings/challenge">
-		  	    <b-dropdown-item>Add Tag</b-dropdown-item>
+			    <b-dropdown right text="Server">
+		  	    <b-dropdown-item to="/settings/SetNotice">Notice</b-dropdown-item>
 			      <b-dropdown-item>Add Prob</b-dropdown-item>
 			      <b-dropdown-divider></b-dropdown-divider>
 			      <b-dropdown-item>Item 3</b-dropdown-item>

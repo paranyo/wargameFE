@@ -50,8 +50,6 @@ export default {
 		...mapState({
 			users: 'users'
 		}),
-		time() {
-					},
 	},
 	created() {
 		this.FETCH_USERS()

@@ -1,28 +1,31 @@
 <template>
 	<b-container fluid class="pt-5 mx-auto">
-	<transition appear appear-to-class="animated fadeInDownBig">
-		<b-row align-v="center">
-			<b-col cols="12" md="12">
-				<b-jumbotron bg-variant="light">
-					<template slot="header">환영합니다!</template>
-					<hr class="my-4">
-					<p>
-						나는 이 서비스를 제공하기 위해 많은 노력을 기울였습니다. 재밌는 시간 보내세요!
-					</p>
-					<p>
-						Written-By  <b-badge variant="primary">gksrbxo123@gmail.com</b-badge>
-					</p>
-				</b-jumbotron>
-			</b-col>
-		</b-row>
-	</transition>
+		<!-- Main -->
+		<div>
+			첫번째는 메인 공지로 두어서 서버 공지로 두자
+			{{ notice }}
+		</div>
+			두번째부터는 게시판 형식으로 간단히 보여주고 클릭시 자세히보기로 만들자
+		<!-- Notice-->
+		<div>
+
+		</div>
+
 	</b-container>
 </div>
 </template>
 <script>
+import { mapState, mapActions, mapMutations } from 'vuex'
 export default {
-	mounted() {
-	}
+	computed: {
+		...mapState([ 'notice' ]),
+	},
+	created() {
+		this.FETCH_NOTICE()
+	},
+	methods: {
+		...mapActions([ 'FETCH_NOTICE' ]),
+	},
 }
 </script>
 <style>

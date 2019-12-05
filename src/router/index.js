@@ -19,6 +19,9 @@ import User				from '@/components/admin/User'
 import EditUser		from '@/components/admin/EditUser'
 import AuthLog		from '@/components/admin/AuthLog'
 import AllLog			from '@/components/admin/AllLog'
+import SetNotice	from '@/components/admin/SetNotice'
+
+
 import store			from '../store'
 Vue.use(Router)
 
@@ -107,6 +110,10 @@ export default new Router({
 							component: EditUser
 						}
 					]
+				},
+				{
+					path: '/settings/SetNotice',
+					component: SetNotice,
 				},
 			],
 		},
