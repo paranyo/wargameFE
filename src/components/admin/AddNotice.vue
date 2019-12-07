@@ -52,11 +52,12 @@ export default {
 	methods: {
 		...mapActions([
 			'ADD_NOTICE',
+			'FETCH_NOTICE'
 		]),
 		...mapMutations([
 			'SET_IS_ADD_NOTICE'
 		]),
-		onSubmitProb() {
+		onSubmitNotice() {
 			const title				= this.nTitle
 			const description = this.nDescription
 			const isOpen			= !!this.nIsOpen

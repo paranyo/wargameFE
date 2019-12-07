@@ -152,7 +152,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 				return t.getFullYear()+'-'+(m>9?m:'0'+m)+'-'+(d>9?d:'0'+d)+' '+(h>9?h:'0'+h)+':'+(i>9?i:'0'+i)+':'+(s>9?s:'0'+s)
 				
 			},
-      info(item, index, button) {
+      nfinfo(item, index, button) {
         this.infoModal.title = `Row index: ${index}`
         this.infoModal.content = JSON.stringify(item, null, 2)
         this.$root.$emit('bv::show::modal', this.infoModal.id, button)
