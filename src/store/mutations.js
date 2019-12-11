@@ -16,6 +16,9 @@ const mutations = {
 		localStorage.clear()
 		setAuthInHeader(null)
 	},
+	SET_FILES (state, file) {
+		state.files = file.map(f => f)
+	},
 	SET_USERS (state, user) {
 		state.users = user.map(u => u)
 	},

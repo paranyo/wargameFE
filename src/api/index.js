@@ -88,9 +88,15 @@ export const notice = {
 	fetch() {
 		return request.get('/notice').then(({ data }) => data)
 	},
-	create (data) {
+	create(data) {
 		return request.post('/notice/create', data).then(({ data }) => data)
 	},
+	update(data) {
+		return request.put('/notice/update', data).then(({ data }) => data)
+	},
+	remove(id) {
+		return request.get(`/notice/remove/${id}`).then(({ data }) => data)
+	}
 }
 
 export const user = {
@@ -104,9 +110,11 @@ export const user = {
 	fetchInfo() {
 		return request.get('/myinfo').then(({ data }) => data)
 	},
-
 	update(uid, data) {
 		return request.put(`/user/${uid}`, data).then(({ data }) => data)
+	},
+	getFile(fName) {
+		return request.get(`/download/${fName}`)
 	}
 }
 
@@ -116,6 +124,12 @@ export const admin = {
 	},
 	getLog(data) {
 		return request.post('/manage/log', data).then(({ data }) => data)
+	},
+	getFile() {
+		return request.get('/manage/file').then(({ data }) => data)
+	},
+	removeFile(data) {
+		return request.put('/manage/file/remove', data).then(({ data }) => data)
 	},
 }
 

@@ -14,6 +14,7 @@ const state = {
 	isChangePassword: true,
 	items: [],
 	notice: [],
+	files: [],
 }
 
 export default state

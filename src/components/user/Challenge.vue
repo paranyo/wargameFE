@@ -11,7 +11,7 @@
 		</b-row>
 		<b-row class="px-3 mx-auto">
 			<b-col v-for="prob in probs" :key="`${prob.id}`" class="mb-3" lg=3 md=4 sm=6>
-				<ProbCard :prob="prob" v-on:showTags="show" />
+				<ProbCard :prob="prob" v-on:showTags="show" class="probCard" />
 			</b-col>
 		</b-row>
 		<router-view />
@@ -55,4 +55,7 @@ export default {
 }
 </script>
 <style scope>
+.probCard:hover {
+	cursor: pointer;
+}
 </style>

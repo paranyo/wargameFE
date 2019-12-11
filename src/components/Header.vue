@@ -47,7 +47,9 @@ export default {
 		}
 	},*/
 	created() {
-		this.FETCH_MYINFO()
+		if(this.$store.getters.isAuthenticated) {
+			this.FETCH_MYINFO()
+		}
 	},
 	methods: {
 		...mapActions(['FETCH_MYINFO']),

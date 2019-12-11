@@ -39,6 +39,12 @@ const actions = {
 	ADD_NOTICE({ state, dispatch }, { title, description, isOpen }) {
 		return notice.create({ title, description, isOpen })
 	},
+	UPDATE_NOTICE({ state, dispatch }, { id, title, description }) {
+		return notice.update({ id, title, description })
+	},
+	REMOVE_NOTICE(_, { id }) {
+		return notice.remove(id)
+	},
 
 /* TAG 관련 */
 
@@ -62,11 +68,11 @@ const actions = {
 	FETCH_ONEPROB({ commit }, id) {
 		return prob.fetchOne(id).then(({ prob }) => commit('SET_PROB', prob))
 	},
-	ADD_PROB({ state, dispatch }, { title, description, author, score, flag, isOpen, tagId }) {
-		return prob.create({ title, description, author, score, flag, isOpen, tagId  })
+	ADD_PROB({ state, dispatch }, { title, description, author, score, flag, isOpen, tagId, fileId, src }) {
+		return prob.create({ title, description, author, score, flag, isOpen, tagId, fileId, src })
 	},
-	UPDATE_PROB({ state, dispatch }, { id, title, description, author, score, flag, isOpen, tagId }) {
-		return prob.update(id, { id, title, description, author, score, flag, isOpen, tagId })
+	UPDATE_PROB({ state, dispatch }, { id, title, description, author, score, flag, isOpen, tagId, fileId, src }) {
+		return prob.update(id, { id, title, description, author, score, flag, isOpen, tagId, fileId, src })
 	},
 
 	/* AUTH PROB */
@@ -81,6 +87,16 @@ const actions = {
 		return admin.getLog({ type }).then(data => data)
 	},
 
+	/* FILE */
+	GET_FILE(_, fName) {
+		return user.getFile(fName)
+	},
+	FETCH_FILES({ commit }) {
+		return admin.getFile().then(data => commit('SET_FILES', data))
+	},
+	REMOVE_FILE(_, { id }) {
+		return admin.removeFile({ id })
+	},
 /* ITEM */
 	
 	FETCH_ITEMS({ commit }, uid) {

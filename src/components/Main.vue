@@ -9,7 +9,7 @@
 		<!-- Notice-->
 		<div>
 	    <b-table sticky-header fixed responsive :items="notice.slice(1, notice.length)" :fields='fields' :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
-				head-variant="light" class="text-center">
+				head-variant="light" class="text-center" :tbody-tr-class="rowClass">
 				<template v-slot:table-colgroup="scope">
 					<col v-for="field in scope.fields" :key="field.key" :style="{ width: field.key === 'title' ? '300px' : '40px' }">
 				</template>
@@ -19,7 +19,7 @@
 			</b-table>
 		</div>
 		<b-modal :id="infoModal.id" :title="infoModal.title" @hide="resetInfoModal">
-		  <pre>{{ infoModal.description }}</pre>
+		  <span v-html="notice[0].description"></span>
       <template v-slot:modal-footer>
 				<span></span>
 			</template>
@@ -46,7 +46,7 @@ export default {
 						return value.replace('T', ' ').substring(2, 19)
 					}
 				},
-				{ key: 'author', label: '게시자', sortable: false }
+				{ key: 'author', label: '작성자', sortable: false }
 			],
 			infoModal: {
 				id: 'info-modal',
@@ -63,6 +63,10 @@ export default {
 	},
 	methods: {
 		...mapActions([ 'FETCH_NOTICE' ]),
+		rowClass(item, type) {
+			if(!item.deletedAt) return
+			if(item.deletedAt !== null) return 'table-danger'
+		},
 		info(item, button) {
 			this.infoModal.title = item.title
 			this.infoModal.description = item.description,

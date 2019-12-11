@@ -8,6 +8,12 @@
 			<div class="mb-3">
 				{{ prob.description }}
 			</div>
+			<div class="mb-3">
+				<p v-if="prob.src"><a :href="'//' + prob.src" target="_blank">LINK</a></p>
+				<p v-if="prob.saveName"><a :href="'//wargame2.run.goorm.io/download/' + prob.saveName" target="_blank">DOWNLOAD</a></p>
+				<!--
+				<p v-if="prob.saveName"><button button-variant='info' size="sm" @click="getFile(prob.saveName)">DOWNLOAD</button></p>-->
+			</div>
 			<div>
 				<div class="input-group">
 				  <input type="text" class="form-control" placeholder="플래그" v-model="flag">
@@ -54,7 +60,11 @@ export default {
 			'AUTH_PROB',
 			'FETCH_MYINFO',
 			'FETCH_PROBS',
+			'GET_FILE',
 		]),
+		getFile(fName) {
+			this.GET_FILE(fName)
+		},
 		onSubmitForm() {
 			const flag = this.flag.trim()
 			if(!flag) return

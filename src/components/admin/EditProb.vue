@@ -6,8 +6,18 @@
 				<input class="form-control" type="text" placeholder='문제 이름' v-model="title">
 			</b-row>
 			<b-row class="form-group">
-				<b-form-textarea id="textarea" class="form-control" v-model="description"
-					placeholder="본문을 입력하세요"	rows="3" max-rows="6"></b-form-textarea>
+				<b-form-textarea id="textarea" class="form-control" v-model="description" placeholder="본문을 입력하세요"	
+					rows="6" max-rows="8"></b-form-textarea>
+			</b-row>
+			<b-row class="px-3 mx-auto">
+				<b-table ref="selectableTable" sticky-header="200px" fixed responsive="sm" :items="files" :fields="fields" class="text-center" selectable select-mode="single"
+					@row-selected="onRowSelected"></b-table>
+			</b-row>
+			<b-row class="form-group">
+				<b-col cols="8" md="8">
+					<p v-if="fileId.length == 1">선택된 파일: <b>{{ fileId[0].id }}번 </b></p>
+<!--					/* 여기서부터 다시*/-->
+				</b-cols>
 			</b-row>
 			<b-row class="form-group">
 				<div class="input-group">
@@ -18,13 +28,16 @@
 				</div>
 			</b-row>
 			<b-row class="form-group" align-h="start">
-				<b-col cols="4" md="5">
+				<b-col cols="3" md="3">
 					<input class="form-control" type="text" placeholder='출제자' v-model="author">
 				</b-col>
-				<b-col cols="4" md="3">
+				<b-col cols="2" md="2">
 					<input class="form-control" type="text" placeholder='스코어' v-model="score">
 				</b-col>
-				<b-col cols="4" md="4">
+				<b-col cols="5" md="5">
+					<input class="form-control" type="text" placeholder='링크' v-model="src">
+				</b-col>
+				<b-col cols="2" md="2">
 					<b-form-radio-group buttons button-variant="outline-primary" v-model="isOpen">
 						<b-form-radio value="1">Open</b-form-radio>
 		        <b-form-radio value="0">Close</b-form-radio>
@@ -65,7 +78,8 @@ export default {
 			author: '',
 			isOpen: '',
 			tagId: '',
-			tag: []
+			tag: [],
+			fileId: [],
 		}
 	},
 	components: {	Modal	},
@@ -88,7 +102,8 @@ export default {
 			this.flag				 = this.prob.flag
 			this.isOpen			 = !this.prob.deletedAt * 1
 			this.tagId			 = this.prob.tagId
-
+			this.src				 = this.prob.src
+			this.fileId			 = this.prob.file
 			this.tags.map((t) => {
 				this.tag.push(t.id)
 			})
@@ -117,10 +132,12 @@ export default {
 			const author			= this.author.trim()
 			const isOpen			= this.isOpen
 			const tagId				= this.tagId
+			const fileId			= this.fileId
+			const src					= this.src.trim()
 			if(!title || !description || !flag || !author) return
 			if(flag.length != 64)
 				return alert('플래그 값을 해시해야 합니다')
-			this.UPDATE_PROB({ id: this.prob.id, title, description, flag: this.rflag, score, author, isOpen, tagId })
+			this.UPDATE_PROB({ id: this.prob.id, title, description, flag: this.rflag, score, author, isOpen, tagId, fileId, src })
 				.then(() => {
 					this.FETCH_PROBS({ tags: this.tag })
 					this.$router.push('/settings/challenge')

@@ -20,7 +20,7 @@ import EditUser		from '@/components/admin/EditUser'
 import AuthLog		from '@/components/admin/AuthLog'
 import AllLog			from '@/components/admin/AllLog'
 import SetNotice	from '@/components/admin/SetNotice'
-
+import Storage		from '@/components/admin/Storage'
 
 import store			from '../store'
 Vue.use(Router)
@@ -115,6 +115,10 @@ export default new Router({
 					path: '/settings/SetNotice',
 					component: SetNotice,
 				},
+				{
+					path: '/settings/Storage',
+					component: Storage,
+				}
 			],
 		},
 		{

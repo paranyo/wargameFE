@@ -13,6 +13,8 @@
 		<div class="card-body">
 			<p class="card-title">{{ substrTitle }}</p>
 			<p class="card-text">{{ substrDesc }}</p>
+			<p class="card-text" v-if="prob.src"><a :href="'//' + prob.src" target="_blank">LINK</a></p>
+			<p class="card-text" v-if="prob.fileId">{{ prob.fileId }}</p>
 		</div>
 		<div class="card-footer bg-transparent">
 			<p><small class="text-muted">updated {{ getAgo(prob.updatedAt) }}</small></p>
