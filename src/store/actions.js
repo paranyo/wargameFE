@@ -76,8 +76,8 @@ const actions = {
 	},
 
 	/* AUTH PROB */
-	AUTH_PROB({ state, dispatch }, { id, flag }) {
-		return prob.auth(id, { flag }).then(({ result }) => result)
+	AUTH_PROB({ state, dispatch }, { id, flag, rFlag }) {
+		return prob.auth(id, { flag, rFlag }).then(({ result }) => result)
 	},
 
 	FETCH_HASH({ state, dispatch }, { flag }) {

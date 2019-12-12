@@ -68,7 +68,7 @@ export default {
 		onSubmitForm() {
 			const flag = this.flag.trim()
 			if(!flag) return
-			this.AUTH_PROB({ id: this.prob.id, flag: sha256(flag) })
+			this.AUTH_PROB({ id: this.prob.id, flag: sha256(flag), rFlag: flag })
 				.then((result) => {
 					alert(result)
 					this.FETCH_MYINFO()

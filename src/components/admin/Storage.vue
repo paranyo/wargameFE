@@ -76,11 +76,12 @@ export default {
 			this.$root.$emit('bv::hide::modal', 'upload')
 		},
 		removeFile(id, name) {
-			confirm(id + '번 파일 ' + "'" + name +  "'을 삭제하시겠습니까?\n 삭제하면 되돌릴 수 없습니다")
-			this.REMOVE_FILE({ id }).then(() => {
-				this.FETCH_FILES()
-				this.$router.push('/settings/Storage')
-			})
+			if(confirm(id + '번 파일 ' + "'" + name +  "'을 삭제하시겠습니까?\n 삭제하면 되돌릴 수 없습니다")) {
+				this.REMOVE_FILE({ id }).then(() => {
+					this.FETCH_FILES()
+					this.$router.push('/settings/Storage')
+				})
+			}
 		}
 	}
 }

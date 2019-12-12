@@ -1,7 +1,7 @@
 <template>
 	<b-container fluid class="pt-5 mx-auto">
 		<!-- Main -->
-		<b-jumbotron :lead="`${notice[0].title}`">
+		<b-jumbotron :lead="notice[0].title">
 			<span v-html="notice[0].description"></span>
 			<hr />
 			<b-button variant="primary" href="#">Discord</b-button>

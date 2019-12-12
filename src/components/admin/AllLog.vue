@@ -71,7 +71,7 @@
           {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
         </b-button>
       </template>
-			      <template v-slot:row-details="row">
+			<template v-slot:row-details="row">
         <b-card>
           <ul>
             <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
@@ -79,7 +79,6 @@
         </b-card>
       </template>
     </b-table>
-			    <!-- Info modal -->
     <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
       <pre>{{ infoModal.content }}</pre>
     </b-modal>

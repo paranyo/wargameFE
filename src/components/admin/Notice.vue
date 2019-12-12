@@ -6,9 +6,7 @@
 				<b-jumbotron bg-variant="light">
 					<template slot="header">환영합니다!</template>
 					<hr class="my-4">
-					<p>
-						공지사항입니다!
-					</p>
+					<p>어드민 몇명인지 띄우기</p>
 					<p>
 						Written-By  <b-badge variant="primary">gksrbxo123@gmail.com</b-badge>
 					</p>

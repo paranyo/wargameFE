@@ -12,6 +12,7 @@
           <b-form-checkbox-group v-model="filterOn" class="mt-1">
             <b-form-checkbox value="solver">제출자</b-form-checkbox>
             <b-form-checkbox value="pid">문제 번호</b-form-checkbox>
+            <b-form-checkbox value="flag">플래그</b-form-checkbox>
             <b-form-checkbox value="isCorrect">풀이 유무</b-form-checkbox>
             <b-form-checkbox value="createdAt">제출 시각</b-form-checkbox>
           </b-form-checkbox-group>
@@ -67,7 +68,6 @@
           {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
         </b-button>
       </template>
-
       <template v-slot:row-details="row">
         <b-card>
           <ul>
@@ -76,8 +76,6 @@
         </b-card>
       </template>
     </b-table>
-
-    <!-- Info modal -->
     <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
       <pre>{{ infoModal.content }}</pre>
     </b-modal>
@@ -90,14 +88,15 @@ import { mapState, mapMutations, mapActions } from 'vuex'
       return {
 				items: [],
         fields: [
-          { key: 'solver', label: '제출자', sortable: true, sortDirection: 'desc' },
-          { key: 'pid', label: '문제 번호', sortable: true, sortDirection: 'desc' },
-          { key: 'isCorrect', label: '풀이 유무',
+          { key: 'createdAt', label: '제출 시각', sortable: true, class: 'text-center' },
+          { key: 'pid', label: '문제 번호', sortable: true, sortDirection: 'desc', class: 'text-center' },
+          { key: 'solver', label: '제출자', sortable: true, sortDirection: 'desc', class: 'text-center' },
+					{ key: 'flag', label: '플래그', sortable: false, class: 'text-center' },
+          { key: 'isCorrect', label: '풀이 유무', class: 'text-center',
 						formatter: (value, key, item) => { return value ? '성공' : '실패' },
             sortable: true, sortByFormatted: true, filterByFormatted: true
           },
-          { key: 'createdAt', label: '제출 시각', sortable: true, class: 'text-center' },
-          { key: 'actions', label: 'Actions' }
+          { key: 'actions', label: 'Actions', class:'text-center' }
         ],
         totalRows: 1,
         currentPage: 1,
@@ -152,8 +151,8 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 				return t.getFullYear()+'-'+(m>9?m:'0'+m)+'-'+(d>9?d:'0'+d)+' '+(h>9?h:'0'+h)+':'+(i>9?i:'0'+i)+':'+(s>9?s:'0'+s)
 				
 			},
-      nfinfo(item, index, button) {
-        this.infoModal.title = `Row index: ${index}`
+			info(item, index, button) {
+			  this.infoModal.title = `Row index: ${index}`
         this.infoModal.content = JSON.stringify(item, null, 2)
         this.$root.$emit('bv::show::modal', this.infoModal.id, button)
       },

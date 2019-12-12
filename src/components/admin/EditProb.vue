@@ -15,9 +15,12 @@
 			</b-row>
 			<b-row class="form-group">
 				<b-col cols="8" md="8">
-					<p v-if="fileId.length == 1">선택된 파일: <b>{{ fileId[0].id }}번 </b></p>
-<!--					/* 여기서부터 다시*/-->
-				</b-cols>
+					<p v-if="selected.length == 1">선택된 파일: <b>{{ selected[0].id }}번 {{ selected[0].originName }}</b></p>
+					<p v-else>파일을 선택하지 않았습니다.</p>
+				</b-col>
+				<b-col cols="4" md="4">
+					<b-button  block button-variant="info" @click="clearSelected">Clear</b-button>
+				</b-col>
 			</b-row>
 			<b-row class="form-group">
 				<div class="input-group">
@@ -56,7 +59,7 @@
 				</b-col>
 			</b-row>
 			<b-row>
-				<b-button block button-variant="outline-secondary" @click="onSubmitForm" @keyup.enter="onSubmitForm">
+				<b-button block button-variant="outline-secondary" @click="onSubmitForm()" @keyup.enter="onSubmitForm()">
 					문제 수정</b-button>
 				<b-button block @click="onClickClose">취소</b-button>
 			</b-row>
@@ -70,6 +73,13 @@ import { sha256 } from 'js-sha256'
 export default {
 	data() {
 		return {
+			fields: [
+				{ key: 'id', label: '인덱스', sortable: true },
+				{ key: 'originName', label: '파일명', sortable: false },
+				{ key: 'size', label: '파일 크기', sortable: true },
+				{ key: 'createdAt', label: '업로드 날짜', sortable: true, formatter: value => { return value.replace('T', ' ').substring(2, 19) } },
+				{ key: 'uploader', label: '업로더', sortable: false },
+			],
 			title: '',
 			description: '',
 			flag: '',
@@ -78,16 +88,14 @@ export default {
 			author: '',
 			isOpen: '',
 			tagId: '',
+			src: '',
 			tag: [],
-			fileId: [],
+			selected: [],
 		}
 	},
 	components: {	Modal	},
 	computed: {
-		...mapState({
-			prob: 'prob',
-			tags: 'tags',
-		}),
+		...mapState([ 'prob', 'tags', 'files' ]),
 		invalidForm() {
 			return !this.title || !this.description || !this.flag || !this.score || !this.author 
 		}
@@ -103,11 +111,11 @@ export default {
 			this.isOpen			 = !this.prob.deletedAt * 1
 			this.tagId			 = this.prob.tagId
 			this.src				 = this.prob.src
-			this.fileId			 = this.prob.file
 			this.tags.map((t) => {
 				this.tag.push(t.id)
 			})
 		})
+		this.FETCH_FILES()
 	},
 	methods: {
 		...mapActions([
@@ -115,7 +123,14 @@ export default {
 			'UPDATE_PROB',
 			"FETCH_HASH",
 			'FETCH_PROBS',
+			'FETCH_FILES', 
 		]),
+		onRowSelected(item) {
+			this.selected = item
+		},
+		clearSelected() {
+			this.$refs.selectableTable.clearSelected()
+		},
 		getHash() {
 			const flag = this.flag.trim()
 			this.rflag = sha256(flag)
@@ -125,6 +140,7 @@ export default {
 				alert('한 번만 해싱하세요!')
 		},
 		onSubmitForm() {
+			console.log(this.selected)
 			const title				= this.title.trim()
 			const description = this.description.trim()
 			const flag				= this.flag.trim()
@@ -132,7 +148,9 @@ export default {
 			const author			= this.author.trim()
 			const isOpen			= this.isOpen
 			const tagId				= this.tagId
-			const fileId			= this.fileId
+			let fileId				= null
+			if(this.selected.length !== 0) 
+				fileId = this.selected[0].id
 			const src					= this.src.trim()
 			if(!title || !description || !flag || !author) return
 			if(flag.length != 64)

@@ -19,7 +19,7 @@
 					<p v-else>파일을 선택하지 않았습니다.</p>
 				</b-col>
 				<b-col cols="4" md="4">
-					<b-button block variant="info" @click="clearSelected">Clear</b-button>
+					<b-button block button-variant="info" @click="clearSelected">Clear</b-button>
 				</b-col>
 			</b-row>
 			<b-row class="form-group">
