@@ -1,4 +1,4 @@
-import { auth, notice, user, tag, challenge, prob, rank, admin, item } from '../api'
+import { auth, notice, user, tag, challenge, prob, rank, admin, item, shop } from '../api'
 
 const actions = {
 	LOGIN({ commit }, { id, pw }) {
@@ -107,6 +107,23 @@ const actions = {
 	},
 	USE_BOX({ commit }, { uid, id, idx}) {
 		return item.useBox({ uid, id, idx }).then(data => data)
+	},
+
+	/* SHOP */
+	FETCH_SHOP({ commit }) {
+		return shop.fetch().then(data => commit('SET_SHOP', data))
+	},
+	FETCH_PRODUCT({ commit }, { idx }) {
+		return shop.fetch({ id: idx }).then(data => commit('SET_PRODUCT', data))
+	},
+	ADD_SHOP({ state, dispatch }, { pdCode, price, pdCount, deadLine, description }) {
+		return shop.create({ pdCode, price, pdCount, deadLine, description })
+	},
+	UPDATE_SHOP(_, { id, pdCode, price, pdCount, deadLine, description }) {
+		return shop.update(id, { pdCode, price, pdCount, deadLine, description })
+	},
+	BUY_PRODUCT(_, { pId }) {
+		return shop.buy(pId)
 	},
 }
 

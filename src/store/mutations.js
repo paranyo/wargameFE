@@ -43,6 +43,9 @@ const mutations = {
 	SET_IS_ADD_NOTICE(state, toggle) {
 		state.isAddNotice = toggle
 	},
+	SET_IS_ADD_SHOP(state, toggle) {
+		state.isAddShop = toggle
+	},
 	SET_IS_CHANGE_PASSWORD(state, toggle) {
 		state.isChangePassword = toggle
 	},
@@ -61,6 +64,13 @@ const mutations = {
 	/* ITEM */
 	SET_ITEMS(state, { items }) {
 		state.items = items.map(i => i)
+	},
+	/* SHOP */
+	SET_SHOP(state, { shop }) {
+		state.shop = shop.map(s => s)
+	},
+	SET_PRODUCT(state, { shop }) {
+		state.product = shop
 	}
 }
 

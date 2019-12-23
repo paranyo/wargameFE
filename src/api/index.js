@@ -150,3 +150,21 @@ export const item = {
 		return request.post('/item/box', data).then(({ data }) => data)
 	},
 }
+
+export const shop = {
+	fetch(id) {
+		if(id)
+			return request.get(`/shop/${id}`).then(({ data }) => data)
+		else
+			return request.get('/shop').then(({ data }) => data)
+	},
+	create (data) {
+		return request.post('/manage/shop/create', data).then(({ data }) => data)
+	},
+	update (id, data) {
+		return request.post(`/manage/shop/update${id}`, data).then(({ data }) => data)
+	},
+	buy(pId) {
+		return request.get(`/shop/buy/${pId}`).then(({ data }) => data)
+	},
+}

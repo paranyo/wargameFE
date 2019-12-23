@@ -11,10 +11,13 @@ const state = {
 	isAddTag: false,
 	isAddProb: false,
 	isAddNotice: false,
+	isAddShop: false,
 	isChangePassword: true,
 	items: [],
 	notice: [],
 	files: [],
+	shop: [],
+	product: {},
 }
 
 export default state

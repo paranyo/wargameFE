@@ -6,6 +6,7 @@
 					<b-button to="/settings/notice">Notice</b-button>
 					<b-button to="/settings/user">User</b-button>
 					<b-button to="/settings/challenge">Challenge</b-button>
+					<b-button to="/settings/shop">Shop</b-button>
 					<b-dropdown right text="Log">
 						<b-dropdown-item to="/settings/AuthLog">Auth Log</b-dropdown-item>
 						<b-dropdown-item to="/settings/AllLog">All Log</b-dropdown-item>

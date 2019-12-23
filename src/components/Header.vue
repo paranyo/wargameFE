@@ -5,7 +5,7 @@
 				<router-link class="headBtn" to="/">Main</router-link>
 				<router-link class="headBtn" to="/ranking">Ranking</router-link>
 				<router-link class="headBtn" to="/challenge">Challenge</router-link>
-				<router-link class="headBtn" to="/challenge">Shop</router-link>
+				<router-link class="headBtn" to="/shop">Shop</router-link>
 				<router-link class="headBtn" to="/challenge">Auction</router-link>
 			</div>
 			<div class="col-md-6 text-right">
