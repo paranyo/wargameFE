@@ -155,7 +155,7 @@ export default {
 			this.UPDATE_EQUIP({ itemCode: id, uid: this.$route.params.uid }).then((data) => {
 				this.myCharacter = ''
 				this.FETCH_MYINFO().then(() => {
-					this.FETCH_ITEMS(this.$route.params.uid)
+					this.FETCH_ITEMS()
 					this.myCharacter += this.myInfo.items.map((i) => {
 						return JSON.stringify({ itemId: i.itemCode, region: "KMS" })
 					})

@@ -24,6 +24,7 @@
 			<b-button v-if="!infoModal.deletedAt" block @click="onRemove(infoModal.idx)" variant="danger">Delete</b-button>
 			<b-button block @click="$bvModal.hide(infoModal.id)">Close Me</b-button>
 		</b-modal>
+		<AddNotice v-if="isAddNotice" />
 	</b-container>
 </template>
 <script>

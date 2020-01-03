@@ -1,8 +1,8 @@
 <template>
 	<b-container fluid class="pt-5 mx-auto">
 		<!-- Main -->
-		<b-jumbotron :lead="notice[0].title">
-			<span v-html="notice[0].description"></span>
+		<b-jumbotron :lead="MainTitle">
+			<span v-html="MainDescription" />
 			<hr />
 			<b-button variant="primary" href="#">Discord</b-button>
 	  </b-jumbotron>
@@ -19,7 +19,7 @@
 			</b-table>
 		</div>
 		<b-modal :id="infoModal.id" :title="infoModal.title" @hide="resetInfoModal">
-		  <span v-html="notice[0].description"></span>
+		  <span v-html="infoModal.description"></span>
       <template v-slot:modal-footer>
 				<span></span>
 			</template>
@@ -53,13 +53,18 @@ export default {
 				title: '',
 				description: ''
 			},
+			MainTitle: '',
+			MainDescription: '',
 		}
 	},
 	computed: {
 		...mapState([ 'notice' ]),
 	},
 	created() {
-		this.FETCH_NOTICE()
+		this.FETCH_NOTICE().then(() => {
+			this.MainTitle = this.notice[0].title	
+			this.MainDescription = this.notice[0].description
+		})
 	},
 	methods: {
 		...mapActions([ 'FETCH_NOTICE' ]),

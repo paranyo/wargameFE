@@ -5,7 +5,7 @@
 		<div slot="body">
 			<b-row class="form-group">
 				<b-col cols="2" md="2">
-					<input class="form-control" type="text" placeholder='ITEM ID' v-model="id">
+					<input class="form-control" type="text" placeholder='ITEM ID' v-model="pdCode">
 				</b-col>
 				<b-col cols="2" md="2">
 					<input class="form-control" type="text" placeholder='상품 재고' v-model="pdCount">
@@ -22,7 +22,7 @@
 					rows="3" max-rows="6"></b-form-textarea>
 			</b-row>
 			<b-row>
-				<b-button block button-variant="outline-secondary" @click="onSubmitForm()" @keyup.enter="onSubmitForm()">
+				<b-button block button-variant="outline-secondary" @click="onSubmitForm()">
 					상품 수정</b-button>
 				<b-button block @click="onClickClose">취소</b-button>
 			</b-row>
@@ -35,22 +35,27 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
 	data() {
 		return {
-			id: null,
-			pdCount: null,
-			price: null,
-			deadLine: null,
+			id: 0,
+			pdCount: 0,
+			price: 0,
+			deadLine: '',
 			description: '',
+			pdCode: 0,
 		}
 	},
 	components: {	Modal	},
 	computed: {
 		...mapState([ 'product' ]),
-		invalidForm() {
-			return !this.id || !this.pdCount || !this.price || !this.deadLine || !this.description
-		}
 	},
 	created() {
-		this.FETCH_PRODUCT(this.$route.params.idx)
+		this.FETCH_PRODUCT({ idx: this.$route.params.idx }).then(() => {
+			this.id					 = this.product.idx
+			this.pdCount		 = this.product.pdCount
+			this.price			 = this.product.price
+			this.deadLine		 = this.product.deadLine.substr(0, 16)
+			this.description = this.product.description
+			this.pdCode			 = this.product.id
+		})
 	},
 	methods: {
 		...mapActions([
@@ -59,14 +64,19 @@ export default {
 			'FETCH_SHOP',
 		]),
 		onSubmitForm() {
-			const description = this.description.trim()
-			if(!title || !description || !flag || !author) return
-			this.UPDATE_SHOP({ id: this.prob.id, title, description, flag: this.rflag, score, author, isOpen, tagId, fileId, src })
+			const id = this.id
+			const description = this.description
+			const pdCount = this.pdCount
+			const price = this.price
+			const deadLine = this.deadLine
+			const pdCode = this.pdCode
+			if(isNaN(pdCount) || isNaN(price) || isNaN(id) || id < 0 || price < 0) return alert('ITEM ID, 상품 재고, 가격은 number 형태여야 합니다.')
+			if(!id || !description || !price || !deadLine) return alert('모든 값은 필수입니다.')
+			this.UPDATE_SHOP({ id, description, pdCount, price, deadLine, pdCode })
 				.then(() => {
 					this.FETCH_SHOP()
 					this.$router.push('/settings/shop')
-				})
-
+			})
 		},
 		onClickClose() {
 			this.$router.push('/settings/shop')

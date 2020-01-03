@@ -71,6 +71,13 @@ const mutations = {
 	},
 	SET_PRODUCT(state, { shop }) {
 		state.product = shop
+	},
+	/* AUCTION */
+	SET_IS_ADD_AUCTION(state, toggle) {
+		state.isAddAuction = toggle
+	},
+	SET_AUCTION(state, auction) {
+		state.auction = auction
 	}
 }
 

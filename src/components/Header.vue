@@ -6,7 +6,7 @@
 				<router-link class="headBtn" to="/ranking">Ranking</router-link>
 				<router-link class="headBtn" to="/challenge">Challenge</router-link>
 				<router-link class="headBtn" to="/shop">Shop</router-link>
-				<router-link class="headBtn" to="/challenge">Auction</router-link>
+				<router-link class="headBtn" to="/auction">Auction</router-link>
 			</div>
 			<div class="col-md-6 text-right">
 				<div v-if="myInfo && isAuthenticated" style="display: inline">

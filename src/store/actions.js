@@ -1,4 +1,4 @@
-import { auth, notice, user, tag, challenge, prob, rank, admin, item, shop } from '../api'
+import { auth, notice, user, tag, challenge, prob, rank, admin, item, shop, auction } from '../api'
 
 const actions = {
 	LOGIN({ commit }, { id, pw }) {
@@ -99,8 +99,8 @@ const actions = {
 	},
 /* ITEM */
 	
-	FETCH_ITEMS({ commit }, uid) {
-		return item.fetch(uid).then(data => commit('SET_ITEMS', data))
+	FETCH_ITEMS({ commit }) {
+		return item.fetch().then(data => commit('SET_ITEMS', data))
 	},
 	UPDATE_EQUIP({ commit }, { itemCode, uid}) {
 		return item.update(uid, { itemCode }).then(data => data)
@@ -114,7 +114,10 @@ const actions = {
 		return shop.fetch().then(data => commit('SET_SHOP', data))
 	},
 	FETCH_PRODUCT({ commit }, { idx }) {
-		return shop.fetch({ id: idx }).then(data => commit('SET_PRODUCT', data))
+		return shop.fetch(idx).then(data => commit('SET_PRODUCT', data))
+	},
+	REMOVE_SHOP(_, { id }) {
+		return shop.remove(id)
 	},
 	ADD_SHOP({ state, dispatch }, { pdCode, price, pdCount, deadLine, description }) {
 		return shop.create({ pdCode, price, pdCount, deadLine, description })
@@ -124,6 +127,17 @@ const actions = {
 	},
 	BUY_PRODUCT(_, { pId }) {
 		return shop.buy(pId)
+	},
+
+	/* AUCTION */
+	FETCH_AUCTION({ commit }) {
+		return auction.fetch().then(data => commit("SET_AUCTION", data))
+	},
+	ADD_AUCTION(_, { price, end, itemId }) {
+		return auction.create({ price, end, itemId })
+	},
+	BIDDING(_, { id, cost }) {
+		return auction.bidding({ id, cost })
 	},
 }
 

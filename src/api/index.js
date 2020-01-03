@@ -140,8 +140,8 @@ export const rank = {
 }
 
 export const item = {
-	fetch(uid) {
-		return request.get(`/item/${uid}`).then(({ data }) => data)
+	fetch() {
+		return request.get('/item').then(({ data }) => data)
 	},
 	update(uid, data) {
 		return request.post(`/item/equip/${uid}`, data).then(({ data }) => data)
@@ -162,9 +162,24 @@ export const shop = {
 		return request.post('/manage/shop/create', data).then(({ data }) => data)
 	},
 	update (id, data) {
-		return request.post(`/manage/shop/update${id}`, data).then(({ data }) => data)
+		return request.post(`/manage/shop/update/${id}`, data).then(({ data }) => data)
+	},
+	remove(id) {
+		return request.put(`/manage/shop/remove/${id}`).then(({ data }) => data)
 	},
 	buy(pId) {
 		return request.get(`/shop/buy/${pId}`).then(({ data }) => data)
+	},
+}
+
+export const auction = {
+	fetch() {
+		return request.get('/auction').then(({ data }) => data)
+	},
+	create (data) {
+		return request.post('/auction/create', data).then(({ data }) => data)
+	},
+	bidding(data) {
+		return request.post('/auction/bid', data).then(({ data }) => data)
 	},
 }

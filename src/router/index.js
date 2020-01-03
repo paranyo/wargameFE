@@ -6,13 +6,11 @@ import Login			from '@/components/Login'
 import Join				from '@/components/Join'
 import Ranking	  from '@/components/Ranking'
 import FindPW		  from '@/components/FindPW'
-
 import Shop				from '@/components/user/Shop'
-
+import Auction		from '@/components/user/Auction'
 import Challenge	from '@/components/user/Challenge'
 import ProbView		from '@/components/user/ProbView'
 import MyStatus		from '@/components/user/MyStatus'
-
 import Notice			from '@/components/admin/Notice'
 import aShop			from '@/components/admin/Shop'
 import EditShop		from '@/components/admin/EditShop'
@@ -75,6 +73,11 @@ export default new Router({
 		{
 			path: '/shop',
 			component: Shop,
+			beforeEnter: requireAuth(),
+		},
+		{
+			path: '/auction',
+			component: Auction,
 			beforeEnter: requireAuth(),
 		},
 		{

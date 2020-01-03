@@ -10,7 +10,7 @@
 				<b-card>
 			    <b-card-title>{{ item.name }} <small><code><i class="fab fa-viacoin"></i>{{ item.price }}</code></small></b-card-title>
 			    <b-card-sub-title>{{ chkCount(item.pdCount) }}</b-card-sub-title>
-			    <b-card-text>{{ timeFormat(item.deletedAt) }}</b-card-text>
+			    <b-card-text>{{ timeFormat(item.deadLine) }}</b-card-text>
 			    <b-card-text>{{ item.description }}</b-card-text>
 			    <a class="card-link" href="#" @click="buy(item)">구매하기</a>
 				  </b-card>

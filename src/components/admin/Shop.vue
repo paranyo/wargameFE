@@ -13,7 +13,8 @@
 				<ShopCard :item="item" />
 			</b-col>
 		</b-row>
-	<AddShop v-if="isAddShop" />
+		<router-view />
+		<AddShop v-if="isAddShop" />
 	</b-container>
 </template>
 <script>

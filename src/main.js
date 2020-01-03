@@ -5,6 +5,9 @@ import store from './store'
 
 import BootstrapVue from 'bootstrap-vue'
 import { TablePlugin } from 'bootstrap-vue'
+import './plugins/socketPlugin'
+
+
 Vue.use(BootstrapVue)
 Vue.use(TablePlugin)
 import 'bootstrap/dist/css/bootstrap.min.css'

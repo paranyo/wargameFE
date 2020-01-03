@@ -18,6 +18,8 @@ const state = {
 	files: [],
 	shop: [],
 	product: {},
+	isAddAuction: false,
+	auction: [],
 }
 
 export default state
