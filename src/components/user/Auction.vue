@@ -6,22 +6,26 @@
 		<hr />
 		<b-row class="px-3 mx-auto">
 			<b-table sticky-header="600px" responsive :items="auction" :fields='fields' :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
-				header-variant="light" striped outlined hover>
+				header-variant="light" striped outlined hover v-if="auction.length > 0" @row-clicked="(item) => bid(item.id, item.name)">
 				<template v-slot:table-colgroup="scope">
 					<col v-for="field in scope.fields" :key="field.key" :style="{ width: field.key === 'name' ? '300px' : '60px' }">
 				</template>
 				<template v-slot:cell(name)="row">
-					<span @click="bid(row.item.id, row.item.name)" class="infoModal">
+					<span class="info">
 						<div class="item">
 							<img :src="`http://maplestory.io/api/KMS/323/item/${row.item.itemCode}/icon`" />
 						</div>
 						{{ row.item.name }}
 					</span>
 				</template>
+				<template v-slot:cell(end)="row">
+					{{ row.item.end }}
+				</template>
 				<template v-slot:cell()="row">
 					<span class="info">{{ row.value }}</span>
 				</template>
 			</b-table>
+			<p v-else>등록된 상품이 없습니다.</p>
 		</b-row>
 		<AddAuction v-if="isAddAuction" />
 	</b-container>
@@ -34,15 +38,14 @@ export default {
 		return {
 			fields: [
 				{ key: 'name', label: '아이템 이름', sortable: false },
-				{ key: 'price', label: '시작가', sortable: true },
-				{ key: 'bid', label: '현재가', sortable: true, formatter: value => { return value == null ? 'No bid' : value } },
-				{ key: 'end', label: '남은 시간', sortable: true, formatter: value => { return value } },
-				{ key: 'owner', label: '등록자', sortable: false },
-				{ key: 'cate', label: '분류', sortable: false },
+				{ key: 'price', label: '시작가', sortable: true, tdClass: 'align-middle' },
+				{ key: 'bid', label: '현재가', sortable: true, formatter: value => { return value == null ? 'No bid' : value }, tdClass: 'align-middle' },
+				{ key: 'end', label: '남은 시간', sortable: true, tdClass: 'align-middle' },
+				{ key: 'owner', label: '등록자', sortable: false, tdClass: 'align-middle' },
+				{ key: 'cate', label: '분류', sortable: false, tdClass: 'align-middle' },
 			],
 			sortBy: 'id',
 			sortDesc: true,
-			datass: {},
 		}
 	},
 	components: { AddAuction },
@@ -81,15 +84,11 @@ export default {
 }
 </script>
 <style scope>
-.infoModal {
-	color: #000000;
-	font-weight: bolder;
-	cursor: pointer;
-}
 .info {
 	color: #000000;
-	font-size: 16pt;
-	cursor: pointer;
+	cursor: default;
+	font-weight: lighter;
+	font-size: 14pt;
 }
 .item {
   border: 2px solid #d4d4d4;

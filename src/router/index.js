@@ -21,6 +21,7 @@ import User				from '@/components/admin/User'
 import EditUser		from '@/components/admin/EditUser'
 import AuthLog		from '@/components/admin/AuthLog'
 import AllLog			from '@/components/admin/AllLog'
+import ErrorLog		from '@/components/admin/ErrorLog'
 import SetNotice	from '@/components/admin/SetNotice'
 import Storage		from '@/components/admin/Storage'
 
@@ -101,6 +102,10 @@ export default new Router({
 				{
 					path: '/settings/AllLog',
 					component: AllLog,
+				},
+				{
+					path: '/settings/ErrorLog',
+					component: ErrorLog,
 				},
 				{
 					path: '/settings/challenge',

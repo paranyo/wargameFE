@@ -10,6 +10,7 @@
 					<b-dropdown right text="Log">
 						<b-dropdown-item to="/settings/AuthLog">Auth Log</b-dropdown-item>
 						<b-dropdown-item to="/settings/AllLog">All Log</b-dropdown-item>
+						<b-dropdown-item to="/settings/ErrorLog">Error Log</b-dropdown-item>
 					</b-dropdown>
 			    <b-dropdown right text="Server">
 		  	    <b-dropdown-item to="/settings/SetNotice">Notice</b-dropdown-item>
