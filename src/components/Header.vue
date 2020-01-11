@@ -13,7 +13,7 @@
 					<router-link :to="`/status/${myInfo.uid}`" class="badge badge-primary">
 						{{ myInfo.nick }}
 					</router-link>
-					<a href="#" class="badge badge-warning">{{ myInfo.score }}pt</a>
+					<router-link to="/myCorrect" class="badge badge-warning">{{ myInfo.score }}pt</router-link>
 					<a href="#" class="badge badge-info">{{ myInfo.money }}<i class="fab fa-viacoin"></i></a>
 				</div>
 				<router-link class="badge badge-danger" v-if="isAuthenticated" to="/login">Logout</router-link>
@@ -41,11 +41,6 @@ export default {
 			return this.$store.getters.isAdmin
 		},
 	},
-/*	watch: {
-		'$route'(to, from) {
-			this.FETCH_MYINFO()
-		}
-	},*/
 	created() {
 		if(this.$store.getters.isAuthenticated) {
 			this.FETCH_MYINFO()

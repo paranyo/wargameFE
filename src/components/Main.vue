@@ -58,7 +58,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapState([ 'notice' ]),
+		...mapState([ 'notice']),
 	},
 	created() {
 		this.FETCH_NOTICE().then(() => {
@@ -84,7 +84,7 @@ export default {
 	},
 }
 </script>
-<style scoped>
+<style>
 .infoModal:hover {
 	color: #000000;
 	font-weight: bolder;

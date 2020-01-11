@@ -110,6 +110,9 @@ export const user = {
 	fetchInfo() {
 		return request.get('/myinfo').then(({ data }) => data)
 	},
+	fetchCorrect() {
+		return request.get('/myCorrect').then(({ data }) => data)
+	},
 	update(uid, data) {
 		return request.put(`/user/${uid}`, data).then(({ data }) => data)
 	},
@@ -145,6 +148,9 @@ export const item = {
 	},
 	update(uid, data) {
 		return request.post(`/item/equip/${uid}`, data).then(({ data }) => data)
+	},
+	clearEquip() {
+		return request.get('/item/clearEquip').then(({ data }) => data)
 	},
 	useBox(data) {
 		return request.post('/item/box', data).then(({ data }) => data)
@@ -182,4 +188,16 @@ export const auction = {
 	bidding(data) {
 		return request.post('/auction/bid', data).then(({ data }) => data)
 	},
+}
+
+export const setting = {
+	fetch() {
+		return request.get('/setting').then(({ data }) => data)
+	},
+	create(data) {
+		return request.post('/manage/setting/create', data).then(({ data }) => data)
+	},
+	update(data) {
+		return request.post('/manage/setting/update', data).then(({ data }) => data)
+	}
 }

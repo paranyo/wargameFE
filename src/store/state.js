@@ -4,6 +4,7 @@ const state = {
 	users: [],
 	user: {},
 	myInfo: {},
+	correct: {},
 	tags: [],
 	category: {},
 	probs: [],
@@ -20,6 +21,7 @@ const state = {
 	product: {},
 	isAddAuction: false,
 	auction: [],
+	settings: [],
 }
 
 export default state

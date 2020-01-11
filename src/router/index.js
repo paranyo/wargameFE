@@ -11,6 +11,7 @@ import Auction		from '@/components/user/Auction'
 import Challenge	from '@/components/user/Challenge'
 import ProbView		from '@/components/user/ProbView'
 import MyStatus		from '@/components/user/MyStatus'
+import MyCorrect	from '@/components/user/MyCorrect'
 import Notice			from '@/components/admin/Notice'
 import aShop			from '@/components/admin/Shop'
 import EditShop		from '@/components/admin/EditShop'
@@ -24,6 +25,8 @@ import AllLog			from '@/components/admin/AllLog'
 import ErrorLog		from '@/components/admin/ErrorLog'
 import SetNotice	from '@/components/admin/SetNotice'
 import Storage		from '@/components/admin/Storage'
+import SetSetting from '@/components/admin/SetSetting'
+
 
 import store			from '../store'
 Vue.use(Router)
@@ -87,6 +90,11 @@ export default new Router({
 			beforeEnter: requireAuth(),
 		},
 		{
+			path: '/myCorrect',
+			component: MyCorrect,
+			beforeEnter: requireAuth(),
+		},
+		{
 			path: '/settings',
 			component: aMain,
 			beforeEnter: AdvancedAuth(),
@@ -146,7 +154,11 @@ export default new Router({
 				{
 					path: '/settings/Storage',
 					component: Storage,
-				}
+				},
+				{
+					path: '/settings/Setting',
+					component: SetSetting,
+				},
 			],
 		},
 		{

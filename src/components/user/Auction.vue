@@ -8,7 +8,7 @@
 			<b-table sticky-header="600px" responsive :items="auction" :fields='fields' :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
 				header-variant="light" striped outlined hover v-if="auction.length > 0" @row-clicked="(item) => bid(item.id, item.name)">
 				<template v-slot:table-colgroup="scope">
-					<col v-for="field in scope.fields" :key="field.key" :style="{ width: field.key === 'name' ? '300px' : '60px' }">
+					<col v-for="field in scope.fields" :key="field.key" :style="{ width: field.key === 'name' || field.key === 'end' ? '150px' : '60px' }">
 				</template>
 				<template v-slot:cell(name)="row">
 					<span class="info">
@@ -17,9 +17,6 @@
 						</div>
 						{{ row.item.name }}
 					</span>
-				</template>
-				<template v-slot:cell(end)="row">
-					{{ row.item.end }}
 				</template>
 				<template v-slot:cell()="row">
 					<span class="info">{{ row.value }}</span>
@@ -40,9 +37,9 @@ export default {
 				{ key: 'name', label: '아이템 이름', sortable: false },
 				{ key: 'price', label: '시작가', sortable: true, tdClass: 'align-middle' },
 				{ key: 'bid', label: '현재가', sortable: true, formatter: value => { return value == null ? 'No bid' : value }, tdClass: 'align-middle' },
-				{ key: 'end', label: '남은 시간', sortable: true, tdClass: 'align-middle' },
 				{ key: 'owner', label: '등록자', sortable: false, tdClass: 'align-middle' },
 				{ key: 'cate', label: '분류', sortable: false, tdClass: 'align-middle' },
+				{ key: 'end', label: '마감 날짜', sortable: true, tdClass: 'align-middle', formatter: value => { return new Date(new Date().setSeconds(new Date().getSeconds() +  value)).toLocaleString() } },
 			],
 			sortBy: 'id',
 			sortDesc: true,
@@ -100,5 +97,8 @@ export default {
 .item > img {
   width: 40px;
   height: 30px;
+}
+.align-middle {
+	vertical-align: middle!important;
 }
 </style>

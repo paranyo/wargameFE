@@ -1,5 +1,6 @@
 <template>
 	<b-container fluid class="pt-5 mx-auto">
+		{{ correct }}
 		<b-row class="mx-auto" align="center">
 			<b-col cols="12" md="12">
 				<b-form-group size="md">
@@ -32,15 +33,18 @@ export default {
 		...mapState({
 			tags: 'tags',
 			probs: 'probs',
+			correct: 'correct',
 		}),
 	},
 	created() {
 		this.FETCH_TAGS().then(() => this.fetchOptions())
+		this.FETCH_MYCORRECT()
 	},
 	methods: {
 		...mapActions([
 			'FETCH_TAGS',
-			'FETCH_PROBS'
+			'FETCH_PROBS',
+			'FETCH_MYCORRECT'
 		]),
 		fetchOptions() {
 			this.tags.map(t => { 
@@ -54,7 +58,7 @@ export default {
 	}
 }
 </script>
-<style>
+<style scope>
 .probCard:hover {
 	cursor: pointer;
 }

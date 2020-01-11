@@ -76,7 +76,7 @@ export default {
 	      { text: 'Open', value: '1' },
         { text: 'Close', value: '0' },
 			],
-			pTag: '',
+			pTag: null,
 			pTitle: '',
 			pDescription: '',
 			pFlag: '',
@@ -136,8 +136,12 @@ export default {
 				fileId			= this.selected[0].id
 			if(!this.pTitle.trim()) return
 			this.ADD_PROB({ title, description, flag: sha256(flag), score, isOpen, author, tagId, fileId, src })
-				.then(() => this.FETCH_PROBS({ tags: this.tags }))
-			this.SET_IS_ADD_PROB(false)
+			.then(() => {
+				this.FETCH_PROBS({ tags: this.tags })	
+				this.SET_IS_ADD_PROB(false)
+			}).catch((err) => {
+				return alert(err.response.data.message)
+			})
 		}
 	}
 }

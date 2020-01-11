@@ -23,10 +23,13 @@ const mutations = {
 		state.users = user.map(u => u)
 	},
 	SET_ONEUSER (state, user) {
-		state.user = user
+		state.user = user.map(p => p)
 	},
 	SET_MYINFO (state, user) {
 		state.myInfo = user
+	},
+	SET_MYCORRECT (state, user) {
+		state.correct = user.map(c => c)
 	},
 	SET_NOTICE (state, notice) {
 		state.notice = notice.map(post => post)
@@ -78,7 +81,10 @@ const mutations = {
 	},
 	SET_AUCTION(state, auction) {
 		state.auction = auction
-	}
+	},
+	SET_SETTINGS(state, { settings }) {
+		state.settings = settings.map(s => s)
+	},
 }
 
 export default mutations

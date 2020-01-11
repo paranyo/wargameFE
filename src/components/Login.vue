@@ -42,13 +42,13 @@ export default {
 	},
 	methods: {
 		...mapActions([
-			'FETCH_ONEUSER'
+			'FETCH_MYINFO'
 		]),
 		onSubmit() {
 			const { id, pw } = this
 			this.$store.dispatch('LOGIN', { id, pw: sha256(pw) })
 				.then((data) => {
-					this.FETCH_ONEUSER(id)
+					this.FETCH_MYINFO()
 					this.$router.push(this.returnPath) 
 				})
 				.catch(err => { this.error = err.response.data.error })

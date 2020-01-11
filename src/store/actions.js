@@ -1,4 +1,4 @@
-import { auth, notice, user, tag, challenge, prob, rank, admin, item, shop, auction } from '../api'
+import { setting, auth, notice, user, tag, challenge, prob, rank, admin, item, shop, auction } from '../api'
 
 const actions = {
 	LOGIN({ commit }, { id, pw }) {
@@ -15,6 +15,9 @@ const actions = {
 	},
 	FETCH_MYINFO({ commit }) {
 		return user.fetchInfo().then(({ user }) => commit("SET_MYINFO", user))
+	},
+	FETCH_MYCORRECT({ commit }) {
+		return user.fetchCorrect().then(({ user }) => commit("SET_MYCORRECT", user))
 	},
 	FETCH_USERS({ commit }) {
 		return user.fetch().then(data => commit('SET_USERS', data))
@@ -105,7 +108,10 @@ const actions = {
 	UPDATE_EQUIP({ commit }, { itemCode, uid}) {
 		return item.update(uid, { itemCode }).then(data => data)
 	},
-	USE_BOX({ commit }, { uid, id, idx}) {
+	CLEAR_EQUIP() {
+		return item.clearEquip().then(data => data)
+	},
+	USE_BOX({ commit }, { uid, id, idx }) {
 		return item.useBox({ uid, id, idx }).then(data => data)
 	},
 
@@ -138,6 +144,16 @@ const actions = {
 	},
 	BIDDING(_, { id, cost }) {
 		return auction.bidding({ id, cost })
+	},
+	/* SETTING */
+	FETCH_SETTING({ commit }) {
+		return setting.fetch().then(data => commit('SET_SETTINGS', data))
+	},
+	ADD_SETTING(_, { name, value }) {
+		return setting.create({ name, value })
+	},
+	UPDATE_SETTING({ dispatch }, { id, value }) {
+		return setting.update({ id, value }).then(() => dispatch('FETCH_SETTING'))
 	},
 }
 

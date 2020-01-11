@@ -15,6 +15,7 @@
 			    <b-dropdown right text="Server">
 		  	    <b-dropdown-item to="/settings/SetNotice">Notice</b-dropdown-item>
 			      <b-dropdown-item to="/settings/Storage">Storage</b-dropdown-item>
+			      <b-dropdown-item to="/settings/Setting">Settings</b-dropdown-item>
 			      <b-dropdown-divider></b-dropdown-divider>
 			      <b-dropdown-item>Item 3</b-dropdown-item>
 		  	  </b-dropdown>

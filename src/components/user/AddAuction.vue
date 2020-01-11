@@ -7,7 +7,7 @@
 					<input class="form-control" type="number" v-model="price" ref="price" placeholder="최소 입찰가">
 				</b-col>
 				<b-col cols="6" md="6">
-					<input class="form-control" type="number" v-model="end"  ref="end"  placeholder="종료 시간(분)">
+					<input class="form-control" type="number" v-model="end"  ref="end"  placeholder="종료 시간(초)">
 				</b-col>
 			</b-row>
 			<b-row class="form-group">

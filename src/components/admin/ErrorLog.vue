@@ -90,7 +90,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
           { key: 'errno', label: '번호', sortable: true, class: 'text-center' },
           { key: 'code', label: '코드', sortable: true, sortDirection: 'desc', class: 'text-center' },
           { key: 'sqlMessage', label: '메시지', sortable: true, sortDirection: 'desc', class: 'text-center' },
-					{ key: 'createdAt', label: '발생 시각', sortable: false, class: 'text-center' },
+					{ key: 'createdAt', label: '발생 시각', sortable: true, sortDirection: 'desc', class: 'text-center' },
           { key: 'actions', label: '보기', class:'text-center' }
         ],
         totalRows: 1,
@@ -98,8 +98,8 @@ import { mapState, mapMutations, mapActions } from 'vuex'
         perPage: 5,
         pageOptions: [5, 10, 15],
         sortBy: '',
-        sortDesc: false,
-        sortDirection: 'asc',
+        sortDesc: true,
+        sortDirection: 'desc',
         filter: null,
         filterOn: [],
         infoModal: {
