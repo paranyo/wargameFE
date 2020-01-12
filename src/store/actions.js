@@ -42,13 +42,9 @@ const actions = {
 	ADD_NOTICE({ state, dispatch }, { title, description, isOpen }) {
 		return notice.create({ title, description, isOpen })
 	},
-	UPDATE_NOTICE({ state, dispatch }, { id, title, description }) {
-		return notice.update({ id, title, description })
+	UPDATE_NOTICE({ state, dispatch }, { id, title, description, isOpen }) {
+		return notice.update({ id, title, description, isOpen })
 	},
-	REMOVE_NOTICE(_, { id }) {
-		return notice.remove(id)
-	},
-
 /* TAG 관련 */
 
 	ADD_TAG({ state, dispatch }, title) {

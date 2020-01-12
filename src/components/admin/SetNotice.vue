@@ -11,7 +11,7 @@
 					<col v-for="field in scope.fields" :key="field.key" :style="{ width: field.key === 'title' ? '300px' : '45px' }">
 				</template>
 				<template v-slot:cell(title)="row">
-					<span @click="info(row.item, $event.target)" class="infoModal">{{ row.item.title }}</span>
+					<span @click="info(row.item, $event.target)" class="infoModal" v-html="row.item.title"></span>
 				</template>
 			</b-table>
 		</b-row>
@@ -20,8 +20,11 @@
 				<b-form-input type="search" v-model="infoModal.title" />
 			</template>
 			<b-form-textarea rows="3" max-rows="8" v-model="infoModal.description" />
+			<b-form-radio-group buttons button-variant="outline-danger" v-model="infoModal.isOpen" class="mt-3 w-100">
+				<b-form-radio value="1">Open</b-form-radio>
+				<b-form-radio value="0">Close</b-form-radio>
+			</b-form-radio-group>
 			<b-button class="mt-3" block @click="onSubmit(infoModal.idx)"  variant="success">Edit</b-button>
-			<b-button v-if="!infoModal.deletedAt" block @click="onRemove(infoModal.idx)" variant="danger">Delete</b-button>
 			<b-button block @click="$bvModal.hide(infoModal.id)">Close Me</b-button>
 		</b-modal>
 		<AddNotice v-if="isAddNotice" />
@@ -46,6 +49,7 @@ export default {
 				idx: 0,
 				title: '',
 				description: '',
+				isOpen: false,
 				deletedAt: '',
 			},
 		}
@@ -59,29 +63,20 @@ export default {
 	},
 	methods: {
 		...mapMutations([ 'SET_IS_ADD_NOTICE' ]),
-		...mapActions([ 'FETCH_NOTICE', 'UPDATE_NOTICE', 'REMOVE_NOTICE']),
+		...mapActions([ 'FETCH_NOTICE', 'UPDATE_NOTICE']),
 		rowClass(item, type) {
 			if(!item.deletedAt) return
 			if(item.id === 1) return 'table-success'
 			if(item.deletedAt !== null) return 'table-danger'
 		},
 		onSubmit(id) {
-			const title = this.infoModal.title
-			const description = this.infoModal.description
-			this.UPDATE_NOTICE({ id, title, description }).then(() => {
+			const { title, description, isOpen } = this.infoModal
+			if(!title.trim()) return alert('제목은 빈칸일 수 없습니다')
+			this.UPDATE_NOTICE({ id, title, description, isOpen }).then(() => {
 				this.FETCH_NOTICE()
 				this.$router.push('/settings/SetNotice')
 				this.$root.$emit('bv::hide::modal', this.infoModal.id)
 			})
-		},
-		onRemove(id) {
-			if(confirm(id + '번 게시글을 삭제하시겠습니까? 삭제하면 되돌릴 수 없습니다.') == true) {
-				this.REMOVE_NOTICE({ id }).then(() => {
-					this.FETCH_NOTICE()
-					this.$router.push('/settings/SetNotice')
-					this.$root.$emit('bv::hide::modal', this.infoModal.id)
-				})
-			}
 		},
 		setAddNotice() {
 			this.SET_IS_ADD_NOTICE(true)
@@ -91,7 +86,7 @@ export default {
 			this.infoModal.idx	 = item.id
 			this.infoModal.title = item.title
 			this.infoModal.description = item.description
-			this.infoModal.deletedAt = item.deletedAt
+			this.infoModal.isOpen = !item.deletedAt * 1
 			this.$root.$emit('bv::show::modal', this.infoModal.id, button)
 		},
 		resetInfoModal() {

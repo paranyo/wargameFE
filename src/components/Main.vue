@@ -3,8 +3,8 @@
 		<!-- Main -->
 		<b-jumbotron :lead="MainTitle">
 			<span v-html="MainDescription" />
-			<hr />
-			<b-button variant="primary" href="#">Discord</b-button>
+<!--		<hr />
+			<b-button variant="primary" href="#">Discord</b-button>-->
 	  </b-jumbotron>
 		<!-- Notice-->
 		<div>
@@ -14,12 +14,12 @@
 					<col v-for="field in scope.fields" :key="field.key" :style="{ width: field.key === 'title' ? '300px' : '40px' }">
 				</template>
 				<template v-slot:cell(title)="row">
-					<span @click="info(row.item, $event.target)" class="infoModal">{{ row.item.title }}</span>
+					<span @click="info(row.item, $event.target)" class="infoModal" v-html="row.item.title"></span>
 				</template>
 			</b-table>
 		</div>
 		<b-modal :id="infoModal.id" :title="infoModal.title" @hide="resetInfoModal">
-		  <span v-html="infoModal.description"></span>
+		  <div v-html="infoModal.description"></div>
       <template v-slot:modal-footer>
 				<span></span>
 			</template>

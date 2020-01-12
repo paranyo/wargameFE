@@ -49,9 +49,10 @@ export default {
 		}
 	},
 	created() {
-		this.FETCH_ONEPROB(this.$route.params.id)
-		this.tags.map((t) => {
-			this.tag.push(t.id)
+		this.FETCH_ONEPROB(this.$route.params.id).then(() => {
+			this.tags.map((t) => {	this.tag.push(t.id) })
+		}).catch((e) => {
+			console.dir(e)
 		})
 	},
 	methods: {

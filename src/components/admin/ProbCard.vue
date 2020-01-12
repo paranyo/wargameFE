@@ -14,11 +14,12 @@
 			<p class="card-title">{{ substrTitle }}</p>
 			<p class="card-text">{{ substrDesc }}</p>
 			<p class="card-text" v-if="prob.src"><a :href="'//' + prob.src" target="_blank">LINK</a></p>
-			<p class="card-text" v-if="prob.fileId">{{ prob.fileId }}</p>
+			<p class="card-text" v-if="prob.fileId">{{ !!prob.fileId ? 'DOWNLOAD' : 'No File' }}</p>
 		</div>
 		<div class="card-footer bg-transparent">
-			<p><small class="text-muted">updated {{ getAgo(prob.updatedAt) }}</small></p>
-			<p><small class="text-muted">created {{ getAgo(prob.createdAt) }}</small></p>
+			<!--<p><small class="text-muted">updated {{ getAgo(prob.updatedAt) }}</small></p>-->
+			<p><small class="text-muted">{{ prob.deletedAt != null ? 'Updated ' + getAgo(prob.deletedAt) : 'No updated' }}</small></p>
+			<p><small class="text-muted">Created {{ getAgo(prob.createdAt) }}</small></p>
 			<p><small class="text-muted" style="float: right">{{ prob.solver }} solvers</small></p>
 		</div>
   </div>
@@ -48,15 +49,22 @@ export default {
 		]),
 		getAgo(ls) {
 			let t = Math.floor((new Date() - new Date(ls)) / 1000)
-		  let c = 0
-			let m = ['s', 'mins', 'hours']
-	    while(t > 59) {
-			  t = Math.floor(t / 60)
-		    c++
-	    }
-	    if(isNaN(t))
-			  return 'no record'
-			return +  t + ' ' + m[c] + ' ago'
+			if((t / 86400) >= 365)
+				if((t / 86400) == 1)	return Math.floor((t / (24 * 60 * 60)) / 365) + ' year ago'
+				else									return Math.floor((t / (24 * 60 * 60)) / 365) + ' years ago'
+			if((t / 86400) >= 30)
+				if((t / 86400) == 1)	return Math.floor((t / (24 * 60 * 60)) / 30) + ' month ago'
+				else									return Math.floor((t / (24 * 60 * 60)) / 30) + ' months ago'
+			if((t / 86400) >= 1)
+				if((t / 86400) == 1)	return Math.floor(t / 86400) + ' day ago'
+				else									return Math.floor(t / 86400) + ' days ago'
+			if(((t % 86400) / 3600) >= 1)
+				if(((t % 86400) / 3600) == 1) return Math.floor((t % 86400) / 3600) + ' hour ago'
+				else													return Math.floor((t % 86400) / 3600) + ' hours ago'
+			if(((t % 3600) / 60) >= 1)
+				if(((t % 3600) / 60) == 1)	return Math.floor((t % 3600) / 60) + ' minute ago'
+				else												return Math.floor((t % 3600) / 60) + ' minutes ago'
+			return t + 60 +  ' seconds ago'
 		},
 		setVisible() {
 			const id		 = this.prob.id

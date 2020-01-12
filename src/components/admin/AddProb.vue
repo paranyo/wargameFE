@@ -134,7 +134,8 @@ export default {
 			let		fileId			= null
 			if(this.selected.length !== 0)
 				fileId			= this.selected[0].id
-			if(!this.pTitle.trim()) return
+			if(!this.pTitle.trim()) return alert('제목 값은 필수입니다.')
+			if(!this.pFlag.trim()) return alert('플래그 값은 필수입니다.')
 			this.ADD_PROB({ title, description, flag: sha256(flag), score, isOpen, author, tagId, fileId, src })
 			.then(() => {
 				this.FETCH_PROBS({ tags: this.tags })	

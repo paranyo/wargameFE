@@ -11,7 +11,15 @@
 			</b-row>
 			<b-row class="px-3 mx-auto">
 				<b-table ref="selectableTable" sticky-header="200px" fixed responsive="sm" :items="files" :fields="fields" class="text-center" selectable select-mode="single"
-					@row-selected="onRowSelected"></b-table>
+					@row-selected="onRowSelected">
+					<template v-slot:table-colgroup="scope">
+						<col key="id" style="width: 20px;" />
+						<col key="originName" style="width: 150px;" />
+						<col key="size" style="width: 40px;" />
+						<col key="createdAt" style="width: 40px;" />
+						<col key="uploader" style="width: 30px;" />
+					</template>
+				</b-table>
 			</b-row>
 			<b-row class="form-group">
 				<b-col cols="8" md="8">
@@ -83,7 +91,6 @@ export default {
 			title: '',
 			description: '',
 			flag: '',
-			rflag: '',
 			score: 0,
 			author: '',
 			isOpen: '',
@@ -114,8 +121,13 @@ export default {
 			this.tags.map((t) => {
 				this.tag.push(t.id)
 			})
+			this.FETCH_FILES().then(() => {
+				if(this.prob.file) {
+					this.selected.push(this.prob.file)
+					this.$refs.selectableTable.selectRow(this.files.map(f => { return f.id }).indexOf(this.selected[0].id))
+				}
+			})
 		})
-		this.FETCH_FILES()
 	},
 	methods: {
 		...mapActions([
@@ -133,14 +145,12 @@ export default {
 		},
 		getHash() {
 			const flag = this.flag.trim()
-			this.rflag = sha256(flag)
 			if(flag.length != 64)
 				this.FETCH_HASH({ flag: sha256(flag) }).then(data => this.flag = data.flag)
 			else
 				alert('한 번만 해싱하세요!')
 		},
 		onSubmitForm() {
-			console.log(this.selected)
 			const title				= this.title.trim()
 			const description = this.description.trim()
 			const flag				= this.flag.trim()
@@ -155,12 +165,12 @@ export default {
 			if(!title || !description || !flag || !author) return
 			if(flag.length != 64)
 				return alert('플래그 값을 해시해야 합니다')
-			this.UPDATE_PROB({ id: this.prob.id, title, description, flag: this.rflag, score, author, isOpen, tagId, fileId, src })
+			this.UPDATE_PROB({ id: this.prob.id, title, description, flag, score, author, isOpen, tagId, fileId, src })
 				.then(() => {
 					this.FETCH_PROBS({ tags: this.tag })
+					this.selected = []
 					this.$router.push('/settings/challenge')
 				})
-
 		},
 		onClickClose() {
 			this.$router.push('/settings/challenge')
