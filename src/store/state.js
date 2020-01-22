@@ -22,6 +22,7 @@ const state = {
 	isAddAuction: false,
 	auction: [],
 	settings: [],
+	returnPath: '',
 }
 
 export default state

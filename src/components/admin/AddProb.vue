@@ -11,7 +11,15 @@
 			</b-row>
 			<b-row class="px-3 mx-auto">
 				<b-table ref="selectableTable" sticky-header="200px" fixed responsive="sm" :items="files" :fields="fields" class="text-center" selectable select-mode="single"
-					@row-selected="onRowSelected"></b-table>
+					@row-selected="onRowSelected">
+					<template v-slot:table-colgroup="scope">
+						<col key="id" style="width: 20px;">
+						<col key="originname" style="width: 150px;">
+						<col key="size" style="width: 40px;">
+						<col key="createdAt" style="width: 40px;">
+						<col key="uploader" style="width: 30px;">
+					</template>	
+				</b-table>
 			</b-row>
 			<b-row class="form-group">
 				<b-col cols="8" md="8">

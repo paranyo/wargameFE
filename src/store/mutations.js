@@ -85,6 +85,9 @@ const mutations = {
 	SET_SETTINGS(state, { settings }) {
 		state.settings = settings.map(s => s)
 	},
+	SET_RETURNPATH(state, path) {
+		state.returnPath = path ? path : ''
+	},
 }
 
 export default mutations

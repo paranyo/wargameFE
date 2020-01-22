@@ -16,7 +16,7 @@
 			</div>
 			<div>
 				<div class="input-group">
-				  <input type="text" class="form-control" placeholder="플래그" v-model="flag">
+				  <input type="text" class="form-control" placeholder="플래그" v-model="flag" ref="flag">
 					<div class="input-group-append">
 						<b-button button-variant="outline-secondary" @click="onSubmitForm" @keyup.enter="onSubmitForm">
 							제출</b-button>
@@ -40,10 +40,7 @@ export default {
 	},
 	components: {	Modal	},
 	computed: {
-		...mapState({
-			prob: 'prob',
-			tags: 'tags',
-		}),
+		...mapState(['prob', 'tags', 'returnPath']),
 		invalidForm() {
 			return !this.flag.trim()
 		}
@@ -54,6 +51,9 @@ export default {
 		}).catch((e) => {
 			console.dir(e)
 		})
+	},
+	mounted() {
+		this.$refs.flag.focus()
 	},
 	methods: {
 		...mapActions([
@@ -75,10 +75,12 @@ export default {
 					this.FETCH_MYINFO()
 					this.FETCH_PROBS({ tags: this.tag })
 					this.$router.push('/challenge')
+				}).catch((err) => {
+					return alert(err.response.data.message)
 				})
 		},
 		onClickClose() {
-			this.$router.push('/challenge')
+			this.$router.push(this.returnPath)
 		},
 	}
 }

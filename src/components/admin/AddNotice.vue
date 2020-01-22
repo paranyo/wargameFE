@@ -2,12 +2,12 @@
 	<modal class="modal-card">
 		<div slot="header"></div>
 		<div slot="body">
-			<b-row class="form-group">
+			<b-row class="form-group w-100">
 				<b-col cols="8" md="8">
-					<input class="form-control" type="text" v-model="nTitle" ref="nTitle"	placeholder='타이틀'>
+					<input class="form-control w-100" type="text" v-model="nTitle" ref="nTitle"	placeholder='타이틀'>
 				</b-col>
 				<b-col cols="4" md="4">
-					<b-form-radio-group v-model="nIsOpen" :options="radioBtns" buttons button-variant="outline-primary">
+					<b-form-radio-group v-model="nIsOpen" :options="radioBtns" buttons button-variant="outline-primary" class="w-100">
 					</b-form-radio-group>
 				</b-col>
 			</b-row>

@@ -93,6 +93,12 @@ export default new Router({
 			path: '/myCorrect',
 			component: MyCorrect,
 			beforeEnter: requireAuth(),
+			children: [
+				{
+					path: ':id',
+					component: ProbView,
+				}
+			]
 		},
 		{
 			path: '/settings',
