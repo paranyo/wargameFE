@@ -27,29 +27,24 @@ export default {
 		...mapActions([
 			'UPDATE_USER',
 		]),
-		getAgo(time) {
-			let t = Math.floor((new Date() - new Date(time)) / 1000)
-			let c = 0
-			let m = ['s', 'mins', 'hrs', 'd']
-			while(t > 59) {
-				t = Math.floor(t / 60)
-				if(c == 2)
-					break
-				c++
-			}
-			let d = 0
-			if(c == 2 && t > 23) {
-				d = Math.floor(t / 24)
-				t = t % 24
-			}
-			if(isNaN(t))
-				return 'no data'
-			if(d != 0 && t != 0)
-				return d + m[c + 1] + ' ' + t + m[c] + ' ago'
-			else if(d != 0)
-				return d + m[c + 1] + ' ago'
-			else
-				return t + m[c] + ' ago'
+		getAgo(ls) {
+			let t = Math.floor((new Date() - new Date(ls)) / 1000)
+			if((t / 86400) >= 365)
+			  if((t / 86400) == 1)  return Math.floor((t / (24 * 60 * 60)) / 365) + ' year ago'
+			  else                  return Math.floor((t / (24 * 60 * 60)) / 365) + ' years ago'
+			if((t / 86400) >= 30)
+			  if((t / 86400) == 1)  return Math.floor((t / (24 * 60 * 60)) / 30) + ' month ago'
+			  else                  return Math.floor((t / (24 * 60 * 60)) / 30) + ' months ago'
+			if((t / 86400) >= 1)
+			  if((t / 86400) == 1)  return Math.floor(t / 86400) + ' day ago'
+			  else                  return Math.floor(t / 86400) + ' days ago'
+			if(((t % 86400) / 3600) >= 1)
+			  if(((t % 86400) / 3600) == 1) return Math.floor((t % 86400) / 3600) + ' hour ago'
+			  else                          return Math.floor((t % 86400) / 3600) + ' hours ago'
+			if(((t % 3600) / 60) >= 1)
+			  if(((t % 3600) / 60) == 1)  return Math.floor((t % 3600) / 60) + ' minute ago'
+			  else                        return Math.floor((t % 3600) / 60) + ' minutes ago'
+			return t + 60 +  ' seconds ago'
 		},
 		Ban() {
 			const uid = this.user.uid

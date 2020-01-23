@@ -13,6 +13,7 @@ const state = {
 	isAddProb: false,
 	isAddNotice: false,
 	isAddShop: false,
+	isAddSetting: false,
 	isChangePassword: true,
 	items: [],
 	notice: [],

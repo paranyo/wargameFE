@@ -1,7 +1,7 @@
 <template>
 	<b-container fluid class="mx-auto">
 		<b-row align-h="center">
-				<b-button variant="info" @click="">세팅 추가</b-button>
+				<b-button variant="info" @click="setAddSetting">세팅 추가</b-button>
 		</b-row>
 		<hr />
 		<b-row class="px-3 mx-auto">
@@ -23,11 +23,14 @@
 			<b-button class="mt-3" block @click="onSubmit(infoModal.idx)"  variant="success">Edit</b-button>
 			<b-button block @click="$bvModal.hide(infoModal.id)">Close Me</b-button>
 		</b-modal>
+		<AddSetting v-if="isAddSetting" />
 	</b-container>
 </template>
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
+import AddSetting from './AddSetting.vue'
 export default {
+	components: { AddSetting },
 	data() {
 		return {
 			fields: [
@@ -47,13 +50,14 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['settings']),
+		...mapState(['settings', 'isAddSetting']),
 	},
 	created() {
 		this.FETCH_SETTING()
 	},
 	methods: {
-		...mapActions([ 'FETCH_SETTING', 'UPDATE_SETTING']),
+		...mapActions(['FETCH_SETTING', 'UPDATE_SETTING']),
+		...mapMutations(['SET_IS_ADD_SETTING']),
 		rowClass(item, type) {
 			if(!item.deletedAt) return
 			if(item.id === 1) return 'table-success'
@@ -78,7 +82,9 @@ export default {
 			this.infoModal.name = ''
 			this.infoModal.value = ''
 		},
-
+		setAddSetting() {
+			this.SET_IS_ADD_SETTING(true)	
+		}
 	}
 }
 </script>

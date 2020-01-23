@@ -19,6 +19,7 @@ import aMain			from '@/components/admin/Main'
 import aChallenge from '@/components/admin/Challenge'
 import EditProb		from '@/components/admin/EditProb'
 import User				from '@/components/admin/User'
+import Users			from '@/components/admin/Users'
 import EditUser		from '@/components/admin/EditUser'
 import AuthLog		from '@/components/admin/AuthLog'
 import AllLog			from '@/components/admin/AllLog'
@@ -26,7 +27,8 @@ import ErrorLog		from '@/components/admin/ErrorLog'
 import SetNotice	from '@/components/admin/SetNotice'
 import Storage		from '@/components/admin/Storage'
 import SetSetting from '@/components/admin/SetSetting'
-
+import Sorry			from '@/components/Sorry'
+import OhMyGod		from '@/components/OhMyGod'
 
 import store			from '../store'
 Vue.use(Router)
@@ -45,8 +47,16 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: Main
+      component: Main,
     },
+		{
+			path: '/Sorry',
+			component: Sorry,
+		},
+		{
+			path: '/OhMyGod',
+			component: OhMyGod,
+		},
 		{
 			path: '/Login',
 			component: Login
@@ -145,7 +155,7 @@ export default new Router({
 				},
 				{
 					path: '/settings/user',
-					component: User,
+					component: Users,
 					children: [
 						{
 							path: ':uid',

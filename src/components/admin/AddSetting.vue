@@ -1,24 +1,20 @@
 <template>
 	<modal class="modal-card">
-		<div slot="header"></div>
+		<div slot="header"><code>세팅 추가하기</code></div>
 		<div slot="body">
-			<b-row class="form-group">
-				<b-col cols="8" md="8">
-					<input class="form-control" type="text" v-model="nTitle" ref="nTitle"	placeholder='타이틀'>
-				</b-col>
-				<b-col cols="4" md="4">
-					<b-form-radio-group v-model="nIsOpen" :options="radioBtns" buttons button-variant="outline-primary">
-					</b-form-radio-group>
-				</b-col>
-			</b-row>
-			<b-row class="form-group">
-				<b-form-textarea id="textarea" class="form-control" v-model="nDescription" placeholder="본문을 입력하세요"
-					rows="3" max-rows="6"></b-form-textarea>
-			</b-row>
 			<b-row>
-				<b-button class="btn" :class="{'btn-success': isValidInput}" form="add-category-form" block
-					:disabled="!isValidInput" @click="onSubmitNotice">작성</b-button>
-				<b-button block @click.prevent="SET_IS_ADD_NOTICE(false)">취소</b-button>	
+				<b-col md="4">
+					<b-form-input type="text" v-model="name" :state="nameState"	placeholder="Enter setting name..." trim autofocus />
+				</b-col>
+				<b-col md="2">
+					<b-form-input type="text" v-model="value" :state="valueState"	placeholder="Enter value..." trim />
+				</b-col>
+				<b-col md="3">
+					<b-button block :class="{'btn-success': isValidInput }" :disabled="!isValidInput"	@click="onSubmit">작성</b-button>
+				</b-col>
+				<b-col md="3">
+					<b-button block @click.prevent="SET_IS_ADD_SETTING(false)">취소</b-button>	
+				</b-col>
 			</b-row>
 		</div>
 	</modal>
@@ -27,45 +23,33 @@
 import Modal from '../Modal.vue'
 import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
-	props: ['options'],
 	data() {
 		return {
-			radioBtns: [
-	      { text: 'Open', value: '1' },
-        { text: 'Close', value: '0' },
-			],
-			nTitle: '',
-			nDescription: '',
-			nIsOpen: 0,
-			isValidInput: false,
+			name: '',
+			value: '',
 		}
+	},
+	computed: {
+		nameState() {
+			return !!this.name.length
+		},
+		valueState() {
+			return !!this.value.length
+		},
+		isValidInput() {
+			return !!this.name.length && !!this.value.length
+		},
 	},
 	components: {	Modal	},
-	watch: {
-		nTitle(val) {
-			this.isValidInput = !!val.trim().length
-		}
-	},
-	mounted () {
-		this.$refs.nTitle.focus()
-	},
 	methods: {
-		...mapActions([
-			'ADD_NOTICE',
-			'FETCH_NOTICE'
-		]),
-		...mapMutations([
-			'SET_IS_ADD_NOTICE'
-		]),
-		onSubmitNotice() {
-			const title				= this.nTitle
-			const description = this.nDescription
-			const isOpen			= !!this.nIsOpen
-			if(!this.nTitle.trim()) return
-			this.ADD_NOTICE({ title, description, isOpen })
-				.then(() => this.FETCH_NOTICE())
-			this.SET_IS_ADD_NOTICE(false)
-		}
+		...mapActions(['ADD_SETTING', 'FETCH_SETTING']),
+		...mapMutations(['SET_IS_ADD_SETTING']),
+		onSubmit() {
+			this.ADD_SETTING({ name: this.name, value: this.value }).then(() => {
+				this.FETCH_SETTING();
+			})
+			this.SET_IS_ADD_SETTING(false)
+		},
 	}
 }
 </script>

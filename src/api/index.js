@@ -3,8 +3,17 @@ import router from '../router'
 
 const domain = 'https://wargame2.run.goorm.io'
 const Unauthorized = 401
+const Forbidden		 = 403
+const ServerError	 = 500
 const onUnauthorized = () => {
 	router.push(`/login?returnPath=${ encodeURIComponent(location.pathname) }`)
+}
+const onForbidden = () => {
+	router.push('/Sorry')
+}
+
+const onServerError = () => {
+	router.push('/OhMyGod')
 }
 
 const request = {
@@ -13,6 +22,8 @@ const request = {
 			.catch(({ response }) => {
 				const { status } = response
 				if (status === Unauthorized) return onUnauthorized()
+				if (status === Forbidden)		 return onForbidden()
+				if (status === ServerError)return onServerError()
 				throw Error(response)
 			})
 	},

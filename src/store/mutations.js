@@ -52,6 +52,9 @@ const mutations = {
 	SET_IS_CHANGE_PASSWORD(state, toggle) {
 		state.isChangePassword = toggle
 	},
+	SET_IS_ADD_SETTING(state, toggle) {
+		state.isAddSetting = toggle
+	},
 	SET_PROBS(state, { list }) {
 		state.probs = list.map(l => l)
 	},
