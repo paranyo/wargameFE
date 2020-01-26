@@ -92,6 +92,7 @@ export default {
 		resetInfoModal() {
 			this.infoModal.title = ''
 			this.infoModal.description = ''
+			this.infoModal.deletedAt = ''
 		},
 
 	}

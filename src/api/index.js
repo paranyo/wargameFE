@@ -127,6 +127,9 @@ export const user = {
 	update(uid, data) {
 		return request.put(`/user/${uid}`, data).then(({ data }) => data)
 	},
+	updateSelf(data) {
+		return request.put('/user', data).then(({ data }) => data)
+	},
 	getFile(fName) {
 		return request.get(`/download/${fName}`)
 	}
@@ -144,6 +147,9 @@ export const admin = {
 	},
 	removeFile(data) {
 		return request.put('/manage/file/remove', data).then(({ data }) => data)
+	},
+	getUsers() {
+		return request.get('/manage/user').then(({ data }) => data)
 	},
 }
 

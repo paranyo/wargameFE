@@ -1,6 +1,5 @@
 <template>
   <b-container fluid>
-    <!-- User Interface controls -->
     <b-row>
       <b-col sm="2" md="2" lg="1" class="my-1">
         <b-form-group class="mb-0">
@@ -10,11 +9,14 @@
       <b-col sm="6" md="4" lg="5" class="my-1">
         <b-form-group align="center" class="mb-0">
           <b-form-checkbox-group v-model="filterOn" class="mt-1">
-            <b-form-checkbox value="solver">제출자</b-form-checkbox>
-            <b-form-checkbox value="pid">문제 번호</b-form-checkbox>
-            <b-form-checkbox value="flag">플래그</b-form-checkbox>
-            <b-form-checkbox value="isCorrect">풀이 유무</b-form-checkbox>
-            <b-form-checkbox value="createdAt">제출 시각</b-form-checkbox>
+            <b-form-checkbox value="uid">아이디</b-form-checkbox>
+            <b-form-checkbox value="nick">닉네임</b-form-checkbox>
+            <b-form-checkbox value="email">이메일</b-form-checkbox>
+            <b-form-checkbox value="intro">소개</b-form-checkbox>
+            <b-form-checkbox value="level">레벨</b-form-checkbox>
+            <b-form-checkbox value="money">재화</b-form-checkbox>
+            <b-form-checkbox value="score">점수</b-form-checkbox>
+            <b-form-checkbox value="createdAt">생성 날짜</b-form-checkbox>
           </b-form-checkbox-group>
         </b-form-group>
       </b-col>
@@ -36,24 +38,10 @@
           size="sm" class="my-0"></b-pagination>
       </b-col>
     </b-row>
-
-    <!-- Main table element -->
-    <b-table
-      show-empty
-      small
-      stacked="md"
-      :items="items"
-      :fields="fields"
-      :current-page="currentPage"
-      :per-page="perPage"
-      :filter="filter"
-      :filterIncludedFields="filterOn"
-      :sort-by.sync="sortBy"
-      :sort-desc.sync="sortDesc"
-      :sort-direction="sortDirection"
-      @filtered="onFiltered"
-			:busy="isBusy"
-    >
+		    <!-- Main table element -->
+    <b-table show-empty small stacked="md" :items="items" :fields="fields" :current-page="currentPage" :per-page="perPage"
+      :filter="filter" :filterIncludedFields="filterOn" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :sort-direction="sortDirection"
+			@filtered="onFiltered":busy="isBusy" ref="uTable">
 			<template v-slot:table-busy>
 				<div class="text-center text-info my-2">
 					<b-spinner class="align-middle"></b-spinner>
@@ -62,10 +50,10 @@
 			</template>
       <template v-slot:cell(actions)="row">
         <b-button size="sm" @click="info(row.item, row.index, $event.target)" class="mr-1">
-					JSON View
+					수정
         </b-button>
         <b-button size="sm" @click="row.toggleDetails">
-          {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+          {{ row.detailsShowing ? '접기' : '펼치기' }}
         </b-button>
       </template>
       <template v-slot:row-details="row">
@@ -76,9 +64,36 @@
         </b-card>
       </template>
     </b-table>
-    <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
-      <pre>{{ infoModal.content }}</pre>
-    </b-modal>
+		<b-modal :id="infoModal.id" @hide="resetInfoModal" hide-footer>
+		  <template v-slot:modal-header>
+				<p>UserID&nbsp;&nbsp;<strong>{{ infoModal.uid }}</strong></p>
+				<code>IPv4 {{ infoModal.ip }}</code>
+		  </template>
+			<b-row>
+				<b-col cols="8">
+					<b-input-group prepend="Nickname" class="mt-3"><b-form-input v-model="infoModal.nick" disabled /></b-input-group>
+				</b-col>
+				<b-col cols="4">
+					<b-input-group prepend="Lv." class="mt-3"><b-form-input v-model="infoModal.level" /></b-input-group>
+				</b-col>
+			</b-row>
+			<b-input-group prepend="E-Mail"   class="mt-3"><b-form-input v-model="infoModal.email" /></b-input-group>
+			<b-input-group prepend="Intro" class="mt-3"><b-form-input v-model="infoModal.intro" /></b-input-group>
+			<b-row>
+				<b-col cols="8">
+					<b-input-group append="$" class="mt-3"><b-form-input v-model="infoModal.money" /></b-input-group>
+				</b-col>
+				<b-col cols="4">
+					<b-input-group append="pt" class="mt-3"><b-form-input v-model="infoModal.score" disabled /></b-input-group>
+				</b-col>
+			</b-row>
+		  <b-form-radio-group buttons button-variant="outline-danger" v-model="infoModal.deletedAt" class="mt-3 w-100">
+		    <b-form-radio value="1">Ban</b-form-radio>
+		    <b-form-radio value="0">Unban</b-form-radio>
+		  </b-form-radio-group>
+		  <b-button class="mt-3" block @click="onSubmit" variant="success">Edit</b-button>
+		  <b-button block @click="$bvModal.hide(infoModal.id)">Close Me</b-button>
+		</b-modal>
   </b-container>
 </template>
 <script>
@@ -88,15 +103,20 @@ import { mapState, mapMutations, mapActions } from 'vuex'
       return {
 				items: [],
         fields: [
-          { key: 'createdAt', label: '제출 시각', sortable: true, class: 'text-center' },
-          { key: 'pid', label: '문제 번호', sortable: true, sortDirection: 'desc', class: 'text-center' },
-          { key: 'solver', label: '제출자', sortable: true, sortDirection: 'desc', class: 'text-center' },
-					{ key: 'flag', label: '플래그', sortable: false, class: 'text-center' },
-          { key: 'isCorrect', label: '풀이 유무', class: 'text-center',
-						formatter: (value, key, item) => { return value ? '성공' : '실패' },
-            sortable: true, sortByFormatted: true, filterByFormatted: true
-          },
-          { key: 'actions', label: 'Actions', class:'text-center' }
+          { key: 'uid', label: '아이디', sortable: true, class: 'text-center' },
+          { key: 'nick', label: '닉네임', sortable: true, class: 'text-center' },
+          { key: 'email', label: '이메일', sortable: true, class: 'text-center' },
+          { key: 'intro', label: '소개', sortable: true, class: 'text-center' },
+					{ key: 'level', label: '레벨', sortable: true, class: 'text-center' },
+					{ key: 'money', label: '재화', sortable: true, class: 'text-center' },
+					{ key: 'score', label: '점수', sortable: true, class: 'text-center' },
+					{ key: 'createdAt', label: '가입 날짜', sortable: true, class: 'text-center',
+						formatter: (value) => {	return value.replace('T', ' ').substring(2, 19)	}
+					},
+					{ key: 'deletedAt', label: '차단', sortable: true, class: 'text-center',
+						formatter: (value) => { return value != null ? value.replace('T', ' ').substring(2, 19) : 'No Ban' }, sortByFormatted: true,
+					},
+          { key: 'actions', label: '관리', class:'text-center' }
         ],
         totalRows: 1,
         currentPage: 1,
@@ -109,8 +129,15 @@ import { mapState, mapMutations, mapActions } from 'vuex'
         filterOn: [],
         infoModal: {
           id: 'info-modal',
-          title: '',
-          content: ''
+					uid: '',
+					nick: '',
+					email: '',
+					money: 0,
+					level: 1,
+					intro: '',
+					ip: '',
+					score: 0,
+					deletedAt: 0,
         },
 				isBusy: true,
       }
@@ -126,36 +153,45 @@ import { mapState, mapMutations, mapActions } from 'vuex'
       }
     },
 		created() {
-			this.FETCH_LOG({ type: 'auth' }).then(data => {
-				data.logs.map((l) => {
-					if(l.isCorrect == true)
-						l._rowVariant = 'success'
-					else
-						l._rowVariant = 'danger'
-					l.createdAt = this.DateFormat(new Date(l.createdAt))
-				})
-				this.items = data.logs
-				this.totalRows = this.items.length
-			}).then(() => this.isBusy = !this.isBusy)
+			this.getUserTable()
 		},
     methods: {
-			...mapActions([
-				'FETCH_LOG'
-			]),
-			DateFormat(t) {
-				let m = t.getMonth()+1
-				let d = t.getDate()
-				let h = t.getHours()
-				let i = t.getMinutes()
-				let s = t.getSeconds()
-				return t.getFullYear()+'-'+(m>9?m:'0'+m)+'-'+(d>9?d:'0'+d)+' '+(h>9?h:'0'+h)+':'+(i>9?i:'0'+i)+':'+(s>9?s:'0'+s)
-				
+			...mapActions(['FETCH_USERS_INFO', 'UPDATE_USER']),
+			onSubmit() {
+				const { uid, email, money, level, intro, deletedAt } = this.infoModal
+				if(!uid || !email || !money || !level)
+					return alert('누락된 정보가 있습니다.')
+				this.UPDATE_USER({ uid, email, money, level, intro, isBan: deletedAt })
+				.then(() => {
+					this.isBusy = !this.isBusy
+					this.getUserTable()
+					this.$root.$emit('bv::hide::modal', this.infoModal.id)
+				})
 			},
 			info(item, index, button) {
-			  this.infoModal.title = `Row index: ${index}`
-        this.infoModal.content = JSON.stringify(item, null, 2)
+				this.infoModal.uid	 = item.uid
+				this.infoModal.nick	 = item.nick
+				this.infoModal.email = item.email
+				this.infoModal.money = item.money
+				this.infoModal.level = item.level
+				this.infoModal.intro = item.intro
+				this.infoModal.ip		 = item.ip
+				this.infoModal.score = item.score
+				this.infoModal.deletedAt = item.deletedAt != null ? 1 : 0
         this.$root.$emit('bv::show::modal', this.infoModal.id, button)
       },
+			getUserTable() {
+				this.FETCH_USERS_INFO().then(data => {
+					data.users.map((u) => {
+						if(u.deletedAt != null)
+							u._rowVariant = 'danger'
+						else
+							u._rowVariant = 'success'
+					})
+					this.items = data.users
+					this.totalRows = this.items.length
+				}).then(() => this.isBusy = !this.isBusy)
+			},
       resetInfoModal() {
         this.infoModal.title = ''
         this.infoModal.content = ''
@@ -168,3 +204,8 @@ import { mapState, mapMutations, mapActions } from 'vuex'
     }
   }
 </script>
+<style scoped>
+p {
+	margin: 0;
+}
+</style>

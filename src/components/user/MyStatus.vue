@@ -1,67 +1,50 @@
 <template>
 	<b-container fluid class="pt-5 mx-auto w-75">
 		<b-row style="height: 250px;">
-			<b-col md=4 style="height: 100%;"><!--
-		    <b-card :img-src='`https://maplestory.io/api/character/${this.myCharacter},{"itemId":2000,"region":"KMS","version":"323"},{"itemId":12000,"region":"KMS","version":"323"}/stand1/0?showears=false&showLefEars=false&showHighLefEars=undefined&resize=1&name=&flipX=undefined`' img-alt="Image" img-top class="h-100"
-					style="margin: 0 auto; width: 150px;">
-	  	    <div slot="footer" style="text-align: center;">
-						Lv. <small class="text-muted">{{ myInfo.level }}</small>
-					</div>
-		    </b-card>-->
+			<b-col md=2 style="height: 100%;">
 				<b-card no-body class="overflow-hidden" style="width: 100%; height:100%;">
-					<b-row no-gutters style="height: 100%;background: url(https://mblogthumb-phinf.pstatic.net/20140608_176/monhog_1402164204467rvtNT_PNG/%C7%EC%B3%D7%BE%EE%B6%B2%C1%FD.png?type=w2) no-repeat;text-align: center;background-position: -200px -120px;">
-						<b-col md="6" style="text-align: center;" v-bind:style="{ height: colHeight }">
-			      	<b-card-img :src='`https://maplestory.io/api/character/${this.myCharacter},{"itemId":2000,"region":"KMS","version":"323"},{"itemId":12000,"region":"KMS","version":"323"}/stand1/0?showears=false&showLefEars=false&showHighLefEars=undefined&resize=1&name=&flipX=undefined`' class="rounded-0" style="width: auto;"></b-card-img>
-			      </b-col>
-      			<b-col md="6">
-			        <b-card-body :title="myInfo.nick">
-      			    <b-card-text>
-									{{ myInfo.level }}
-      			    </b-card-text>
-			        </b-card-body>
-      			</b-col>
+					<b-row no-gutters style="height: 100%;background: url(https://mblogthumb-phinf.pstatic.net/20140608_176/monhog_1402164204467rvtNT_PNG/%C7%EC%B3%D7%BE%EE%B6%B2%C1%FD.png?type=w2) no-repeat;text-align: center;background-position: -200px -130px;">
+						<b-col md="12" style="text-align: center; width: 100%; height: 80%;">
+			      	<b-card-img :src='`https://maplestory.io/api/character/${this.myCharacter},{"itemId":2000,"region":"KMS","version":"323"},{"itemId":12000,"region":"KMS","version":"323"}/stand1/0?showears=false&showLefEars=false&showHighLefEars=undefined&resize=1&name=&flipX=undefined`' class="rounded-0" style="width: auto; height: 75%; position:relative; top: 50px;" />
+						</b-col>
+						<b-col md="12" style="width: 100%;height: 25%;">
+							<b-button variant="dark" style="width: 100%; height: 70%; top: 16px; position: relative;" @click="clearEquip">모두 벗기</b-button>
+						</b-col>
 			    </b-row>
 			  </b-card>
 			</b-col>
-			<b-col md=8>
+			<b-col md=10>
 				<b-row>
 					<b-col md="3">
 				    <b-input-group prepend="ID" class="mb-2 mr-sm-2 mb-sm-0">
-				      <b-input type="text" placeholder="UID" :value="myInfo.uid" readonly></b-input>
+				      <b-input type="text" placeholder="UID" :value="myInfo.uid" readonly />
 				    </b-input-group>
 					</b-col>
 					<b-col md="3">
 				    <b-input-group prepend="Nickname" class="mb-2 mr-sm-2 mb-sm-0">
-				      <b-input type="text" placeholder="NICKNAME" :value="myInfo.nick" readonly></b-input>
+				      <b-input type="text" placeholder="NICKNAME" :value="myInfo.nick" readonly />
 				    </b-input-group>
 					</b-col>
 					<b-col md="6">
 				    <b-input-group prepend="E-Mail" class="mb-2 mr-sm-2 mb-sm-0">
-				      <b-input type="text" placeholder="EMAIL" :value="myInfo.email" readonly></b-input>
+				      <b-input type="text" placeholder="EMAIL" :value="myInfo.email" readonly />
 				    </b-input-group>
 					</b-col>
 				</b-row>
 				<b-row>
 					<b-col md="12">
-						<div class="input-group">
-							<input v-if="isEditIntro" class="form-control" type="text"	placeholder="소개글을 입력하세요" 
-								v-model="inputIntro" ref="inputIntro"	@keyup.enter="onIntroSubmit">
-							<input v-else type="Text" class="form-control" readonly :value="myInfo.intro" 
-								@click="onClickIntro" placeholder="소개글을 입력하세요.">
-						</div>
+				    <b-input-group class="mb-2 mr-sm-2 mb-sm-0">
+				      <b-input type="text" v-model="inputIntro" placeholder="소개글을 입력하세요" />
+							   <b-input-group-append>
+						       <b-button variant="outline-secondary" @click="onIntroSubmit">변경</b-button>
+						     </b-input-group-append>
+				    </b-input-group>
 					</b-col>
 				</b-row>
 				<b-row>
 					<b-col md=12>
 						<div class="input-group">
 							<b-button block button-variant="outline-secondary" @click="setChangePassword">비밀번호 변경</b-button>
-						</div>
-					</b-col>
-				</b-row>
-				<b-row>
-					<b-col md=12>
-						<div class="input-group">
-							<b-button block button-variant="outline-secondary" @click="clearEquip">모두 벗기</b-button>
 						</div>
 					</b-col>
 				</b-row>
@@ -160,12 +143,13 @@
 						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
+					<!--
 					<p class='items-nav'>Chair</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==18" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
 						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
-					</div>
+					</div>-->
 					<p class='items-nav'>BOX</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==99" v-for="item in items" :key="`${item.id}`" :value="`${item.itemCode}`"
@@ -189,11 +173,9 @@ export default {
 	components: { ChangePassword },
 	data() {
 		return {
-			isEditIntro: false,
 			inputIntro: '',
 			hair: '',
 			myCharacter: '',
-			colHeight: '85%;',
 			character: '',
 		}
 	},
@@ -230,7 +212,7 @@ export default {
 		...mapMutations([
 			'SET_IS_CHANGE_PASSWORD',
 		]),
-		...mapActions(['UPDATE_USER','FETCH_MYINFO','FETCH_ITEMS','UPDATE_EQUIP','USE_BOX', 'CLEAR_EQUIP']),
+		...mapActions(['UPDATE_MYSTATUS','FETCH_MYINFO','FETCH_ITEMS','UPDATE_EQUIP','USE_BOX', 'CLEAR_EQUIP']),
 		changeItem(id) {
 			this.UPDATE_EQUIP({ itemCode: id, uid: this.$route.params.uid }).then((data) => {
 				this.myCharacter = ''
@@ -268,20 +250,13 @@ export default {
 		setChangePassword() {
 			this.SET_IS_CHANGE_PASSWORD(false)
 		},
-		onClickIntro() {
-			this.isEditIntro = true
-			this.$nextTick(() => this.$refs.inputIntro.focus())
-		},
 		onIntroSubmit() {
 			if(!this.inputIntro) return
 			if(this.inputIntro.length > 33) return alert('32글자까지 입력 가능합니다')
-			const uid		= this.myInfo.uid
 			const intro = this.inputIntro
-			if(intro === this.myInfo.intro) return this.isEditIntro = false
-
-			this.UPDATE_USER({ uid, intro }).then(() => { 
+			this.UPDATE_MYSTATUS({ intro }).then(() => { 
 				this.FETCH_MYINFO()
-				this.isEditIntro = false
+				return alert('변경 성공')
 			})
 		},
 	},

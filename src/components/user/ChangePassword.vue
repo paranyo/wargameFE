@@ -4,8 +4,7 @@
 			<p>Change Password</p>
 		</div>
 		<div slot="body">
-			<input class="form-control mb-3" type="password" placeholder="Current Password" ref="currentPW"
-				v-model="currentPW">
+			<input class="form-control mb-3" type="password" placeholder="Current Password" ref="curPW" v-model="curPW">
 			<input class="form-control mb-3" type="password" placeholder="New Password" v-model="newPW">
 			<input class="form-control mb-3" type="password" placeholder="Confirm Password" v-model="confirmPW">
 			<b-button block form="add-tag-form" :disabled="!state" @click="onSubmit">Change</b-button>
@@ -21,7 +20,7 @@ export default {
 	components: {	Modal	},
 	data() {
 		return {
-			currentPW: '',
+			curPW: '',
 			newPW: '',
 			confirmPW: '',
 			isValidInput: false,
@@ -29,12 +28,12 @@ export default {
 	},
 	computed: {
 		state() {
-			return !!this.currentPW.trim().length && !!this.newPW.trim() && !!this.confirmPW.trim()
+			return !!this.curPW.trim().length && !!this.newPW.trim() && !!this.confirmPW.trim()
 		},
 	},
 	methods: {
 		...mapActions([
-			'UPDATE_USER',
+			'UPDATE_MYSTATUS',
 		]),
 		...mapMutations([
 			'SET_IS_CHANGE_PASSWORD',
@@ -44,9 +43,9 @@ export default {
 			if(this.newPW != this.confirmPW)
 				return alert('변경하려는 비밀번호가 서로 일치하지 않습니다')
 			const uid				= this.$route.params.uid
-			const currentPW = sha256(this.currentPW)
+			const curPW = sha256(this.curPW)
 			const	newPW			= sha256(this.newPW)
-			this.UPDATE_USER({ uid, pw: currentPW, reason: newPW })
+			this.UPDATE_MYSTATUS({ curPW, newPW })
 				.then(() => {
 					this.SET_IS_CHANGE_PASSWORD(2)
 				})

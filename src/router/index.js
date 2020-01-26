@@ -18,9 +18,7 @@ import EditShop		from '@/components/admin/EditShop'
 import aMain			from '@/components/admin/Main'
 import aChallenge from '@/components/admin/Challenge'
 import EditProb		from '@/components/admin/EditProb'
-import User				from '@/components/admin/User'
 import Users			from '@/components/admin/Users'
-import EditUser		from '@/components/admin/EditUser'
 import AuthLog		from '@/components/admin/AuthLog'
 import AllLog			from '@/components/admin/AllLog'
 import ErrorLog		from '@/components/admin/ErrorLog'
@@ -156,12 +154,6 @@ export default new Router({
 				{
 					path: '/settings/user',
 					component: Users,
-					children: [
-						{
-							path: ':uid',
-							component: EditUser
-						}
-					]
 				},
 				{
 					path: '/settings/SetNotice',

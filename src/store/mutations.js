@@ -1,10 +1,12 @@
 import { setAuthInHeader } from '../api'
 
 const mutations = {
-	LOGIN (state, { accessToken, advancedToken, user }) {
+	LOGIN (state, { accessToken, advancedToken, user, isAdmin }) {
 		if(!accessToken) return
 			state.accessToken				 = accessToken
 			localStorage.accessToken = accessToken
+			state.isAdmin						 = isAdmin
+			localStorage.isAdmin		 = isAdmin
 			if(typeof advancedToken !== null)
 				state.advancedToken				 = advancedToken
 				localStorage.advancedToken = advancedToken
@@ -13,6 +15,7 @@ const mutations = {
 	LOGOUT (state) {
 		state.accessToken = null
 		state.advancedToken = null
+		state.isAdmin = null
 		localStorage.clear()
 		setAuthInHeader(null)
 	},

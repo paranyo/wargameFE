@@ -3,8 +3,8 @@ import { setting, auth, notice, user, tag, challenge, prob, rank, admin, item, s
 const actions = {
 	LOGIN({ commit }, { id, pw }) {
 		return auth.login(id, pw)
-			.then(({ accessToken, advancedToken, user }) => {
-				commit('LOGIN', { accessToken, advancedToken, user })
+			.then(({ accessToken, advancedToken, user, isAdmin }) => {
+				commit('LOGIN', { accessToken, advancedToken, user, isAdmin })
 		})
 	},
 	JOIN(_, { id, nick, email, pw }) {
@@ -30,9 +30,15 @@ const actions = {
 			return user.fetch()
 				.then(({ user }) => commit('SET_ONEUSER', user))
 	},
-	UPDATE_USER({ state, dispatch }, { uid, pw, ip, money, nick, level, isBan, reason, email, intro }) {
-		return user.update(uid, { pw, ip, money, nick, level, isBan, reason, email, intro })
-			.then(_ => dispatch('FETCH_USERS'))
+	UPDATE_USER({ state, dispatch }, { uid, email, money, level, intro, isBan}) {
+		return user.update(uid, { email, money, level, intro, isBan })
+	},
+	UPDATE_MYSTATUS({ state, dispatch }, { curPW, newPW, intro }) {
+		return user.updateSelf({ curPW, newPW, intro })
+	},
+	/* 모든 유저의 정보를 가져온다 */
+	FETCH_USERS_INFO({ commit }) {
+		return admin.getUsers().then(data => data)
 	},
 
 	// User Main

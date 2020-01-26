@@ -1,6 +1,7 @@
 const state = {
 	accessToken: null,
 	advancedToken: null,
+	isAdmin: null,
 	users: [],
 	user: {},
 	myInfo: {},
