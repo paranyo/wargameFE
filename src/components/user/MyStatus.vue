@@ -3,9 +3,9 @@
 		<b-row style="height: 250px;">
 			<b-col md=2 style="height: 100%;">
 				<b-card no-body class="overflow-hidden" style="width: 100%; height:100%;">
-					<b-row no-gutters style="height: 100%;background: url(https://mblogthumb-phinf.pstatic.net/20140608_176/monhog_1402164204467rvtNT_PNG/%C7%EC%B3%D7%BE%EE%B6%B2%C1%FD.png?type=w2) no-repeat;text-align: center;background-position: -200px -130px;">
+					<b-row no-gutters style="height: 100%;background: url(http://wargame1.run.goorm.io/static/rank1.jpeg) no-repeat;text-align: center;background-position: -175px -310px;">
 						<b-col md="12" style="text-align: center; width: 100%; height: 80%;">
-			      	<b-card-img :src='`https://maplestory.io/api/character/${this.myCharacter},{"itemId":2000,"region":"KMS","version":"323"},{"itemId":12000,"region":"KMS","version":"323"}/stand1/0?showears=false&showLefEars=false&showHighLefEars=undefined&resize=1&name=&flipX=undefined`' class="rounded-0" style="width: auto; height: 75%; position:relative; top: 50px;" />
+			      	<b-card-img :src='`https://maplestory.io/api/character/${this.myCharacter},{"itemId":2000,"region":"KMS","version":"323"},{"itemId":12000,"region":"KMS","version":"323"}/stand1/0?showears=false&showLefEars=false&showHighLefEars=undefined&resize=1&name=&flipX=undefined`' class="rounded-0" style="width: auto; position: absolute; bottom: 0; right: 5%;" />
 						</b-col>
 						<b-col md="12" style="width: 100%;height: 25%;">
 							<b-button variant="dark" style="width: 100%; height: 70%; top: 16px; position: relative;" @click="clearEquip">모두 벗기</b-button>
@@ -125,15 +125,9 @@
 						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
-					<p class='items-nav'>One-Handed Weapon</p>
+					<p class='items-nav'>Weapon</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==16" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
-						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
-						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
-					</div>
-					<p class='items-nav'>Two-Handed Weapon</p>
-					<hr class="my-1">
-					<div class="items" v-if="item.cCode==17" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
 						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
@@ -219,7 +213,7 @@ export default {
 				this.FETCH_MYINFO().then(() => {
 					this.FETCH_ITEMS()
 					this.myCharacter += this.myInfo.items.map((i) => {
-						return JSON.stringify({ itemId: i.itemCode, region: "KMS" })
+						return JSON.stringify({ itemId: i.itemCode, region: "KMS", version: "323" })
 					})
 				})
 				this.character = 'https://maplestory.io/api/character/' + this.myCharacter + ',{"itemId":2000,"region":"KMS","version":"323"},{"itemId":12000,"region":"KMS","version":"323"}/stand1/0?showears=false&showLefEars=false&showHighLefEars=undefined&resize=1&name=&flipX=undefined'
@@ -231,7 +225,7 @@ export default {
 				this.FETCH_MYINFO().then(() => {
 					this.FETCH_ITEMS()
 					this.myCharacter += this.myInfo.items.map((i) => {
-						return JSON.stringify({ itemId: i.itemCode, region: "KMS" })
+						return JSON.stringify({ itemId: i.itemCode, region: "KMS", version: "323" })
 					})
 				})
 			})
@@ -275,7 +269,7 @@ export default {
   background: linear-gradient(#868686, #ffffff);
 }
 .jumbotron {
-	max-height: 300px;
+	max-height: 650px;
 	text-align: center;
   margin: 0 auto;
 	padding: 15px 10px;

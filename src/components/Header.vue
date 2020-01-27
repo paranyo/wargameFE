@@ -16,8 +16,11 @@
 					<router-link to="/myCorrect" class="badge badge-warning">{{ myInfo.score }}pt</router-link>
 					<a href="#" class="badge badge-info">{{ myInfo.money }}<i class="fab fa-viacoin"></i></a>
 				</div>
+
 				<router-link class="badge badge-danger" v-if="isAuthenticated" to="/login">Logout</router-link>
 				<router-link to="/settings"	v-if="isAdmin" href="#" class="badge badge-secondary"><i class="fas fa-wrench"></i></router-link>
+				<div v-else />
+
 				<div v-else>
 		    	<router-link class="headBtn" to="/login">Sign In</router-link>
 		    	<router-link class="headBtn" to="/Join">Sign Up</router-link>
