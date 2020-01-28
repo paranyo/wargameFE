@@ -25,6 +25,8 @@ const state = {
 	auction: [],
 	settings: [],
 	returnPath: '',
+	backColor: '',
+	shopItems: [],
 }
 
 export default state

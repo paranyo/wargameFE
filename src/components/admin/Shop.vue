@@ -1,30 +1,59 @@
 <template>
-	<b-container fluid class="pt-5 mx-auto">
-		<b-row class="mx-auto w-75" align-h="center">
-			<b-button @click="setProduct">Add</b-button>
+	<b-container fluid class="mx-auto w-75">
+		<b-row align-h="center">
+			<b-button variant="secondary" @click="add">등록</b-button>
 		</b-row>
-		<b-row class="center">
-			<b-col>
-				<hr class="my-4" />
-			</b-col>
+		<hr />
+		<b-row class="px-3 mx-auto">
+			<b-table sticky-header="700px" responsive :items="shop" :fields='fields' :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
+				header-variant="light" striped outlined hover v-if="shop.length > 0" @row-clicked="(item) => edit(item.idx)">
+				<template v-slot:table-colgroup="scope">
+					<col key="idx" style="width: 40px" />
+					<col key="name" style="width: 200px" />
+					<col key="price" style="width: 40px" />
+					<col key="pdCount" style="width: 40px" />
+					<col key="id" style="width: 40px" />
+					<col key="deadLine" style="width: 80px" />
+				</template>
+				<template v-slot:cell(name)="row">
+					<span class="info">
+						<div class="item">
+							<img :src="`http://maplestory.io/api/KMS/323/item/${row.item.id}/icon`" />
+						</div>
+						{{ row.item.name }}
+					</span>
+				</template>
+				<template v-slot:cell()="row">
+					<span class="info">{{ row.value }}</span>
+				</template>
+			</b-table>
+			<p v-else>등록된 상품이 없습니다.</p>
 		</b-row>
-		<b-row class="mx-auto w-75" v-for="(i, index) in shop" :key="`${index}`" v-if="index % 4 == 0" :id="index" style="margin-bottom: 15px">
-			<b-col v-for="(item, idx) in shop" :key="`${item.id}`" v-if="((index / 4) * 4) - 1 < idx && idx < ((index / 4) + 1) * 4">
-				<ShopCard :item="item" />
-			</b-col>
-		</b-row>
-		<router-view />
-		<AddShop v-if="isAddShop" />
+		<AddShop />
 	</b-container>
 </template>
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
-import AddShop	from './AddShop.vue'
-import ShopCard from './ShopCard.vue'
+import AddShop from './AddShop.vue'
 export default {
-	components: { AddShop, ShopCard },
+	components: { AddShop },
+	data() {
+		return {
+			fields: [
+				{ key: 'idx', label: '번호', sortable: true, tdClass: 'align-middle' },
+				{ key: 'name', label: '아이템 이름', sortable: true, tdClass: 'align-middle' },
+				{ key: 'price', label: '가격', sortable: true, tdClass: 'align-middle' },
+				{ key: 'pdCount', label: '수량', sortable: true, tdClass: 'align-middle' },
+				{ key: 'id', label: '아이템 코드', sortable: true, tdClass: 'align-middle' },
+				{ key: 'deadLine', label: '판매 기한', sortable: true, tdClass: 'align-middle', formatter: value => { return value.replace('T', ' ').substring(2, 19) } },
+			],
+			sortBy: 'idx',
+			sortDesc: true,
+		}
+	},
+	components: { AddShop },
 	computed: {
-		...mapState(['shop', 'isAddShop']),
+		...mapState([ 'shop', 'isAddShop' ]),
 	},
 	created() {
 		this.FETCH_SHOP()
@@ -32,17 +61,34 @@ export default {
 	methods: {
 		...mapActions(['FETCH_SHOP', 'ADD_SHOP']),
 		...mapMutations(['SET_IS_ADD_SHOP']),
-		setProduct() {
-			this.SET_IS_ADD_SHOP(true)
+		add() {
+			this.$root.$emit('bv::show::modal', 'add-shop')
 		},
-		timeFormat(time) {
-			return  time.replace('T', ' ').substring(2, 17)
+		edit(idx) {
+			alert(idx)
 		},
-	},
+	}
 }
 </script>
 <style scope>
-.col-3 {
-padding: 15px;
+.info {
+	color: #000000;
+	cursor: default;
+	font-weight: lighter;
+	font-size: 14pt;
+}
+.item {
+  border: 2px solid #d4d4d4;
+  border-radius: 6px;
+  padding: 16px 10px;
+  display: inline-block;
+  background: linear-gradient(#868686, #ffffff);
+}
+.item > img {
+  width: 40px;
+  height: 30px;
+}
+.align-middle {
+	vertical-align: middle!important;
 }
 </style>

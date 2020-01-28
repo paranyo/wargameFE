@@ -8,27 +8,23 @@
 
 <script>
 import Header from '@/components/Header'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
-	data() {
-		return {
-			backColor: '',
-		}
-	},
 	components: {
 		'Header': Header,
 	},
 	created() {
 		this.FETCH_SETTING().then(() => {
 			if(this.settings[0].name == 'backColor')
-				this.backColor = this.settings[0].value
+				this.SET_BACK_COLOR(this.settings[0].value)
 		})
 	},
 	computed: {
-		...mapState(['settings'])
+		...mapState(['settings', 'backColor'])
 	},
 	methods: {
-		...mapActions(['FETCH_SETTING'])
+		...mapActions(['FETCH_SETTING']),
+		...mapMutations(['SET_BACK_COLOR']),
 	}
 }
 </script>

@@ -2,7 +2,7 @@
 	<b-container fluid class="pt-5 mx-auto">
 		<b-row class="mx-auto w-50">
 			<b-col cols="4" v-for="(user, index) in users.slice(0, 3)" :key="user.nick">
-				<b-card no-body class="overflow-hidden" style="width: 100%; height: 150px;" v-b-popover.hover.top="1 + index + '등'">
+				<b-card no-body class="overflow-hidden rank" style="width: 100%; height: 150px;" v-b-popover.hover.top="1 + index + '등'">
 					<b-row no-gutters style="height: 100%;background: url(http://wargame1.run.goorm.io/static/rank1.jpeg) no-repeat;text-align: center;background-position: -127px -376px;">
 						<b-col cols="8">
 							<p class="score" v-b-popover.hover.top="DateFormat(user.lastSolved)" style="color: #fff;"> {{ user.score }}pt</p>
@@ -24,7 +24,7 @@
 		</b-row>
 		<b-row class="mx-auto w-75">
 			<b-col cols="3" v-for="(user, index) in users.slice(3, users.length)" :key="user.nick" style="padding: 10px;">
-				<b-card no-body class="overflow-hidden" style="width: 100%; height: 150px;" v-b-popover.hover.top="4 + index + '등'">
+				<b-card no-body class="overflow-hidden rank" style="width: 100%; height: 150px;" v-b-popover.hover.top="4 + index + '등'">
 					<b-row no-gutters style="height: 100%;background: url(http://wargame1.run.goorm.io/static/MyStatus.png) no-repeat;text-align: center;background-position: -230px -200px;">
 						<b-col cols="8">
 							<p class="score" v-b-popover.hover.top="DateFormat(user.lastSolved)"> {{ user.score }}pt</p>
@@ -96,7 +96,7 @@ export default {
 	margin: 0 10px 5px 0;
 	border-radius: 3px;
 }
-.overflow-hidden {
+.rank{
 	box-shadow: 0px 0px 7px #000;
 }
 </style>

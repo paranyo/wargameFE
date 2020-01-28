@@ -121,6 +121,9 @@ const actions = {
 	FETCH_SHOP({ commit }) {
 		return shop.fetch().then(data => commit('SET_SHOP', data))
 	},
+	FETCH_SHOP_ITEMS({ commit }) {
+		return shop.fetchItems().then(data => commit('SET_SHOP_ITEMS', data))
+	},
 	FETCH_PRODUCT({ commit }, { idx }) {
 		return shop.fetch(idx).then(data => commit('SET_PRODUCT', data))
 	},
@@ -154,8 +157,8 @@ const actions = {
 	ADD_SETTING(_, { name, value }) {
 		return setting.create({ name, value })
 	},
-	UPDATE_SETTING({ dispatch }, { id, value }) {
-		return setting.update({ id, value }).then(() => dispatch('FETCH_SETTING'))
+	UPDATE_SETTING({ dispatch }, { name, value }) {
+		return setting.update({ name, value }).then(() => dispatch('FETCH_SETTING'))
 	},
 }
 

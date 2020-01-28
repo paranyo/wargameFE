@@ -181,6 +181,9 @@ export const shop = {
 		else
 			return request.get('/shop').then(({ data }) => data)
 	},
+	fetchItems() {
+		return request.get('/manage/shop').then(({ data }) => data)
+	},
 	create (data) {
 		return request.post('/manage/shop/create', data).then(({ data }) => data)
 	},

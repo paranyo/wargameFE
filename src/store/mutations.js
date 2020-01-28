@@ -22,6 +22,9 @@ const mutations = {
 	SET_FILES (state, file) {
 		state.files = file.map(f => f)
 	},
+	SET_SHOP_ITEMS(state, item) {
+		state.shopItems = item.map(i => i)
+	},
 	SET_USERS (state, user) {
 		state.users = user.map(u => u)
 	},
@@ -93,6 +96,9 @@ const mutations = {
 	},
 	SET_RETURNPATH(state, path) {
 		state.returnPath = path ? path : ''
+	},
+	SET_BACK_COLOR(state, color) {
+		state.backColor = color
 	},
 }
 

@@ -1,97 +1,133 @@
 <template>
 	<b-container fluid class="mx-auto">
 		<b-row align-h="center">
-				<b-button variant="info" @click="setAddSetting">세팅 추가</b-button>
+		<!--	<b-button variant="info" @click="setAddSetting">세팅 추가</b-button>-->
 		</b-row>
 		<hr />
 		<b-row class="px-3 mx-auto">
-			<b-table sticky-header="600px" responsive :items="settings" :fields='fields' :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
-				header-variant="light" class="text-center" :tbody-tr-class="rowClass">
-				<template v-slot:table-colgroup="scope">
-					<col v-for="field in scope.fields" :key="field.key" :style="{ width: field.key === 'name' ? '300px' : '45px' }">
-				</template>
-				<template v-slot:cell(name)="row">
-					<span @click="info(row.item, $event.target)" class="infoModal">{{ row.item.name }}</span>
-				</template>
-			</b-table>
+			<b-col style="text-align: right;" cols="2">
+				<b-card no-body class="overflow-hidden rank">
+					<b-row no-gutters>
+						<b-col md="4" style="text-align: center;">
+							<i class="fa fa-wrench fa-5x" aria-hidden="true" style="margin: 30px"></i>
+						</b-col>
+						<b-col md="8">
+							<b-card-body title="점검 설정">
+								<b-form-checkbox v-model="isOpen" name="check-button" switch size="lg" value="true" unchecked-value="false" >
+								</b-form-checkbox>
+							</b-card-body>
+						</b-col>
+					</b-row>
+				</b-card>
+			</b-col>
+			<b-col style="text-align: right;" cols="4">
+				<b-card no-body class="overflow-hidden rank" >
+					<b-row no-gutters>
+						<b-col md="4" style="text-align: center;">
+							<i class="fa fa-battery-full fa-5x" aria-hidden="true" style="margin: 30px"></i>
+						</b-col>
+						<b-col md="8">
+							<b-card-body title="시작 시간">
+							  <b-input-group class="mt-3">
+									<b-form-input type="datetime-local" v-model="startTime" />
+							    <b-input-group-append>
+							      <b-button variant="outline-secondary" @click="setServer(1)">
+											<i class="fa fa-check" aria-hidden="true"></i>
+										</b-button>
+							    </b-input-group-append>
+							  </b-input-group>
+							</b-card-body>
+						</b-col>
+					</b-row>
+				</b-card>
+			</b-col>
+			<b-col style="text-align: right;" cols="4">
+				<b-card no-body class="overflow-hidden rank" >
+					<b-row no-gutters>
+						<b-col md="4" style="text-align: center;">
+							<i class="fa fa-battery-empty fa-5x" aria-hidden="true" style="margin: 30px"></i>
+						</b-col>
+						<b-col md="8">
+							<b-card-body title="종료 시간">
+							  <b-input-group class="mt-3">
+									<b-form-input type="datetime-local" v-model="endTime"/>
+							    <b-input-group-append>
+							      <b-button variant="outline-secondary" @click="setServer(2)">
+											<i class="fa fa-check" aria-hidden="true"></i>
+										</b-button>
+							    </b-input-group-append>
+							  </b-input-group>
+							</b-card-body>
+						</b-col>
+					</b-row>
+				</b-card>
+			</b-col>
+			<b-col style="text-align: right;" cols="2">
+				<b-card no-body class="rank" >
+					<b-row no-gutters>
+						<b-col md="4" style="text-align: center;">
+							<i class="fa fa-paint-brush fa-5x" aria-hidden="true" style="margin: 30px"></i>
+						</b-col>
+						<b-col md="8">
+							<b-card-body title="배경 설정">
+								<ColorPicker :curColor="settings[0].value" />
+							</b-card-body>
+						</b-col>
+					</b-row>
+				</b-card>
+			</b-col>
 		</b-row>
-		<b-modal :id="infoModal.id" @hide="resetInfoModal" hide-footer>
-			<template v-slot:modal-header>
-				<b-form-input type="search" v-model="infoModal.name" />
-			</template>
-			<b-form-textarea rows="3" max-rows="8" v-model="infoModal.value" />
-			<b-button class="mt-3" block @click="onSubmit(infoModal.idx)"  variant="success">Edit</b-button>
-			<b-button block @click="$bvModal.hide(infoModal.id)">Close Me</b-button>
-		</b-modal>
 		<AddSetting v-if="isAddSetting" />
 	</b-container>
 </template>
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
 import AddSetting from './AddSetting.vue'
+import ColorPicker from './ColorPicker.vue'
 export default {
-	components: { AddSetting },
+	components: { AddSetting, ColorPicker },
 	data() {
 		return {
-			fields: [
-				{ key: 'id', label: '번호', sortable: true, sortDirection: 'desc' },
-				{ key: 'name', label: '이름', sortable: false },
-				{ key: 'value', label: '값', sortable: false },
-			],
-			sortBy: 'id',
-			sortDesc: true,
-			infoModal: {
-				id: 'info-modal',
-				idx: 0,
-				name: '',
-				value: '',
-				deletedAt: '',
-			},
+			isOpen: false,
+			startTime: '',
+			endTime: '',
 		}
 	},
 	computed: {
 		...mapState(['settings', 'isAddSetting']),
 	},
+	watch: {
+		isOpen() {
+			this.setServer(3)
+		}
+	},
 	created() {
-		this.FETCH_SETTING()
+		this.FETCH_SETTING().then(() => {
+			this.startTime = this.settings[1].value
+			this.endTime	 = this.settings[2].value
+			this.isOpen		 = this.settings[3].value
+		})
 	},
 	methods: {
 		...mapActions(['FETCH_SETTING', 'UPDATE_SETTING']),
 		...mapMutations(['SET_IS_ADD_SETTING']),
-		rowClass(item, type) {
-			if(!item.deletedAt) return
-			if(item.id === 1) return 'table-success'
-			if(item.deletedAt !== null) return 'table-danger'
-		},
-		onSubmit(id) {
-			const value = this.infoModal.value
-			this.UPDATE_SETTING({ id, value }).then(() => {
-				this.FETCH_SETTING()
-				this.$router.push('/settings/Setting')
-				this.$root.$emit('bv::hide::modal', this.infoModal.id)
-			})
-		},
-		info(item, button) {
-			this.infoModal.idx	 = item.id
-			this.infoModal.name = item.name
-			this.infoModal.value = item.value
-			this.infoModal.deletedAt = item.deletedAt
-			this.$root.$emit('bv::show::modal', this.infoModal.id, button)
-		},
-		resetInfoModal() {
-			this.infoModal.name = ''
-			this.infoModal.value = ''
-		},
+		setServer(type) {
+			if(type == 1) 
+				this.UPDATE_SETTING({ name: 'StartCTF', value: this.startTime })
+			else if(type == 2)
+				this.UPDATE_SETTING({ name: 'EndCTF', value: this.endTime })
+			else if(type == 3) {
+				this.UPDATE_SETTING({ name: 'EditCTF', value: this.isOpen })
+			}
+		},	
 		setAddSetting() {
 			this.SET_IS_ADD_SETTING(true)	
 		}
 	}
 }
 </script>
-<style scope>
-.infoModal {
-	color: #000000;
-	font-wegiht: bolder;
-	cursor: pointer;
+<style scoped>
+.rank {
+	box-shadow: 0px 0px 7px #000;
 }
 </style>
