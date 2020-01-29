@@ -5,8 +5,8 @@
 		</b-row>
 		<hr />
 		<b-row class="px-3 mx-auto">
-			<b-table sticky-header="700px" responsive :items="shop" :fields='fields' :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
-				header-variant="light" striped outlined hover v-if="shop.length > 0" @row-clicked="(item) => edit(item.idx)">
+			<b-table sticky-header="700px" responsive :items="items" :fields='fields' :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
+				header-variant="light" striped outlined hover v-if="shop.length > 0"@row-clicked="(item) => edit(item.idx)">
 				<template v-slot:table-colgroup="scope">
 					<col key="idx" style="width: 40px" />
 					<col key="name" style="width: 200px" />
@@ -29,7 +29,8 @@
 			</b-table>
 			<p v-else>등록된 상품이 없습니다.</p>
 		</b-row>
-		<AddShop />
+		<AddShop @update="getTable" />
+		<router-view @update="getTable" />
 	</b-container>
 </template>
 <script>
@@ -39,11 +40,12 @@ export default {
 	components: { AddShop },
 	data() {
 		return {
+			items: [],
 			fields: [
 				{ key: 'idx', label: '번호', sortable: true, tdClass: 'align-middle' },
 				{ key: 'name', label: '아이템 이름', sortable: true, tdClass: 'align-middle' },
-				{ key: 'price', label: '가격', sortable: true, tdClass: 'align-middle' },
 				{ key: 'pdCount', label: '수량', sortable: true, tdClass: 'align-middle' },
+				{ key: 'price', label: '가격', sortable: true, tdClass: 'align-middle' },
 				{ key: 'id', label: '아이템 코드', sortable: true, tdClass: 'align-middle' },
 				{ key: 'deadLine', label: '판매 기한', sortable: true, tdClass: 'align-middle', formatter: value => { return value.replace('T', ' ').substring(2, 19) } },
 			],
@@ -56,7 +58,7 @@ export default {
 		...mapState([ 'shop', 'isAddShop' ]),
 	},
 	created() {
-		this.FETCH_SHOP()
+		this.getTable()
 	},
 	methods: {
 		...mapActions(['FETCH_SHOP', 'ADD_SHOP']),
@@ -65,7 +67,15 @@ export default {
 			this.$root.$emit('bv::show::modal', 'add-shop')
 		},
 		edit(idx) {
-			alert(idx)
+			this.$router.push('/settings/shop/' + idx)
+			this.$nextTick(() => {
+				this.$root.$emit('bv::show::modal', 'edit-shop')
+			})
+		},
+		getTable() {
+			this.FETCH_SHOP().then(() => {
+				this.items = this.shop
+			})
 		},
 	}
 }

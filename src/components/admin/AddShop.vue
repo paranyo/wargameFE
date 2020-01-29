@@ -44,7 +44,7 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 				modal: {
 					name: '',
 					pdCount: 0,
-					id: 0,
+					pdCode: 0,
 					price: 0,
 					description: '',
 					deadLine: '',
@@ -60,12 +60,15 @@ import { mapState, mapMutations, mapActions } from 'vuex'
     methods: {
 			...mapActions(['FETCH_SHOP_ITEMS', 'ADD_SHOP']),
 			onSubmit() {
-				this.ADD_SHOP()
+				const { pdCode, pdCount, price, deadLine, description } = this.modal
+				this.ADD_SHOP({ pdCode, pdCount, price, deadLine, description }).then(() => {
+					this.$emit('update')
+				})
 				this.$root.$emit('bv::hide::modal', 'add-shop')
 			},
 			setItem(item) {
-				this.modal.name = item.name
-				this.modal.id		= item.id
+				this.modal.name			= item.name
+				this.modal.pdCode		= item.id
 			},
 			resetInfoModal() {
 				this.$root.$emit('bv::hide::modal', 'add-shop')
