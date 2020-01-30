@@ -4,11 +4,11 @@
 			<b-row align-v="center">
 				<b-col cols="12" md="12">
 					<b-jumbotron bg-variant="light">
-						<template slot="header">환영합니다!</template>
+						<template slot="header">Welcome!</template>
 						<hr class="my-4">
-						<p>어드민 몇명인지 띄우기</p>
+						<p>2020년도 운영진분들의 열정과 배움의 노고를 존경합니다.</p>
 						<p>
-							Written-By  <b-badge variant="primary">gksrbxo123@gmail.com</b-badge>
+							Written-By  <b-badge variant="warning">paranyo</b-badge>
 						</p>
 					</b-jumbotron>
 				</b-col>
