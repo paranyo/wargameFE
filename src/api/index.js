@@ -1,6 +1,5 @@
 import axios from 'axios'
 import router from '../router'
-
 const domain = 'https://wargame2.run.goorm.io'
 const Unauthorized = 401
 const Forbidden		 = 403
@@ -11,11 +10,9 @@ const onUnauthorized = () => {
 const onForbidden = () => {
 	router.push('/Sorry')
 }
-
 const onServerError = () => {
 	router.push('/OhMyGod')
 }
-
 const request = {
 	get(path) {
 		return axios.get(`${ domain + path }`)
@@ -38,11 +35,9 @@ const request = {
 			})
 	}
 }
-
 export const setAuthInHeader = token => {
 	axios.defaults.headers.common['Authorization'] = token ? `${ token }` : null;
 }
-
 export const auth = {
 	login(id, pw) {
 		return request.post('/user/login', { id, pw })
@@ -57,7 +52,6 @@ export const auth = {
 			.then(({ data }) => data)
 	},
 }
-
 export const tag = {
 	fetch() {
 		return request.get('/tags').then(({ data }) => data)
@@ -69,7 +63,6 @@ export const tag = {
 		return request.put(`/manage/tag/update/${title}`, data).then(({ data }) => data)
 	}
 }
-
 export const prob = {
 	fetch(tags) {
 		if(tags)
@@ -94,7 +87,6 @@ export const prob = {
 		return request.post(`/auth/${id}`, data).then(({ data }) => data)
 	},
 }
-
 export const notice = {
 	fetch() {
 		return request.get('/notice').then(({ data }) => data)
@@ -109,7 +101,6 @@ export const notice = {
 		return request.get(`/notice/remove/${id}`).then(({ data }) => data)
 	}
 }
-
 export const user = {
 	fetch(uid) {
 		if(uid) {
@@ -130,11 +121,21 @@ export const user = {
 	updateSelf(data) {
 		return request.put('/user', data).then(({ data }) => data)
 	},
-	getFile(fName) {
-		return request.get(`/download/${fName}`)
+	getFile(fName) {	// 미사용. 보류
+		return request.get(`/download/${fName}`, { responseType: "blob" })
+			.then((res) => {
+				const url = window.URL.createObjectURL(new Blob([res.data], { type: res.headers['Content-Type'] }))
+				const link = document.createElement('a')
+				link.href = url
+				const filename = res.headers.filename
+				link.setAttribute('downloads', filename)
+				document.body.appendChild(link)
+				link.click()
+			}).catch((error) => {
+				console.error(error)
+			})
 	}
 }
-
 export const admin = {
 	getHash(data) {
 			return request.post('/manage/hash', data).then(({ data }) => data)
@@ -152,13 +153,11 @@ export const admin = {
 		return request.get('/manage/user').then(({ data }) => data)
 	},
 }
-
 export const rank = {
 	fetch() {
 		return request.get('/ranking').then(({ data }) => data)
 	}
 }
-
 export const item = {
 	fetch() {
 		return request.get('/item').then(({ data }) => data)
@@ -173,7 +172,6 @@ export const item = {
 		return request.post('/item/box', data).then(({ data }) => data)
 	},
 }
-
 export const shop = {
 	fetch(id) {
 		if(id)
@@ -197,7 +195,6 @@ export const shop = {
 		return request.get(`/shop/buy/${pId}`).then(({ data }) => data)
 	},
 }
-
 export const auction = {
 	fetch() {
 		return request.get('/auction').then(({ data }) => data)
@@ -209,7 +206,6 @@ export const auction = {
 		return request.post('/auction/bid', data).then(({ data }) => data)
 	},
 }
-
 export const setting = {
 	fetch() {
 		return request.get('/setting').then(({ data }) => data)

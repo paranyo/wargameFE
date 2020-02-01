@@ -52,7 +52,7 @@
 		</b-row>
 		<b-row>
 			<b-col md=12>
-				<b-jumbotron>
+				<b-jumbotron style="user-select: none;">
 					<p class='items-nav'>Hair</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==1" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"

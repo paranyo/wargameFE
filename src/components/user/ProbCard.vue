@@ -21,22 +21,6 @@
     	</b-col>
   	</b-row>
 	</b-card>
-<!--
-	<div class="card bg-light mb-3 h-100" @click="showProb">
-	  <div class="card-header px-2 py-2" :class="{'bg-danger': prob.deletedAt}">
-			<span class="badge badge-pill badge-secondary">{{ prob.tag }}</span>
-			<span class="badge badge-pill badge-warning">{{ prob.score }}pt</span>
-			<span class="badge badge-pill badge-primary">{{ prob.author }}</span>
-			<span v-if="prob.isCorrect" class="badge badge-pill badge-success">Correct</span>
-		</div>
-		<div class="card-body" :class="{'bg-danger': prob.deletedAt}">
-			<p class="card-title">{{ substrTitle }}</p>
-			<p class="card-text">{{ substrDesc }}</p>
-		</div>
-	  <div class="card-footer" :class="{'bg-danger': prob.deletedAt}">
-			<p class="card-text"><small class="text-muted">{{ prob.solver }}명이 풀었습니다.</small></p>
-		</div>
-  </div>-->
 </template>
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
@@ -71,6 +55,9 @@ export default {
 		showProb() {
 			this.SET_RETURNPATH('/challenge')
 			this.$router.push('/challenge/' + this.prob.id)
+			this.$nextTick(() => {
+				this.$root.$emit('bv::show::modal', 'prob-view')
+			})
 		},
 	}
 }

@@ -52,6 +52,9 @@ export default {
 		showProb(id) {
 			this.SET_RETURNPATH('/myCorrect')
 			this.$router.push('/myCorrect/' + id)
+			this.$nextTick(() => {
+				this.$root.$emit('bv::show::modal', 'prob-view')
+			})
 		},
 	}
 }

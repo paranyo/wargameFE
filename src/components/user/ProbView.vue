@@ -1,34 +1,18 @@
 <template>
-	<modal class="modal-card">
-		<div slot="header">
-			<span class="badge badge-pill badge-warning">{{ prob.score }}</span>
-			<span>&nbsp;{{ prob.title }}</span>
-		</div>
-		<div slot="body">
-			<div class="mb-3">
-				{{ prob.description }}
-			</div>
-			<div class="mb-3">
-				<p v-if="prob.src"><a :href="'//' + prob.src" target="_blank">LINK</a></p>
-				<p v-if="prob.saveName"><a :href="'//wargame2.run.goorm.io/download/' + prob.saveName" target="_blank">DOWNLOAD</a></p>
-				<!--
-				<p v-if="prob.saveName"><button button-variant='info' size="sm" @click="getFile(prob.saveName)">DOWNLOAD</button></p>-->
-			</div>
-			<div>
-				<div class="input-group">
-				  <input type="text" class="form-control" placeholder="플래그" v-model="flag" ref="flag">
-					<div class="input-group-append">
-						<b-button button-variant="outline-secondary" @click="onSubmitForm" @keyup.enter="onSubmitForm">
-							제출</b-button>
-					</div>
-				</div>
-			</div>
-			<b-button class="mt-3" block @click="onClickClose">취소</b-button>
-		</div>
-	</modal>
+	<b-modal id="prob-view" @hide="close" hide-footer centered>
+		<template v-slot:modal-title>
+			<b-badge pill variant="warning">{{ prob.score }}</b-badge>
+			&nbsp;<span>{{ prob.title }}</span>
+		</template>
+		<p>{{ prob.description }}</p>
+		<code v-if="prob.src" class="text-right d-block"><a :href="'//' + prob.src" target="_blank">LINK</a></code>
+		<code v-if="prob.saveName" class="text-right d-block"><a :href="'//wargame2.run.goorm.io/download/' + prob.saveName" target="_blank">DOWNLOAD</a></code>
+		<b-input-group prepend="FLAG" class="mt-3"><b-form-input v-model="flag" /></b-input-group>
+		<b-button class="mt-3" block @click="onSubmit" variant="success" :disabled="invalidForm" >제출</b-button>
+		<b-button block @click="close">취소</b-button>
+	</b-modal>
 </template>
 <script>
-import Modal from '../Modal.vue'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { sha256 } from 'js-sha256'
 export default {
@@ -38,7 +22,6 @@ export default {
 			tag: [],
 		}
 	},
-	components: {	Modal	},
 	computed: {
 		...mapState(['prob', 'tags', 'returnPath']),
 		invalidForm() {
@@ -47,43 +30,39 @@ export default {
 	},
 	created() {
 		this.FETCH_ONEPROB(this.$route.params.id).then(() => {
-			this.tags.map((t) => {	this.tag.push(t.id) })
-		}).catch((e) => {
-			console.dir(e)
+			this.tags.map((t) => { this.tag.push(t.id) } )
+		}).catch((err) => {
+			return alert(err.response.data.message)
 		})
 	},
-	mounted() {
-		this.$refs.flag.focus()
-	},
 	methods: {
-		...mapActions([
-			'FETCH_ONEPROB',
-			'AUTH_PROB',
-			'FETCH_MYINFO',
-			'FETCH_PROBS',
-			'GET_FILE',
-		]),
-		getFile(fName) {
-			this.GET_FILE(fName)
-		},
-		onSubmitForm() {
+		...mapActions(['FETCH_ONEPROB', 'AUTH_PROB', 'FETCH_MYINFO', 'FETCH_PROBS']),
+		onSubmit() {
 			const flag = this.flag.trim()
-			if(!flag) return
+			if(!flag) return alert('플래그를 입력하세요!')
 			this.AUTH_PROB({ id: this.prob.id, flag: sha256(flag), rFlag: flag })
-				.then((result) => {
-					alert(result)
-					this.FETCH_MYINFO()
-					this.FETCH_PROBS({ tags: this.tag })
-					this.$router.push('/challenge')
-				}).catch((err) => {
-					return alert(err.response.data.message)
-				})
+			.then((result) => {
+				alert(result)
+				this.FETCH_MYINFO()
+				this.FETCH_PROBS({ tags: this.tag })
+				this.$router.push(this.returnPath)
+			}).catch((err) => {
+				return alert(err.response.data.message)
+			})	
 		},
-		onClickClose() {
+		close() {
+			this.$root.$emit('bv::hide::modal', 'prob-view')
+			this.FETCH_PROBS({ tags: this.tag })
 			this.$router.push(this.returnPath)
 		},
-	}
+	},
 }
 </script>
 <style scoped>
+p {
+	margin: 0;
+}
+.row {
+	margin-bottom: 10px;
+}
 </style>
