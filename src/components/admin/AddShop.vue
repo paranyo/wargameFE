@@ -63,8 +63,10 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 				const { pdCode, pdCount, price, deadLine, description } = this.modal
 				this.ADD_SHOP({ pdCode, pdCount, price, deadLine, description }).then(() => {
 					this.$emit('update')
+					this.$root.$emit('bv::hide::modal', 'add-shop')
+				}).catch((err) => {
+					return alert(err.response.data.message)
 				})
-				this.$root.$emit('bv::hide::modal', 'add-shop')
 			},
 			setItem(item) {
 				this.modal.name			= item.name

@@ -20,7 +20,8 @@
 		    	<router-link class="headBtn" to="/login">Sign In</router-link>
 			  	<router-link class="headBtn" to="/Join">Sign Up</router-link>
 				</div>
-				<router-link class="badge badge-danger" v-if="isAuthenticated" to="/login">Logout</router-link>
+					<b-badge class="logout" variant="danger" v-if="isAuthenticated" @click="logout">Logout</b-badge>
+<!--				<router-link class="badge badge-danger" v-if="isAuthenticated" to="/login">Logout</router-link>-->
 				<router-link to="/settings"	v-if="isAdmin" href="#" class="badge badge-secondary"><i class="fas fa-wrench"></i></router-link>
 				</div>
 			</div>
@@ -38,7 +39,8 @@ export default {
 			return this.$store.getters.isAuthenticated
 		},
 		isAdmin() {
-			return this.$store.getters.isAdmin
+			return localStorage.isAdmin
+			//return this.$store.getters.isAdministator
 		},
 	},
 	created() {
@@ -48,6 +50,10 @@ export default {
 	},
 	methods: {
 		...mapActions(['FETCH_MYINFO']),
+		logout() {
+			if(confirm('로그아웃 하시겠습니까?'))
+				this.$router.push('/login')
+		},
 	},
 }
 </script>
@@ -59,5 +65,8 @@ export default {
 }
 .headBtn:hover {
 	text-decoration: underline;
+}
+.logout:hover {
+	cursor: pointer;
 }
 </style>

@@ -5,19 +5,22 @@ const mutations = {
 		if(!accessToken) return
 			state.accessToken				 = accessToken
 			localStorage.accessToken = accessToken
-			state.isAdmin						 = isAdmin
-			localStorage.isAdmin		 = isAdmin
-			if(typeof advancedToken !== null)
+			if(typeof advancedToken !== null) {
 				state.advancedToken				 = advancedToken
 				localStorage.advancedToken = advancedToken
+			}
+			if(isAdmin == true) {
+				state.isAdmin				 = isAdmin
+				localStorage.isAdmin = isAdmin
+			}
 			setAuthInHeader(accessToken)
 	},
 	LOGOUT (state) {
+		setAuthInHeader()
 		state.accessToken = null
 		state.advancedToken = null
 		state.isAdmin = null
 		localStorage.clear()
-		setAuthInHeader(null)
 	},
 	SET_FILES (state, file) {
 		state.files = file.map(f => f)

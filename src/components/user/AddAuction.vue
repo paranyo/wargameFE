@@ -74,7 +74,7 @@ export default {
 			const end		 = this.end
 			const itemId = this.itemId
 			if(!price || !end || !itemId) return alert('모든 값은 필수입니다.')
-			if(confirm("선택한 아이템을 입찰가 " + price + ", 경매시간은 " + end + "분입니다. 등록하시겠습니까?"))
+			if(confirm("선택한 아이템을 입찰가 " + price + ", 경매시간은 " + end + "초입니다. 등록하시겠습니까?"))
 				this.ADD_AUCTION({ price, end, itemId }).then((data) => {
 					alert(data.result)
 					this.FETCH_AUCTION() 

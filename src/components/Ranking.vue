@@ -6,7 +6,7 @@
 					<b-row no-gutters style="height: 100%;background: url(http://wargame1.run.goorm.io/static/rank1.jpeg) no-repeat;text-align: center;background-position: -127px -376px;">
 						<b-col cols="8">
 							<p class="score" v-b-popover.hover.top="DateFormat(user.lastSolved)" style="color: #fff;"> {{ user.score }}pt</p>
-							<p class="score" style="height: 48%; color: #fff;">{{ user.intro ? user.intro : 'No Intro' }}</p>
+							<p class="score" style="height: 55%; color: #fff;">{{ user.intro ? user.intro : 'No Intro' }}</p>
 						</b-col>
 						<b-col cols="4">
 							<div style="margin: 0; hegiht: 85%;">
@@ -28,7 +28,7 @@
 					<b-row no-gutters style="height: 100%;background: url(http://wargame1.run.goorm.io/static/MyStatus.png) no-repeat;text-align: center;background-position: -230px -200px;">
 						<b-col cols="8">
 							<p class="score" v-b-popover.hover.top="DateFormat(user.lastSolved)"> {{ user.score }}pt</p>
-							<p class="score" style="height: 48%;">{{ user.intro ? user.intro : 'No Intro' }}</p>
+							<p class="score" style="height: 55%;">{{ user.intro ? user.intro : 'No Intro' }}</p>
 						</b-col>
 						<b-col cols="4">
 							<div style="margin: 0; hegiht: 85%;">
@@ -84,7 +84,7 @@ export default {
 <style scope>
 .score {
 	padding: 5px;
-	width: 50%;
+	width: 60%;
 	top: 10px;
 	left: 5px;
 	position: relative;

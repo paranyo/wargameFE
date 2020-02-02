@@ -72,8 +72,11 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 			...mapActions(['FETCH_SHOP_ITEMS', 'FETCH_PRODUCT', 'UPDATE_SHOP', 'REMOVE_SHOP']),
 			onSubmit() {
 				const { id, pdCode, pdCount, price, deadLine, description } = this.modal
-				this.UPDATE_SHOP({ id, pdCode, pdCount, price, deadLine, description })
-				this.close()
+				this.UPDATE_SHOP({ id, pdCode, pdCount, price, deadLine, description }).then(() => {
+					this.close()
+				}).catch((err) => {
+					alert(err.response.data.message)
+				})
 			},
 			onRemove() {
 				const { id } = this.modal

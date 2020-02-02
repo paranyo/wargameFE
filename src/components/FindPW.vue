@@ -1,6 +1,6 @@
 <template>
 	<b-container fluid class="pt-5 mx-auto w-50">
-		<form @submit.prevent="onSubmit">
+		<form @submit.prevent="onSubmit" @keyup.enter="onSubmit">
 			<div class="alert alert-light" role="alert">
 				<h4 class="alert-heading">비밀번호 찾기</h4>
 					<span class="small" v-if="error">{{ error }} :(</span>

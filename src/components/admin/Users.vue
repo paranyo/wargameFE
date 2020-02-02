@@ -166,6 +166,8 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 					this.isBusy = !this.isBusy
 					this.getUserTable()
 					this.$root.$emit('bv::hide::modal', this.infoModal.id)
+				}).catch(err => {
+					alert('intro는 최대 32글자입니다.')
 				})
 			},
 			info(item, index, button) {

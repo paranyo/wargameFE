@@ -246,11 +246,13 @@ export default {
 		},
 		onIntroSubmit() {
 			if(!this.inputIntro) return
-			if(this.inputIntro.length > 33) return alert('32글자까지 입력 가능합니다')
+			if(this.inputIntro.length > 32) return alert('32글자까지 입력 가능합니다')
 			const intro = this.inputIntro
 			this.UPDATE_MYSTATUS({ intro }).then(() => { 
 				this.FETCH_MYINFO()
 				return alert('변경 성공')
+			}).catch(e => {
+				alert(e.response.data.message)
 			})
 		},
 	},

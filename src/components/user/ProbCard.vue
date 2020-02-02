@@ -4,7 +4,7 @@
     	<b-col md="3" style="height: 100%;">
         <p v-if="prob.isCorrect" style="font-size: 32pt; transform: rotate(300deg); margin: 60px 0 0 -10px; font-weight: 400; position: absolute; text-align: center; color: #77DD77;">Correct!</p>
         <p v-else style="font-size: 36pt; transform: rotate(300deg); margin: 60px 0 0 10px; font-weight: 100; position: absolute; text-align: center;" :style="{'color': fontColor }">{{ prob.tag }}</p>
-        <p style="position: absolute; width: 100%; text-align: center; margin: 10px 0; bottom: 0; color: #ccc; font-weight: lighter;"><b-badge variant="primary">paranyo</b-badge></p>
+        <p style="position: absolute; width: 100%; text-align: center; margin: 10px 0; bottom: 0; color: #ccc; font-weight: lighter;"><b-badge variant="primary">{{ prob.author }}</b-badge></p>
       </b-col>
       <b-col md="9">
         <b-card-body style="height: 100%;">

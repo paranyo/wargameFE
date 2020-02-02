@@ -40,7 +40,7 @@
 			</b-row>
 			<b-row class="form-group" align-h="start">
 				<b-col cols="3" md="3">
-					<input class="form-control" type="text" placeholder='출제자' v-model="author">
+					<input class="form-control" type="text" placeholder='출제자(ID)' v-model="author">
 				</b-col>
 				<b-col cols="2" md="2">
 					<input class="form-control" type="text" placeholder='스코어' v-model="score">

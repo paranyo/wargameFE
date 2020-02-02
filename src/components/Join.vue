@@ -23,7 +23,6 @@
 				<div class="form-group row">
 					<button type="submit" class="btn btn-primary btn-lg btn-block" :disabled="invalidForm">가입</button>
 				</div>
-				<router-link to="/ForgotPW">비밀번호를 분실하였습니까?</router-link>
 			</div>
 		</form>
 	</b-container>

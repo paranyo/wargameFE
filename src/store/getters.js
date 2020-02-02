@@ -3,7 +3,7 @@ const getters = {
 		return !!state.accessToken
 	},
 	isAdmin(state) {
-		return !!state.isAdmin
+		return state.isAdmin
 	},
 	userId(state) {
 		return state.uid

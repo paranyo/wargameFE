@@ -38,7 +38,7 @@
 					<input class="form-control" type="text" v-model='pScore' placeholder='스코어'>
 				</b-col>
 				<b-col cols="2" md="2">
-					<input class="form-control" type="text" v-model='pAuthor' placeholder='출제자'>
+					<input class="form-control" type="text" v-model='pAuthor' placeholder='출제자(ID)'>
 				</b-col>
 				<b-col cols="3" md="3">
 					<input class="form-control" type="text" v-model="pSrc"	placeholder='링크'>

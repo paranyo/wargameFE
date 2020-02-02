@@ -14,7 +14,8 @@
 				<div class="form-group row">
 					<button type="submit" class="btn btn-primary btn-lg btn-block" :disabled="invalidForm">로그인</button>
 				</div>
-				<router-link to="/Join">계정이 없거나 분실하였습니까?</router-link>
+				<router-link to="/Join" style="margin: 0 15px 0 0 ;">계정이 없습니다.</router-link>
+				<router-link to="/ForgotPW">비밀번호를 분실하였습니다.</router-link>
 			</div>
 		</form>
 	</b-container>

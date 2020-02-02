@@ -31,7 +31,7 @@ const actions = {
 				.then(({ user }) => commit('SET_ONEUSER', user))
 	},
 	UPDATE_USER({ state, dispatch }, { uid, email, money, level, intro, isBan}) {
-		return user.update(uid, { email, money, level, intro, isBan })
+		return user.update(uid, { email, money, level, intro, isBan }).then((data) => data)
 	},
 	UPDATE_MYSTATUS({ state, dispatch }, { curPW, newPW, intro }) {
 		return user.updateSelf({ curPW, newPW, intro })
