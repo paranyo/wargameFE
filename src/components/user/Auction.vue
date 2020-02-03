@@ -18,6 +18,9 @@
 						{{ row.item.name }}
 					</span>
 				</template>
+				<template v-slot:cell(end)="row">
+					<span class="info">{{ calcEnd(row.item) }}</span>
+				</template>
 				<template v-slot:cell()="row">
 					<span class="info">{{ row.value }}</span>
 				</template>
@@ -39,7 +42,7 @@ export default {
 				{ key: 'bid', label: '현재가', sortable: true, formatter: value => { return value == null ? 'No bid' : value }, tdClass: 'align-middle' },
 				{ key: 'owner', label: '등록자', sortable: false, tdClass: 'align-middle' },
 				{ key: 'cate', label: '분류', sortable: false, tdClass: 'align-middle' },
-				{ key: 'end', label: '마감 날짜', sortable: true, tdClass: 'align-middle', formatter: value => { return new Date(new Date().setSeconds(new Date().getSeconds() +  value)).toLocaleString() } },
+				{ key: 'end', label: '마감 날짜', sortable: true, tdClass: 'align-middle' },
 			],
 			sortBy: 'id',
 			sortDesc: true,
@@ -73,6 +76,9 @@ export default {
 				else
 					alert(data.result)
 			})
+		},
+		calcEnd(item) {
+			return new Date(new Date(item.createdAt).setSeconds(new Date(item.createdAt).getSeconds() + item.end)).toLocaleString()
 		},
 		setAddAuction() {
 			this.SET_IS_ADD_AUCTION(true)
