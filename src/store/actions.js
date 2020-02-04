@@ -107,8 +107,8 @@ const actions = {
 	FETCH_ITEMS({ commit }) {
 		return item.fetch().then(data => commit('SET_ITEMS', data))
 	},
-	UPDATE_EQUIP({ commit }, { itemCode, uid}) {
-		return item.update(uid, { itemCode }).then(data => data)
+	UPDATE_EQUIP({ commit }, { itemCode, uid, cCode }) {
+		return item.update(uid, { itemCode, cCode }).then(data => data)
 	},
 	CLEAR_EQUIP() {
 		return item.clearEquip().then(data => data)

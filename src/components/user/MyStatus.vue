@@ -3,7 +3,7 @@
 		<b-row style="height: 250px;">
 			<b-col md=2 style="height: 100%;">
 				<b-card no-body class="overflow-hidden" style="width: 100%; height:100%;">
-					<b-row no-gutters style="height: 100%;background: url(http://wargame1.run.goorm.io/static/rank1.jpeg) no-repeat;text-align: center;background-position: -175px -310px;">
+					<b-row no-gutters style="height: 100%;background: url(http://wargame1.run.goorm.io/static/rank1.jpeg) no-repeat;text-align: center;background-position: -305px -375px;">
 						<b-col md="12" style="text-align: center; width: 100%; height: 80%;">
 			      	<b-card-img :src='`https://maplestory.io/api/character/${this.myCharacter},{"itemId":2000,"region":"KMS","version":"323"},{"itemId":12000,"region":"KMS","version":"323"}/stand1/0?showears=false&showLefEars=false&showHighLefEars=undefined&resize=1&name=&flipX=undefined`' class="rounded-0" style="width: auto; position: absolute; bottom: 0; right: 5%;" />
 						</b-col>
@@ -56,92 +56,92 @@
 					<p class='items-nav'>Hair</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==1" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
-						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
+						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
 					<p class='items-nav'>Eye</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==2" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
-						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
+						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
 					<p class='items-nav'>Hat</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==8" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
-						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
+						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
 					<p class='items-nav'>Face Decoration</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==3" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
-						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
+						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
 					<p class='items-nav'>Eye Decoration</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==4" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
-						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
+						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
 					<p class='items-nav'>Earrings</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==5" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
-						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
+						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
 					<p class='items-nav'>Overall</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==12" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
-						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
+						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
 					<p class='items-nav'>Top</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==10" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
-						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
+						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
 					<p class='items-nav'>Bottom</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==13" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
-						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
+						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
 					<p class='items-nav'>Cape</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==9" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
-						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
+						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
 					<p class='items-nav'>Glove</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==11" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
-						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
+						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
 					<p class='items-nav'>Shoes</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==15" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
-						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
+						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
 					<p class='items-nav'>Weapon</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==16" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
-						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
+						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
 					<p class='items-nav'>Shield</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==14" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
-						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
+						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>
 					<!--
 					<p class='items-nav'>Chair</p>
 					<hr class="my-1">
 					<div class="items" v-if="item.cCode==18" v-for="item in items" :key="`${item.id}`" :class="{'isEquip': `${item.isEquip}` == 1 ? true : false }"
-						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item.itemCode)">
+						v-b-popover.hover.top="`${item.item.name}`" @dblclick="changeItem(item)">
 						<img :src="`https://maplestory.io/api/KMS/323/item/${item.itemCode}/icon`" />
 					</div>-->
 					<p class='items-nav'>BOX</p>
@@ -207,8 +207,8 @@ export default {
 			'SET_IS_CHANGE_PASSWORD',
 		]),
 		...mapActions(['UPDATE_MYSTATUS','FETCH_MYINFO','FETCH_ITEMS','UPDATE_EQUIP','USE_BOX', 'CLEAR_EQUIP']),
-		changeItem(id) {
-			this.UPDATE_EQUIP({ itemCode: id, uid: this.$route.params.uid }).then((data) => {
+		changeItem(item) {
+			this.UPDATE_EQUIP({ itemCode: item.itemCode, cCode: item.cCode, uid: this.$route.params.uid }).then((data) => {
 				this.myCharacter = ''
 				this.FETCH_MYINFO().then(() => {
 					this.FETCH_ITEMS()

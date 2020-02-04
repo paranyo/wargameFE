@@ -1,32 +1,30 @@
 <template>
-	<div class="container-fluid fixed-top">
-		<div class="row">
-			<div class="col-md-6">
+	<b-container fluid class="fixed-top">
+		<b-row>
+			<b-col cols="6">
 				<router-link class="headBtn" to="/">Main</router-link>
 				<router-link class="headBtn" to="/ranking">Ranking</router-link>
 				<router-link class="headBtn" to="/challenge">Challenge</router-link>
 				<router-link class="headBtn" to="/shop">Shop</router-link>
 				<router-link class="headBtn" to="/auction">Auction</router-link>
-			</div>
-			<div class="col-md-6 text-right">
+			</b-col>
+			<b-col cols="6" class="text-right btnList">
 				<div v-if="myInfo && isAuthenticated" style="display: inline">
-					<router-link :to="`/status/${myInfo.uid}`" class="badge badge-primary">
+					<router-link :to="`/status/${myInfo.uid}`" class="badge badge-primary" style="font-size: 10pt">
 						{{ myInfo.nick }}
 					</router-link>
-					<router-link to="/myCorrect" class="badge badge-warning">{{ myInfo.score }}pt</router-link>
-					<a href="#" class="badge badge-info">{{ myInfo.money }}<i class="fab fa-viacoin"></i></a>
+					<router-link to="/myCorrect" class="badge badge-warning" style="font-size: 10pt">{{ myInfo.score }}pt</router-link>
+					<a href="#" class="badge badge-info" style="font-size: 10pt">{{ myInfo.money }}<i class="fab fa-viacoin"></i></a>
 				</div>
 				<div v-else>
-		    	<router-link class="headBtn" to="/login">Sign In</router-link>
-			  	<router-link class="headBtn" to="/Join">Sign Up</router-link>
+		    	<router-link class="headBtn" to="/login" style="font-size: 12pt">Sign In</router-link>
+			  	<router-link class="headBtn" to="/Join" style="font-size: 12pt">Sign Up</router-link>
 				</div>
-					<b-badge class="logout" variant="danger" v-if="isAuthenticated" @click="logout">Logout</b-badge>
-<!--				<router-link class="badge badge-danger" v-if="isAuthenticated" to="/login">Logout</router-link>-->
+				<b-badge class="logout" variant="danger" v-if="isAuthenticated" @click="logout">Logout</b-badge>
 				<router-link to="/settings"	v-if="isAdmin" href="#" class="badge badge-secondary"><i class="fas fa-wrench"></i></router-link>
-				</div>
-			</div>
-		</div>
-	</div>
+			</b-col>
+		</b-row>
+	</b-container>
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
@@ -40,7 +38,6 @@ export default {
 		},
 		isAdmin() {
 			return localStorage.isAdmin
-			//return this.$store.getters.isAdministator
 		},
 	},
 	created() {
@@ -60,7 +57,7 @@ export default {
 <style scoped>
 .headBtn {
 	padding: 0px 10px;
-	font-size: 14px;
+	font-size: 12pt;
 	color: #666666;
 }
 .headBtn:hover {
@@ -68,5 +65,8 @@ export default {
 }
 .logout:hover {
 	cursor: pointer;
+}
+.btnList > * {
+	font-size: 10pt;
 }
 </style>
